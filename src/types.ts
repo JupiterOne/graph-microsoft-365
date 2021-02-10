@@ -16,15 +16,23 @@ export interface IntegrationConfig extends IntegrationInstanceConfig {
   clientId: string;
 
   /**
-   * The Azuser application client secret used to authenticate requests.
+   * The Azurevv application client secret used to authenticate requests.
    */
   clientSecret: string;
 
   /**
-   * The target directory/tenant ID, identified during the admin consent OAuth
-   * flow.
+   * The target Azure directory/tenant ID you would like to ingest entites from.
+   * This can be found here: https://aad.portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Properties
+   *
+   * NOTE:Not needed if authenticationTenant is provided.
    */
-  tenant: string;
+  ingestTenant?: string;
+
+  /**
+   * The authentication directory/tenant ID this is created upon a successful
+   * admin consent OAuth flow.
+   */
+  authenticationTenant: string;
 }
 
 /**

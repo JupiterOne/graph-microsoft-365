@@ -34,7 +34,7 @@ Given this example configuration:
     "type": "string",
     "mask": true
   },
-  "tenant": {
+  "authenticationTenant": {
     "type": "string",
     "mask": true
   }
@@ -46,7 +46,7 @@ You would provide a `.env` file like this:
 ```bash
 CLIENT_ID="client-id"
 CLIENT_SECRET="supersecret"
-TENANT="tenant-directory-id"
+AUTHENTICATION_TENANT="authentication-tenant-directory-id"
 ```
 
 The snake cased environment variables will automatically be converted and

@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 2.0.0 - 2020-02-09
+
+## Added
+
+- Configuration values `ingestTenant` and `authenticationTenant` which
+
 ### Updated
 
 - Updated documentation.

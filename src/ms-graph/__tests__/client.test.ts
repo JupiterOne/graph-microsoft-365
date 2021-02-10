@@ -27,7 +27,7 @@ describe('verifyAuthentication', () => {
 
     const client = new GraphClient(logger, {
       ...config,
-      tenant: 'abc123testing',
+      authenticationTenant: 'abc123testing',
     });
 
     await expect(client.verifyAuthentication()).rejects.toThrow(

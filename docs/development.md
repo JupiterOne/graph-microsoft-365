@@ -95,7 +95,7 @@ repository):
 ```
 CLIENT_ID='885121e7-c3c6-4378-8f6b-e315cc5994ce'
 CLIENT_SECRET='<top secret passphrase>'
-TENANT='<tenant / directory id>'
+AUTHENTICATION_TENANT='<authentication tenant / directory id>'
 ```
 
 This will be used to auto-populate the

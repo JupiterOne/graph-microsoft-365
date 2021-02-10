@@ -141,7 +141,7 @@ class GraphAuthenticationProvider implements AuthenticationProvider {
       this.accessToken.expiresOnTimestamp - Date.now() < 1000 * 60
     ) {
       const credentials = new ClientSecretCredential(
-        this.config.tenant,
+        this.config.authenticationTenant,
         this.config.clientId,
         this.config.clientSecret,
       );

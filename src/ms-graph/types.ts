@@ -4,19 +4,28 @@
  */
 export type ClientConfig = {
   /**
-   * The application client ID. This is the value provided by the App
-   * Registration.
+   * The Azure application client ID used to identify the program as the
+   * registered app. This will be the same for all tenants since this is a
+   * multi-tenant application.
    */
   clientId: string;
 
   /**
-   * The application client secret. The value is maintained as part of the App
-   * Registration.
+   * The Azure application client secret used to authenticate requests.
    */
   clientSecret: string;
 
   /**
-   * The Active Directory ID (Tenant) to target in requests to Microsoft Graph.
+   * The target Azure directory/tenant ID you would like to ingest entites from.
+   * This can be found here: https://aad.portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Properties
+   *
+   * NOTE:Not needed if authenticationTenant is provided.
    */
-  tenant: string;
+  ingestTenant?: string;
+
+  /**
+   * The authentication directory/tenant ID this is created upon a successful
+   * admin consent OAuth flow.
+   */
+  authenticationTenant: string;
 };
