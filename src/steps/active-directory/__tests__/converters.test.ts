@@ -23,6 +23,8 @@ import exampleGroupMemberUser from './fixtures/exampleGroupMemberUser';
 import exampleIntegrationInstance from './fixtures/exampleIntegrationInstance';
 import exampleOrganization from './fixtures/exampleOrganization';
 
+process.env.TENANT = 'TENANT';
+
 describe('createAccountEntityWithOrganization', () => {
   test('properties transferred', () => {
     const accountEntity = createAccountEntityWithOrganization(
@@ -40,6 +42,7 @@ describe('createAccountEntityWithOrganization', () => {
       defaultDomain: 'verifiedDomain.onmicrosoft.com',
       organizationName: 'Default Directory',
       verifiedDomains: ['verifiedDomain.onmicrosoft.com'],
+      tenantId: process.env.TENANT,
     });
   });
 });
@@ -67,6 +70,7 @@ describe('createGroupEntity', () => {
       mailNickname: '8bb2d1c34',
       renewedOn: 1556042765000,
       securityEnabled: true,
+      tenantId: process.env.TENANT,
     });
   });
 });
@@ -108,6 +112,7 @@ describe('createUserEntity', () => {
       preferredLanguage: undefined,
       surname: 'Kulakov',
       lastName: 'Kulakov',
+      tenantId: process.env.TENANT,
       username:
         'admin_test.dualboot.com#EXT#@admintestdualboot.onmicrosoft.com',
       userPrincipalName:
@@ -132,6 +137,7 @@ describe('createOrganizationEntity', () => {
       displayName: 'Default Directory',
       website: 'verifiedDomain.onmicrosoft.com',
       emailDomain: 'verifiedDomain.onmicrosoft.com',
+      tenantId: process.env.TENANT,
     });
   });
 });

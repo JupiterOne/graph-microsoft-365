@@ -66,6 +66,7 @@ export function createAccountEntityWithOrganization(
         organizationName: organization.displayName,
         defaultDomain,
         verifiedDomains,
+        tenantId: process.env.TENANT,
       },
     },
   });
@@ -91,6 +92,7 @@ export function createGroupEntity(data: Group): Entity {
         mailNickname: data.mailNickname,
         renewedOn: getTime(data.renewedDateTime),
         securityEnabled: data.securityEnabled,
+        tenantId: process.env.TENANT,
       },
     },
   });
@@ -118,6 +120,7 @@ export function createUserEntity(data: User): Entity {
         lastName: data.surname,
         userPrincipalName: data.userPrincipalName,
         id: data.id,
+        tenantId: process.env.TENANT,
       },
     },
   });
@@ -136,6 +139,7 @@ export function createOrganizationEntity(data: Organization): Entity {
           .map((domain) => domain.name)
           .join(', '),
         external: undefined,
+        tenantId: process.env.TENANT,
       },
     },
   });

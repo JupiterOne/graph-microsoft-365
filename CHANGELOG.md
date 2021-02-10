@@ -8,6 +8,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+-`tenantId` to ingested entities
+
 ## 1.0.0 - 2020-02-05
 
 Initial beta release.
