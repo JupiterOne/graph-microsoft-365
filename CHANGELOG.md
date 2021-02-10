@@ -11,6 +11,7 @@ and this project adheres to
 ### Added
 
 -`tenantId` to ingested entities
+- Updated documentation.
 
 ## 1.0.0 - 2020-02-05
 
