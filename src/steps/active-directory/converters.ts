@@ -12,29 +12,16 @@ import {
 import { Group, Organization, User } from '@microsoft/microsoft-graph-types';
 
 import { GroupMember, MemberType } from './clients/directoryClient';
-import {
-  ACCOUNT_ENTITY_CLASS,
-  ACCOUNT_ENTITY_TYPE,
-  ACCOUNT_GROUP_RELATIONSHIP_TYPE,
-  GROUP_ENTITY_CLASS,
-  GROUP_ENTITY_TYPE,
-  GROUP_MEMBER_ENTITY_CLASS,
-  GROUP_MEMBER_ENTITY_TYPE,
-  GROUP_MEMBER_RELATIONSHIP_TYPE,
-  ORGANIZATION_ENTITY_CLASS,
-  ORGANIZATION_ENTITY_TYPE,
-  USER_ENTITY_CLASS,
-  USER_ENTITY_TYPE,
-} from './constants';
+import { entities, relationships } from './constants';
 
 export function createAccountEntity(instance: IntegrationInstance): Entity {
   return createIntegrationEntity({
     entityData: {
       source: {},
       assign: {
-        _class: ACCOUNT_ENTITY_CLASS,
-        _key: `${ACCOUNT_ENTITY_TYPE}-${instance.id}`,
-        _type: ACCOUNT_ENTITY_TYPE,
+        _class: entities.ACCOUNT._class,
+        _key: `${entities.ACCOUNT._type}-${instance.id}`,
+        _type: entities.ACCOUNT._type,
         name: instance.name,
         displayName: instance.name,
       },
@@ -58,9 +45,9 @@ export function createAccountEntityWithOrganization(
     entityData: {
       source: organization,
       assign: {
-        _class: ACCOUNT_ENTITY_CLASS,
-        _key: `${ACCOUNT_ENTITY_TYPE}-${instance.id}`,
-        _type: ACCOUNT_ENTITY_TYPE,
+        _class: entities.ACCOUNT._class,
+        _key: `${entities.ACCOUNT._type}-${instance.id}`,
+        _type: entities.ACCOUNT._type,
         name: organization.displayName,
         displayName: instance.name,
         organizationName: organization.displayName,
@@ -76,8 +63,8 @@ export function createGroupEntity(data: Group): Entity {
     entityData: {
       source: data,
       assign: {
-        _class: GROUP_ENTITY_CLASS,
-        _type: GROUP_ENTITY_TYPE,
+        _class: entities.GROUP._class,
+        _type: entities.GROUP._type,
         name: data.displayName,
         displayName: data.displayName as string | undefined,
         id: data.id,
@@ -101,8 +88,8 @@ export function createUserEntity(data: User): Entity {
     entityData: {
       source: data,
       assign: {
-        _class: USER_ENTITY_CLASS,
-        _type: USER_ENTITY_TYPE,
+        _class: entities.USER._class,
+        _type: entities.USER._type,
         name: data.displayName,
         username: data.userPrincipalName,
         displayName: data.displayName as string | undefined,
@@ -128,8 +115,8 @@ export function createOrganizationEntity(data: Organization): Entity {
     entityData: {
       source: data,
       assign: {
-        _class: ORGANIZATION_ENTITY_CLASS,
-        _type: ORGANIZATION_ENTITY_TYPE,
+        _class: entities.ORGANIZATION._class,
+        _type: entities.ORGANIZATION._type,
         website: data.verifiedDomains?.map((domain) => domain.name).join(', '),
         emailDomain: data.verifiedDomains
           ?.filter((domain) => domain.capabilities?.includes('Email'))
@@ -148,11 +135,11 @@ export function createAccountGroupRelationship(
   return createDirectRelationship({
     _class: RelationshipClass.HAS,
     fromKey: account._key,
-    fromType: ACCOUNT_ENTITY_TYPE,
+    fromType: entities.ACCOUNT._type,
     toKey: group.id as string,
-    toType: GROUP_ENTITY_TYPE,
+    toType: entities.GROUP._type,
     properties: {
-      _type: ACCOUNT_GROUP_RELATIONSHIP_TYPE,
+      _type: relationships.ACCOUNT_HAS_GROUP._type,
     },
   });
 }
@@ -177,7 +164,7 @@ export function createGroupMemberRelationship(
 
   return createMappedRelationship({
     _class: RelationshipClass.HAS,
-    _type: GROUP_MEMBER_RELATIONSHIP_TYPE,
+    _type: relationships.GROUP_HAS_MEMBER._type,
     _mapping: {
       relationshipDirection: RelationshipDirection.FORWARD,
       sourceEntityKey: group._key,
@@ -202,21 +189,21 @@ export function createGroupMemberRelationship(
 function getGroupMemberEntityType(member: GroupMember): string {
   switch (member['@odata.type']) {
     case MemberType.USER:
-      return USER_ENTITY_TYPE;
+      return entities.USER._type;
     case MemberType.GROUP:
-      return GROUP_ENTITY_TYPE;
+      return entities.GROUP._type;
     default:
-      return GROUP_MEMBER_ENTITY_TYPE;
+      return entities.GROUP_MEMEBER._type;
   }
 }
 
 function getGroupMemberEntityClass(member: GroupMember): string {
   switch (member['@odata.type']) {
     case MemberType.USER:
-      return USER_ENTITY_CLASS;
+      return entities.USER._class;
     case MemberType.GROUP:
-      return GROUP_ENTITY_CLASS;
+      return entities.GROUP._class;
     default:
-      return GROUP_MEMBER_ENTITY_CLASS;
+      return entities.GROUP_MEMEBER._class;
   }
 }

@@ -1,125 +1,53 @@
 import {
   IntegrationStepExecutionContext,
-  RelationshipClass,
   Step,
 } from '@jupiterone/integration-sdk-core';
 import { noop } from 'lodash';
 import { IntegrationConfig } from '../../types';
-import {
-  GROUP_ENTITY_TYPE,
-  STEP_GROUPS,
-  STEP_USERS,
-  USER_ENTITY_TYPE,
-} from '../active-directory';
-import {
-  STEP_DEVICES,
-  DEVICE_ENTITY_CLASS,
-  DEVICE_ENTITY_TYPE,
-  STEP_DEVICE_CATEGORIES,
-  DEVICE_CATEGORY_ENTITY_TYPE,
-  DEVICE_CATEGORY_ENTITY_CLASS,
-  DEVICE_CATEGORY_DEVICE_RELATIONSHIP_TYPE,
-  STEP_DEVICE_CONFIGURATIONS,
-  DEVICE_DEVICE_CONFIGURATION_RELATIONSHIP_TYPE,
-  DEVICE_CONFIGURATION_ENTITY_CLASS,
-  DEVICE_CONFIGURATION_ENTITY_TYPE,
-  USER_DEVICE_RELATIONSHIP_TYPE,
-  GROUP_DEVICE_CONFIGURATION_RELATIONSHIP_TYPE,
-  DETECTED_APPLICATION_ENTITY_CLASS,
-  DETECTED_APPLICATION_ENTITY_TYPE,
-  DEVICE_DETECTED_APPLICATION_RELATIONSHIP_TYPE,
-  STEP_DETECTED_APPLICATIONS,
-} from './constants';
+import { steps as activeDirectorySteps } from '../active-directory';
+import { relationships, entities, steps } from './constants';
 
 export const deviceSteps: Step<
   IntegrationStepExecutionContext<IntegrationConfig>
 >[] = [
   {
-    id: STEP_DEVICE_CATEGORIES,
+    id: steps.FETCH_DEVICE_CATEGORIES,
     name: 'Device Categories',
-    entities: [
-      {
-        resourceName: 'Managed Device Categories',
-        _type: DEVICE_CATEGORY_ENTITY_TYPE,
-        _class: DEVICE_CATEGORY_ENTITY_CLASS,
-      },
-    ],
+    entities: [entities.DEVICE_CATEGORY],
     relationships: [],
     executionHandler: noop,
   },
   {
-    id: STEP_DEVICES,
+    id: steps.FETCH_DEVICES,
     name: 'Managed Devices',
-    entities: [
-      {
-        resourceName: 'Managed Device',
-        _type: DEVICE_ENTITY_TYPE,
-        _class: DEVICE_ENTITY_CLASS,
-      },
-    ],
+    entities: [entities.DEVICE],
     relationships: [
-      {
-        _type: DEVICE_CATEGORY_DEVICE_RELATIONSHIP_TYPE,
-        sourceType: DEVICE_CATEGORY_ENTITY_TYPE,
-        _class: RelationshipClass.HAS,
-        targetType: DEVICE_ENTITY_TYPE,
-      },
-      {
-        _type: USER_DEVICE_RELATIONSHIP_TYPE,
-        sourceType: USER_ENTITY_TYPE,
-        _class: RelationshipClass.HAS,
-        targetType: DEVICE_ENTITY_TYPE,
-      },
+      relationships.DEVICE_CATEGORY_HAS_DEVICE,
+      relationships.USER_OWNS_DEVICE,
     ],
-    dependsOn: [STEP_DEVICE_CATEGORIES, STEP_USERS],
+    dependsOn: [
+      steps.FETCH_DEVICE_CATEGORIES,
+      activeDirectorySteps.FETCH_USERS,
+    ],
     executionHandler: noop,
   },
   {
-    id: STEP_DETECTED_APPLICATIONS,
+    id: steps.FETCH_DETECTED_APPLICATIONS,
     name: 'Device Detected Applications',
-    entities: [
-      {
-        resourceName: 'Device Detected Application',
-        _type: DETECTED_APPLICATION_ENTITY_TYPE,
-        _class: DETECTED_APPLICATION_ENTITY_CLASS,
-      },
-    ],
-    relationships: [
-      {
-        _type: DEVICE_DETECTED_APPLICATION_RELATIONSHIP_TYPE,
-        sourceType: DEVICE_ENTITY_TYPE,
-        _class: RelationshipClass.HAS,
-        targetType: DETECTED_APPLICATION_ENTITY_TYPE,
-      },
-    ],
-    dependsOn: [STEP_DEVICES],
+    entities: [entities.DETECTED_APPLICATION],
+    relationships: [relationships.DEVICE_HAS_DETECTED_APPLICATION],
+    dependsOn: [steps.FETCH_DEVICES],
     executionHandler: noop,
   },
   {
-    id: STEP_DEVICE_CONFIGURATIONS,
+    id: steps.FETCH_DEVICE_CONFIGURATIONS,
     name: 'Device Configurations',
-    entities: [
-      {
-        resourceName: 'Device Configuration',
-        _type: DEVICE_CONFIGURATION_ENTITY_TYPE,
-        _class: DEVICE_CONFIGURATION_ENTITY_CLASS,
-      },
-    ],
+    entities: [entities.DEVICE_CONFIGURATION],
     relationships: [
-      {
-        _type: GROUP_DEVICE_CONFIGURATION_RELATIONSHIP_TYPE,
-        sourceType: GROUP_ENTITY_TYPE,
-        _class: RelationshipClass.ASSIGNED,
-        targetType: DEVICE_CONFIGURATION_ENTITY_TYPE,
-      },
-      {
-        _type: DEVICE_DEVICE_CONFIGURATION_RELATIONSHIP_TYPE,
-        sourceType: DEVICE_ENTITY_TYPE,
-        _class: RelationshipClass.USES,
-        targetType: DEVICE_CONFIGURATION_ENTITY_TYPE,
-      },
+      relationships.GROUP_ASSIGNED_DEVICE_CONFIGURATION,
+      relationships.DEVICE_USES_DEVICE_CONFIGURATION,
     ],
-    dependsOn: [STEP_DEVICES, STEP_GROUPS],
+    dependsOn: [steps.FETCH_DEVICES, activeDirectorySteps.FETCH_GROUPS],
     executionHandler: noop,
   },
 ];
