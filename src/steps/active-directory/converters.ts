@@ -197,7 +197,7 @@ function getGroupMemberEntityType(member: GroupMember): string {
   }
 }
 
-function getGroupMemberEntityClass(member: GroupMember): string {
+function getGroupMemberEntityClass(member: GroupMember): string | string[] {
   switch (member['@odata.type']) {
     case MemberType.USER:
       return entities.USER._class;

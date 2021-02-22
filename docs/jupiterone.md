@@ -114,62 +114,24 @@ https://github.com/JupiterOne/sdk/blob/master/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources                       | Entity `_type`                         | Entity `_class`  |
-| ------------------------------- | -------------------------------------- | ---------------- |
-| Application Category            | `application_category`                 | `Group`          |
-| Application Configuration       | `application_configuration`            | `Configuration`  |
-| Application Policy              | `application_policy`                   | `Configuration`  |
-| Device Compliance Policy        | `device_compliance_policy`             | `Configuration`  |
-| Device Compliance Policy Action | `device_compliance_policy_action_item` | `Rule`           |
-| Device Compliance Script        | `device_compliance_script`             | `Assessment`     |
-| Device Configuration            | `device_configuration`                 | `Configuration`  |
-| Device Detected Application     | `detected_applications`                | `Application`    |
-| Device Management Script        | `device_management_script`             | `Service`        |
-| Endpoint Security Setting       | `endpoint_security_setting`            | `Configuration`  |
-| Managed Application             | `managed_application`                  | `Application`    |
-| Managed Device                  | `managed_device`                       | `Host`, `Device` |
-| Managed Device Categories       | `device_category`                      | `Group`          |
-| Noncompliance Finding           | `device_statuses`                      | `Finding`        |
-| [AD] Account                    | `microsoft_365_account`                | `Account`        |
-| [AD] Group                      | `microsoft_365_user_group`             | `UserGroup`      |
-| [AD] Group Member               | `microsoft_365_group_member`           | `User`           |
-| [AD] User                       | `microsoft_365_user`                   | `User`           |
+| Resources         | Entity `_type`               | Entity `_class` |
+| ----------------- | ---------------------------- | --------------- |
+| [AD] Account      | `microsoft_365_account`      | `Account`       |
+| [AD] Group        | `microsoft_365_user_group`   | `UserGroup`     |
+| [AD] Group Member | `microsoft_365_group_member` | `User`          |
+| [AD] User         | `microsoft_365_user`         | `User`          |
 
 ### Relationships
 
 The following relationships are created/mapped:
 
-| Source Entity `_type`                  | Relationship `_class` | Target Entity `_type`                  |
-| -------------------------------------- | --------------------- | -------------------------------------- |
-| `application_category`                 | **HAS**               | `managed_application`                  |
-| `application_configuration`            | **IDENTIFIED**        | `device_statuses`                      |
-| `device_compliance_policy_action_item` | **MITIGATES**         | `device_statuses`                      |
-| `device_compliance_policy`             | **IDENTIFIED**        | `device_statuses`                      |
-| `managed_device`                       | **ASSIGNED**          | `device_compliance_policy`             |
-| `managed_device`                       | **ASSIGNED**          | `endpoint_security_setting`            |
-| `managed_device`                       | **ASSIGNED**          | `managed_application`                  |
-| `device_category`                      | **HAS**               | `managed_device`                       |
-| `device_compliance_policy`             | **HAS**               | `device_compliance_policy_action_item` |
-| `device_compliance_script`             | **IDENTIFIED**        | `device_statuses`                      |
-| `device_compliance_script`             | **MONITORS**          | `managed_device`                       |
-| `managed_device`                       | **HAS**               | `detected_applications`                |
-| `managed_device`                       | **HAS**               | `device_statuses`                      |
-| `device_management_script`             | **MANAGES**           | `managed_device`                       |
-| `managed_device`                       | **USES**              | `device_configuration`                 |
-| `endpoint_security_setting`            | **IDENTIFIED**        | `device_statuses`                      |
-| `managed_application`                  | **ASSIGNED**          | `application_policy`                   |
-| `managed_application`                  | **HAS**               | `endpoint_security_setting`            |
-| `managed_application`                  | **USES**              | `application_configuration`            |
-| `microsoft_365_account`                | **HAS**               | `microsoft_365_user_group`             |
-| `microsoft_365_account`                | **HAS**               | `microsoft_365_user`                   |
-| `microsoft_365_user_group`             | **ASSIGNED**          | `device_compliance_policy`             |
-| `microsoft_365_user_group`             | **HAS**               | `microsoft_365_user_group`             |
-| `microsoft_365_user_group`             | **HAS**               | `microsoft_365_group_member`           |
-| `microsoft_365_user_group`             | **HAS**               | `microsoft_365_user`                   |
-| `microsoft_365_user`                   | **ASSIGNED**          | `device_compliance_policy`             |
-| `microsoft_365_user_group`             | **ASSIGNED**          | `device_configuration`                 |
-| `microsoft_365_user_group`             | **ASSIGNED**          | `device_management_script`             |
-| `microsoft_365_user`                   | **OWNS**              | `managed_device`                       |
+| Source Entity `_type`      | Relationship `_class` | Target Entity `_type`        |
+| -------------------------- | --------------------- | ---------------------------- |
+| `microsoft_365_account`    | **HAS**               | `microsoft_365_user_group`   |
+| `microsoft_365_account`    | **HAS**               | `microsoft_365_user`         |
+| `microsoft_365_user_group` | **HAS**               | `microsoft_365_user_group`   |
+| `microsoft_365_user_group` | **HAS**               | `microsoft_365_group_member` |
+| `microsoft_365_user_group` | **HAS**               | `microsoft_365_user`         |
 
 <!--
 ********************************************************************************

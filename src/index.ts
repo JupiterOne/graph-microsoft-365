@@ -9,5 +9,8 @@ import validateInvocation from './validateInvocation';
 export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = {
   instanceConfigFields,
   validateInvocation,
-  integrationSteps: [...activeDirectorySteps, ...intuneSteps],
+  integrationSteps: [
+    ...activeDirectorySteps,
+    // ...intuneSteps
+  ],
 };

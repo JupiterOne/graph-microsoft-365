@@ -1,7 +1,11 @@
-import { RelationshipClass } from '@jupiterone/integration-sdk-core';
+import {
+  RelationshipClass,
+  StepEntityMetadata,
+  StepRelationshipMetadata,
+} from '@jupiterone/integration-sdk-core';
 import { entities as activeDirectoryEntities } from '../active-directory';
 
-export const steps = {
+export const steps: Record<string, string> = {
   FETCH_DEVICES: 'managed-devices',
   FETCH_DETECTED_APPLICATIONS: 'detected-applications',
   FETCH_DEVICE_CATEGORIES: 'device-categories',
@@ -20,7 +24,7 @@ export const steps = {
     'managed-application-configurations',
 };
 
-export const entities = {
+export const entities: Record<string, StepEntityMetadata> = {
   DEVICE_CATEGORY: {
     resourceName: 'Managed Device Categories',
     _type: 'device_category',
@@ -93,7 +97,7 @@ export const entities = {
   },
 };
 
-export const relationships = {
+export const relationships: Record<string, StepRelationshipMetadata> = {
   USER_OWNS_DEVICE: {
     _type: 'user_owns_device',
     sourceType: activeDirectoryEntities.USER._type,
