@@ -11,6 +11,7 @@ export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> = 
   validateInvocation,
   integrationSteps: [
     ...activeDirectorySteps,
+    // Commenting out until all entities are ingested. This prevents the J1_DOCUMENTATION from documenting entities and relationships that don't exist yet.
     // ...intuneSteps
   ],
 };
