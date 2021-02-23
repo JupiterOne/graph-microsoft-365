@@ -44,12 +44,8 @@ export const mobileManagementSteps: Step<
     entities: [entities.APPLICATION_CONFIGURATION],
     relationships: [
       relationships.MANAGED_APPLICATION_USES_APPLICATION_CONFIGURATION,
-      relationships.APPLICATION_CONFIGURATION_IDENTIFIES_NONCOMPLIANCE_FINDING,
     ],
-    dependsOn: [
-      steps.FETCH_MANAGED_APPLICATIONS,
-      steps.FETCH_NONCOMPLIANCE_FINDINGS,
-    ],
+    dependsOn: [steps.FETCH_MANAGED_APPLICATIONS],
     executionHandler: noop,
   },
 ];

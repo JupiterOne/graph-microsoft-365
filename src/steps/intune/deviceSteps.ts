@@ -23,7 +23,7 @@ export const deviceSteps: Step<
     entities: [entities.DEVICE],
     relationships: [
       relationships.DEVICE_CATEGORY_HAS_DEVICE,
-      relationships.USER_OWNS_DEVICE,
+      relationships.USER_HAS_DEVICE,
     ],
     dependsOn: [
       steps.FETCH_DEVICE_CATEGORIES,

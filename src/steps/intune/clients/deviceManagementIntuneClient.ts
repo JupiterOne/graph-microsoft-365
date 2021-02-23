@@ -31,17 +31,9 @@ class DeviceManagementIntuneClient extends GraphClient {
     });
   }
 
-  // NOTE: There are 2 types of devices that seem to be unified in the Microsoft cloud setup I have, but might be different for different customers. Potentially need to ingest Azure devices as well.
-  // //********** AZURE DEVICES **********/
-  //  // https://docs.microsoft.com/en-us/graph/api/resources/device?view=graph-rest-1.0
-  //  // DeviceManagementConfiguration.Read.All
-
-  // // https://docs.microsoft.com/en-us/graph/api/device-list?view=graph-rest-1.0&tabs=http
-  // public async iterateAzureDevices (
-  //     callback: (managedDevice: ManagedDevice) => void | Promise<void>,
-  // ): Promise<void> {
-  //     return this.iterateResources({ resourceUrl: '/deviceManagement/managedDevices', callback });
-  // }
+  //********** AZURE DEVICES **********/
+  // https://docs.microsoft.com/en-us/graph/api/resources/device?view=graph-rest-1.0
+  // Another way to get devices that contains some different information. Currently not using.
 
   //********** DEVICE CATEGORIES **********/
   // https://docs.microsoft.com/en-us/graph/api/resources/intune-shared-devicecategory?view=graph-rest-1.0

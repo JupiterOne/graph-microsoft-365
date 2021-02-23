@@ -98,10 +98,10 @@ export const entities: Record<string, StepEntityMetadata> = {
 };
 
 export const relationships: Record<string, StepRelationshipMetadata> = {
-  USER_OWNS_DEVICE: {
-    _type: 'user_owns_device',
+  USER_HAS_DEVICE: {
+    _type: 'user_has_device',
     sourceType: activeDirectoryEntities.USER._type,
-    _class: RelationshipClass.OWNS,
+    _class: RelationshipClass.HAS,
     targetType: entities.DEVICE._type,
   },
   DEVICE_CATEGORY_HAS_DEVICE: {

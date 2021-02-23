@@ -48,7 +48,7 @@ export const deviceManagementSteps: Step<
     relationships: [
       relationships.DEVICE_COMPLIANCE_POLICY_HAS_COMPLIANCE_POLICY_ACTION,
     ],
-    dependsOn: [steps.FETCH_DEVICES, steps.FETCH_COMPLIANCE_POLICIES],
+    dependsOn: [steps.FETCH_COMPLIANCE_POLICIES],
     executionHandler: noop,
   },
   {
@@ -56,11 +56,7 @@ export const deviceManagementSteps: Step<
     name: 'Endpoint Security Settings',
     entities: [entities.ENDPOINT_SECURITY_SETTING],
     relationships: [relationships.DEVICE_HAS_ENDPOINT_SECURITY_SETTING],
-    dependsOn: [
-      steps.FETCH_DEVICES,
-      activeDirectorySteps.FETCH_GROUPS,
-      activeDirectorySteps.FETCH_USERS,
-    ],
+    dependsOn: [steps.FETCH_DEVICES],
     executionHandler: noop,
   },
   {
@@ -73,6 +69,7 @@ export const deviceManagementSteps: Step<
       relationships.COMPLIANCE_SCRIPT_IDENTIFIED_NONCOMPLIANCE_FINDING,
       relationships.ENDPOINT_SECURITY_SETTING_IDENTIFIED_NONCOMPLIANCE_FINDING,
       relationships.COMPLIANCE_POLICY_ACTION_MITIGATES_NONCOMPLIANCE_FINDING,
+      relationships.APPLICATION_CONFIGURATION_IDENTIFIES_NONCOMPLIANCE_FINDING,
     ],
     dependsOn: [
       steps.FETCH_DEVICES,
@@ -80,6 +77,7 @@ export const deviceManagementSteps: Step<
       steps.FETCH_COMPLIANCE_POLICY_ACTION,
       steps.FETCH_DEVICE_COMPLIANCE_SCRIPTS,
       steps.FETCH_ENDPOINT_SECURITY_SETTINGS,
+      steps.FETCH_MANAGED_APPLICATION_CONFIGURATIONS,
     ],
     executionHandler: noop,
   },
