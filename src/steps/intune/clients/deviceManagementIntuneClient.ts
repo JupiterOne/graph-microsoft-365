@@ -81,7 +81,7 @@ class DeviceManagementIntuneClient extends GraphClient {
 
   // NOTE: This turns into a relationship to MANAGED DEVICE
   // https://docs.microsoft.com/en-us/graph/api/intune-deviceconfig-deviceconfigurationdevicestatus-list?view=graph-rest-beta
-  public async iterateDeviceConfiguratinDeviceStatus(
+  public async iterateDeviceConfigurationDeviceStatus(
     deviceConfigurationId: string,
     callback: (
       deviceConfigurationDeviceStatus: DeviceConfigurationDeviceStatus,
