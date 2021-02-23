@@ -35,7 +35,7 @@ export async function fetchAccount(
   }
 
   await jobState.addEntity(accountEntity);
-  await jobState.setData(entities.ACCOUNT._type, accountEntity);
+  await jobState.setData(DATA_ACCOUT_TYPE, accountEntity);
 }
 
 export async function fetchUsers(
@@ -44,7 +44,7 @@ export async function fetchUsers(
   const { logger, instance, jobState } = executionContext;
   const graphClient = new DirectoryGraphClient(logger, instance.config);
 
-  const accountEntity = await jobState.getData<Entity>(entities.ACCOUNT._type);
+  const accountEntity = await jobState.getData<Entity>(DATA_ACCOUT_TYPE);
   await graphClient.iterateUsers(async (user) => {
     const userEntity = createUserEntity(user);
     await jobState.addEntity(userEntity);
@@ -60,7 +60,7 @@ export async function fetchGroups(
   const { logger, instance, jobState } = executionContext;
   const graphClient = new DirectoryGraphClient(logger, instance.config);
 
-  const accountEntity = await jobState.getData<Entity>(entities.ACCOUNT._type);
+  const accountEntity = await jobState.getData<Entity>(DATA_ACCOUT_TYPE);
   await graphClient.iterateGroups(async (group) => {
     const groupEntity = createGroupEntity(group);
     await jobState.addEntity(groupEntity);
