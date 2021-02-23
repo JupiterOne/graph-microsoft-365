@@ -6,7 +6,7 @@ import {
 
 import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { DirectoryGraphClient } from './clients/directoryClient';
-import { entities, relationships, steps } from './constants';
+import { DATA_ACCOUT_TYPE, entities, relationships, steps } from './constants';
 import {
   createAccountEntity,
   createAccountEntityWithOrganization,
