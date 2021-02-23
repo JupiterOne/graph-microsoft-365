@@ -37,17 +37,7 @@ class DeviceManagementIntuneClient extends GraphClient {
 
   //********** DEVICE CATEGORIES **********/
   // https://docs.microsoft.com/en-us/graph/api/resources/intune-shared-devicecategory?view=graph-rest-1.0
-  // DeviceManagementManagedDevices.Read.All
-
-  // https://docs.microsoft.com/en-us/graph/api/intune-shared-devicecategory-list?view=graph-rest-1.0
-  public async iterateDeviceCategories(
-    callback: (deviceCategory: DeviceCategory) => void | Promise<void>,
-  ): Promise<void> {
-    return this.iterateResources({
-      resourceUrl: '/deviceManagement/deviceCategories',
-      callback,
-    });
-  }
+  // Groups of devices. Currently not using.
 
   //********** DEVICE CONFIGURATIONS **********/
   // https://docs.microsoft.com/en-us/graph/api/resources/intune-shared-deviceconfiguration?view=graph-rest-beta
@@ -123,52 +113,14 @@ class DeviceManagementIntuneClient extends GraphClient {
     });
   }
 
-  // NOTE: Only important if we want to get the malware states of Windows devices.
-  // //**********  DEVICE MANAGEMENT SCRIPTS **********/
-  //  // https://docs.microsoft.com/en-us/graph/api/resources/intune-shared-devicemanagementscript?view=graph-rest-beta
-  //  // DeviceManagementManagedDevices.Read.All
+  //********** DEVICE MANAGEMENT SCRIPTS **********/
+  // https://docs.microsoft.com/en-us/graph/api/resources/intune-shared-devicemanagementscript?view=graph-rest-beta
+  // Can be used to find computer-specific findings such as the Windows protection state. Currently not used
+  // https://docs.microsoft.com/en-us/graph/api/intune-devices-windowsprotectionstate-get?view=graph-rest-beta
 
-  // // https://docs.microsoft.com/en-us/graph/api/intune-shared-devicemanagementscript-list?view=graph-rest-beta
-  // public async iterateDeviceManagementScripts (
-  //     callback: (deviceManagementScript: DeviceManagementScript) => void | Promise<void>,
-  // ): Promise<void> {
-  //     return this.iterateResources({ resourceUrl: '/deviceManagement/deviceManagementScripts', callback });
-  // }
-
-  // // NOTE: This turns into a relationship to GROUPS
-  // // https://docs.microsoft.com/en-us/graph/api/intune-devices-devicemanagementscriptgroupassignment-list?view=graph-rest-beta
-  // public async iterateDeviceManagementScriptGroupAssignments (
-  //     deviceManagementScriptId: string,
-  //     callback: (groupScriptAssignment: DeviceManagementScriptGroupAssignment) => void | Promise<void>,
-  // ): Promise<void> {
-  //     return this.iterateResources({ resourceUrl: `/deviceManagement/deviceManagementScripts/${deviceManagementScriptId}/groupAssignments`, callback });
-  // }
-
-  // // NOTE: these will all be added into the MANAGED DEVICE entity as well as create a relationship to MANAGED DEVICE
-  // // https://docs.microsoft.com/en-us/graph/api/intune-devices-devicemanagementscriptdevicestate-list?view=graph-rest-beta
-  // public async iterateDeviceManagementScriptDeviceRunStates (
-  //     deviceManagementScriptId: string,
-  //     callback: (scriptDeviceRunState: DeviceManagementScriptDeviceState) => void | Promise<void>,
-  // ): Promise<void> {
-  //     return this.iterateResources({ resourceUrl: `/deviceManagement/deviceManagementScripts/${deviceManagementScriptId}/deviceRunStates`, callback });
-  // }
-  // // https://docs.microsoft.com/en-us/graph/api/intune-devices-windowsprotectionstate-get?view=graph-rest-beta
-  // public async iterateWindowsProtectionStates (
-  //     deviceManagementScriptId: string,
-  //     deviceManagementScriptDeviceStateId: string,
-  //     callback: (windowsProtectionState: WindowsProtectionState) => void | Promise<void>,
-  // ): Promise<void> {
-  //     return this.iterateResources({ resourceUrl: `/deviceManagement/deviceManagementScripts/${deviceManagementScriptId}/deviceRunStates/${deviceManagementScriptDeviceStateId}/managedDevice/windowsProtectionState`, callback });
-  // }
-  // // https://docs.microsoft.com/en-us/graph/api/intune-devices-windowsprotectionstate-get?view=graph-rest-beta
-  // public async iterateWindowsMalwareStates (
-  //     deviceManagementScriptId: string,
-  //     deviceManagementScriptDeviceStateId: string,
-  //     callback: (windowsMalwareState: WindowsDeviceMalwareState) => void | Promise<void>,
-  // ): Promise<void> {
-  //     return this.iterateResources({ resourceUrl: `/deviceManagement/deviceManagementScripts/${deviceManagementScriptId}/deviceRunStates/${deviceManagementScriptDeviceStateId}/managedDevice/windowsProtectionState/detectedMalwareState`, callback });
-  // }
-  // // NOTE: Could potentially load in all malware information instead of just the ones that match managed devices -- https://docs.microsoft.com/en-us/graph/api/intune-devices-windowsmalwareinformation-list?view=graph-rest-beta
+  //********** WINDOWS MALWARE STATE **********/
+  // https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-windowsmalwareinformation?view=graph-rest-beta
+  // Can be used to get findings of malware on windows devices. Currently not used
 
   //********** DEVICE COMPLIANCE POLICIES **********/
   // https://docs.microsoft.com/en-us/graph/api/resources/intune-shared-devicecompliancepolicy?view=graph-rest-beta
@@ -288,7 +240,7 @@ class DeviceManagementIntuneClient extends GraphClient {
     });
   }
 
-  // TODO: useful for Office 365
-  //********************************************* OFFICE SETTINGS **********************************************/
+  //********** OFFICE SETTINGS **********/
   // https://config.office.com/api/OfficeSettings/policies
+  // Intune has special policies specifically for Office 365 that you need to query for in a different way. Not currently using.
 }
