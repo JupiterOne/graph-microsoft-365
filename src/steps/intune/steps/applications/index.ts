@@ -1,9 +1,8 @@
 import {
   Step,
   IntegrationStepExecutionContext,
-  createDirectRelationship,
-  JobState,
-  Entity,
+  createMappedRelationship,
+  RelationshipDirection,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../../../types';
 import {
@@ -13,11 +12,12 @@ import {
   steps,
 } from '../../constants';
 import {
-  createDetectedApplicationEntity,
-  createManagedApplicationEntity,
+  findNewestVersion,
+  mapDetectedApplicationEntityValues,
+  mapManagedApplicationEntityValues,
 } from './converters';
 import { DeviceManagementIntuneClient } from '../../clients/deviceManagementIntuneClient';
-import { DetectedApp } from '@microsoft/microsoft-graph-types-beta';
+import { DetectedApp, ManagedApp } from '@microsoft/microsoft-graph-types-beta';
 
 export async function fetchManagedApplications(
   executionContext: IntegrationStepContext,
@@ -28,10 +28,6 @@ export async function fetchManagedApplications(
     instance.config,
   );
   await intuneClient.iterateManagedApps(async (managedApp) => {
-    // Ingest all assigned or line of business apps reguardless if a device has installed it or not yet
-    const managedAppEntity = createManagedApplicationEntity(managedApp);
-    await jobState.addEntity(managedAppEntity);
-
     await intuneClient.iterateManagedAppDeviceStatuses(
       managedApp.id as string,
       async (deviceStatus) => {
@@ -47,15 +43,27 @@ export async function fetchManagedApplications(
         }
 
         await jobState.addRelationship(
-          createDirectRelationship({
+          createMappedRelationship({
+            _key: createManagedAppMappedRelationshipKey(
+              deviceEntity._key,
+              managedApp,
+            ),
             _class:
               relationships.MULTI_DEVICE_ASSIGNED_MANAGED_APPLICATION[0]._class,
-            from: deviceEntity,
-            to: managedAppEntity,
+            _mapping: {
+              relationshipDirection: RelationshipDirection.FORWARD,
+              sourceEntityKey: deviceEntity._key,
+              targetFilterKeys: [['name', '_class']],
+              targetEntity: mapManagedApplicationEntityValues(managedApp),
+            },
             properties: {
               installState: deviceStatus.installState, // Possible values are: installed, failed, notInstalled, uninstallFailed, pendingInstall, & unknown
               installStateDetail: deviceStatus.installStateDetail, // extra details on the install state. Ex: iosAppStoreUpdateFailedToInstall
               errorCode: deviceStatus.errorCode,
+              installedVersion:
+                managedApp.version ??
+                findNewestVersion(managedApp) ??
+                'unversioned',
             },
           }),
         );
@@ -82,21 +90,36 @@ export async function fetchDetectedApplications(
             deviceEntity.id as string,
             async ({ detectedApps }) => {
               for (const detectedApp of detectedApps ?? []) {
-                // Ingest all assigned or line of business apps reguardless if a device has installed it or not yet
-                const detectedAppEntity = await findOrCreateDetectedApplicationEntity(
-                  detectedApp,
-                  jobState,
-                );
-
-                await jobState.addRelationship(
-                  createDirectRelationship({
-                    _class:
-                      relationships.MULTI_DEVICE_HAS_DETECTED_APPLICATION[0]
-                        ._class,
-                    from: deviceEntity,
-                    to: detectedAppEntity,
-                  }),
-                );
+                try {
+                  await jobState.addRelationship(
+                    createMappedRelationship({
+                      _key: createDetectedAppMappedRelationshipKey(
+                        deviceEntity._key,
+                        detectedApp,
+                      ),
+                      _class:
+                        relationships.MULTI_DEVICE_HAS_DETECTED_APPLICATION[0]
+                          ._class,
+                      _mapping: {
+                        relationshipDirection: RelationshipDirection.FORWARD,
+                        sourceEntityKey: deviceEntity._key,
+                        targetFilterKeys: [['name', '_class']],
+                        targetEntity: mapDetectedApplicationEntityValues(
+                          detectedApp,
+                        ),
+                      },
+                      properties: {
+                        installState: 'installed',
+                        version: detectedApp.version ?? 'unversioned',
+                      },
+                    }),
+                  );
+                } catch (err) {
+                  // This happens when there are two instances of the same version of an app installed on a single device (it surprisingly does happen)
+                  if (err.code !== 'DUPLICATE_KEY_DETECTED') {
+                    throw err;
+                  }
+                }
               }
             },
           );
@@ -106,18 +129,32 @@ export async function fetchDetectedApplications(
   );
 }
 
-async function findOrCreateDetectedApplicationEntity(
+function createDetectedAppMappedRelationshipKey(
+  deviceKey: string,
   detectedApp: DetectedApp,
-  jobState: JobState,
-): Promise<Entity> {
-  let detectedAppEntity =
-    detectedApp.id && (await jobState.findEntity(detectedApp.id));
+): string {
+  const detectedAppDeviceRelationshipKey = `${deviceKey}|${relationships.MULTI_DEVICE_HAS_DETECTED_APPLICATION[0]._class.toLowerCase()}|FORWARD:name=${
+    detectedApp.displayName
+  }:_class=${entities.DETECTED_APPLICATION._class}`;
+  // Append the version onto the end so there can be multiple relationships for the same application
+  return (
+    detectedAppDeviceRelationshipKey + '|' + detectedApp.version ??
+    detectedApp.id
+  );
+}
 
-  if (!detectedAppEntity) {
-    detectedAppEntity = createDetectedApplicationEntity(detectedApp);
-    await jobState.addEntity(detectedAppEntity);
-  }
-  return detectedAppEntity;
+function createManagedAppMappedRelationshipKey(
+  deviceKey: string,
+  managedApp: ManagedApp,
+): string {
+  const managedAppDeviceRelationshipKey = `${deviceKey}|${relationships.MULTI_DEVICE_ASSIGNED_MANAGED_APPLICATION[0]._class.toLowerCase()}|FORWARD:name=${
+    managedApp.displayName
+  }:_class=${entities.MANAGED_APPLICATION._class}`;
+  // Append the version onto the end so there can be multiple relationships for the same application
+  return (
+    managedAppDeviceRelationshipKey + '|' + findNewestVersion(managedApp) ??
+    managedApp.id
+  );
 }
 
 export const applicationSteps: Step<
@@ -126,17 +163,17 @@ export const applicationSteps: Step<
   {
     id: steps.FETCH_MANAGED_APPLICATIONS,
     name: 'Managed Applications',
-    entities: [entities.MANAGED_APPLICATION],
-    relationships: [...relationships.MULTI_DEVICE_ASSIGNED_MANAGED_APPLICATION],
+    entities: [], // only mapped entities are created
+    relationships: [...relationships.MULTI_DEVICE_ASSIGNED_MANAGED_APPLICATION], // Relationships will be mapped, but leaving for documentation
     dependsOn: [steps.FETCH_DEVICES],
     executionHandler: fetchManagedApplications,
   },
   {
     id: steps.FETCH_DETECTED_APPLICATIONS,
     name: 'Detected Applications',
-    entities: [entities.DETECTED_APPLICATION],
-    relationships: [...relationships.MULTI_DEVICE_HAS_DETECTED_APPLICATION],
-    dependsOn: [steps.FETCH_DEVICES],
+    entities: [], // only mapped entities are created
+    relationships: [...relationships.MULTI_DEVICE_HAS_DETECTED_APPLICATION], // Relationships will be mapped, but leaving for documentation
+    dependsOn: [steps.FETCH_DEVICES, steps.FETCH_MANAGED_APPLICATIONS],
     executionHandler: fetchDetectedApplications,
   },
 ];

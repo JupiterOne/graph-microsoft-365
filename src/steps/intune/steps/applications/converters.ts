@@ -1,6 +1,5 @@
 import {
-  createIntegrationEntity,
-  Entity,
+  IntegrationEntityData,
   parseTimePropertyValue,
 } from '@jupiterone/integration-sdk-core';
 import {
@@ -16,68 +15,66 @@ import {
 import { entities } from '../../constants';
 
 // https://docs.microsoft.com/en-us/graph/api/resources/intune-shared-mobileapp?view=graph-rest-beta
-export function createManagedApplicationEntity(
+export function mapManagedApplicationEntityValues(
   managedApp: ManagedApp & { '@odata.type': string },
-): Entity {
-  return createIntegrationEntity({
-    entityData: {
-      source: managedApp,
-      assign: {
-        _class: entities.MANAGED_APPLICATION._class,
-        _type: entities.MANAGED_APPLICATION._type,
-        id: managedApp.id,
-        name: managedApp.displayName,
-        displayName: managedApp.displayName as string,
-        description: managedApp.description,
-        notes: managedApp.notes ? [managedApp.notes] : [],
-        COTS: !isLineOfBusiness(managedApp['@odata.type']),
-        external: !isLineOfBusiness(managedApp['@odata.type']),
-        mobile: isMobile(managedApp['@odata.type']),
-        productionURL:
-          (managedApp as WebApp).appUrl ??
-          (managedApp as AndroidManagedStoreApp).appStoreUrl,
-        publisher: managedApp.publisher,
-        isPublished: managedApp.publishingState === 'published', // Essentially if it is available for download
-        createdOn: parseTimePropertyValue(managedApp.createdDateTime),
-        lastUpdatedOn: parseTimePropertyValue(managedApp.lastModifiedDateTime),
-        featured: managedApp.isFeatured, // Indicates that they are featuring this app on their Company Portal
-        privacyInformationURL: managedApp.privacyInformationUrl,
-        informationURL: managedApp.informationUrl,
-        owner: managedApp.owner || undefined, // Ex: Microsoft, Google, Facebook...
-        developer: managedApp.developer, // Almost always the same as the owner
+): IntegrationEntityData['assign'] {
+  return {
+    _class: entities.MANAGED_APPLICATION._class,
+    _type: entities.MANAGED_APPLICATION._type,
+    id: managedApp.id,
+    name: managedApp.displayName?.toLowerCase(),
+    displayName: managedApp.displayName as string,
+    description: managedApp.description,
+    notes: managedApp.notes ? [managedApp.notes] : [],
+    COTS: !isLineOfBusiness(managedApp['@odata.type']),
+    external: !isLineOfBusiness(managedApp['@odata.type']),
+    mobile: isMobile(managedApp['@odata.type']),
+    productionURL:
+      (managedApp as WebApp).appUrl ??
+      (managedApp as AndroidManagedStoreApp).appStoreUrl,
+    publisher: managedApp.publisher,
+    isPublished: managedApp.publishingState === 'published', // Essentially if it is available for download
+    createdOn: parseTimePropertyValue(managedApp.createdDateTime),
+    lastUpdatedOn: parseTimePropertyValue(managedApp.lastModifiedDateTime),
+    featured: managedApp.isFeatured, // Indicates that they are featuring this app on their Company Portal
+    privacyInformationURL: managedApp.privacyInformationUrl,
+    informationURL: managedApp.informationUrl,
+    owner: managedApp.owner || undefined, // Ex: Microsoft, Google, Facebook...
+    developer: managedApp.developer, // Almost always the same as the owner
 
-        // Line of Business Apps
-        version:
-          (managedApp as WindowsPhoneXAP).identityVersion ??
-          (managedApp as AndroidLobApp).versionName ??
-          (managedApp as AndroidLobApp).versionCode ??
-          (managedApp as IosLobApp).versionNumber,
-        committedContentVersion: (managedApp as MobileLobApp)
-          .committedContentVersion,
-        packageId: (managedApp as AndroidLobApp).packageId,
-      },
-    },
-  });
+    // Line of Business Apps
+    newestVersion: findNewestVersion(managedApp),
+    committedContentVersion: (managedApp as MobileLobApp)
+      .committedContentVersion,
+    packageId: (managedApp as AndroidLobApp).packageId,
+  };
 }
 
 // https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-detectedapp?view=graph-rest-beta
-export function createDetectedApplicationEntity(
+export function mapDetectedApplicationEntityValues(
   detectedApp: DetectedApp,
-): Entity {
-  return createIntegrationEntity({
-    entityData: {
-      source: detectedApp,
-      assign: {
-        _class: entities.DETECTED_APPLICATION._class,
-        _type: entities.DETECTED_APPLICATION._type,
-        id: detectedApp.id,
-        name: detectedApp.displayName,
-        displayName: detectedApp.displayName as string,
-        version: detectedApp.version,
-        sizeInByte: detectedApp.sizeInByte,
-      },
-    },
-  });
+): IntegrationEntityData['assign'] {
+  return {
+    _class: entities.DETECTED_APPLICATION._class,
+    _type: entities.DETECTED_APPLICATION._type,
+    id: detectedApp.id,
+    name: detectedApp.displayName?.toLowerCase(),
+    displayName: detectedApp.displayName as string,
+    sizeInByte: detectedApp.sizeInByte,
+  };
+}
+
+export function findNewestVersion(
+  managedApp: ManagedApp & WindowsPhoneXAP & AndroidLobApp & IosLobApp,
+) {
+  return (
+    managedApp.identityVersion ??
+    managedApp.versionName ??
+    managedApp.versionCode ??
+    managedApp.versionNumber ??
+    managedApp.version ??
+    'unversioned'
+  );
 }
 
 /**

@@ -117,10 +117,8 @@ The following entities are created:
 | Resources             | Entity `_type`                 | Entity `_class`                  |
 | --------------------- | ------------------------------ | -------------------------------- |
 | Compliance Policy     | `intune_compliance_policy`     | `Configuration`, `ControlPolicy` |
-| Detected Application  | `intune_detected_application`  | `Application`                    |
 | Device Configuration  | `intune_device_configuration`  | `Configuration`, `ControlPolicy` |
 | Intune Host Agent     | `intune_host_agent`            | `HostAgent`                      |
-| Managed Application   | `intune_managed_application`   | `Application`                    |
 | Managed Device        | `user_endpoint`                | `Device`, `Host`                 |
 | Managed Device        | `workstation`                  | `Device`, `Host`                 |
 | Managed Device        | `laptop`                       | `Device`, `Host`                 |

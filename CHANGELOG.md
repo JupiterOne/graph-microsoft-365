@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- `intune_managed_application` and `intune_detected_application` entities to
+  mapped relationships. Multiple relationships may be created for each
+  application based on application name and version.
+
 ### Added
 
 - `mobileDeviceManagementAuthority`, `intuneSubscriptionState`, and
