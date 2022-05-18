@@ -1,8 +1,4 @@
-export function isRetryable(
-  err: any,
-  nextLink: string,
-  retries: number,
-): boolean {
+export function isRetryable(err: any, retries: number): boolean {
   const retryableErrorMessages = [
     'CompactToken parsing failed with error code: 80049217',
   ];
@@ -17,7 +13,6 @@ export function isRetryable(
   // retryable can be type boolean, "", or undefined
   return (
     retries < 5 &&
-    !!nextLink &&
     (retryableErrorMessages.includes(err.message) ||
       retryableStatusCodes.includes(err.statusCode))
   );

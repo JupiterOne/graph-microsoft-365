@@ -168,7 +168,7 @@ export class GraphClient {
           query,
         });
       } catch (err) {
-        if (isRetryable(err, nextLink, retries)) {
+        if (isRetryable(err, retries)) {
           retries++;
           continue;
         } else {

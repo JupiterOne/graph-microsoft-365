@@ -7,7 +7,7 @@ describe('#isRetryable', () => {
       statusCode: -1,
       statusText: 'FetchError',
     });
-    expect(isRetryable(err, 'dummy-link', 0)).toBe(true);
+    expect(isRetryable(err, 0)).toBe(true);
   });
 
   test('will retry 408 errors', () => {
@@ -16,7 +16,7 @@ describe('#isRetryable', () => {
     Object.assign(err, {
       statusCode: 408,
     });
-    expect(isRetryable(err, 'dummy-link', 0)).toBe(true);
+    expect(isRetryable(err, 0)).toBe(true);
   });
 
   test('will retry 500 errors', () => {
@@ -25,7 +25,7 @@ describe('#isRetryable', () => {
     Object.assign(err, {
       statusCode: 500,
     });
-    expect(isRetryable(err, 'dummy-link', 0)).toBe(true);
+    expect(isRetryable(err, 0)).toBe(true);
   });
 
   test('will retry 502 errors', () => {
@@ -35,7 +35,7 @@ describe('#isRetryable', () => {
       statusCode: 502,
     });
 
-    expect(isRetryable(err, 'dummy-link', 0)).toBe(true);
+    expect(isRetryable(err, 0)).toBe(true);
   });
 
   test('will retry compact token error', () => {
@@ -43,19 +43,7 @@ describe('#isRetryable', () => {
       'CompactToken parsing failed with error code: 80049217',
     );
 
-    expect(isRetryable(err, 'dummy-link', 0)).toBe(true);
-  });
-
-  test('will not retry if next link is empty', () => {
-    const err = new Error();
-
-    // assign a retryable code
-    Object.assign(err, {
-      statusCode: 502,
-    });
-
-    // but nextLink is empty so we shouldn't retry
-    expect(isRetryable(err, '', 0)).toBe(false);
+    expect(isRetryable(err, 0)).toBe(true);
   });
 
   test('will ot retry if already retried 5 times', () => {
@@ -66,6 +54,6 @@ describe('#isRetryable', () => {
     });
 
     // but we've already retried 5 times so we shouldn't retry
-    expect(isRetryable(err, '', 5)).toBe(false);
+    expect(isRetryable(err, 5)).toBe(false);
   });
 });
