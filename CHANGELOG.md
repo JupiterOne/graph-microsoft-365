@@ -8,6 +8,15 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.1.2 - 2022-05-19
+
+### Changed
+
+- Updated `APIClient` retry logic to include additional `statusCode`s. These
+  changes go towards reducing the impact of `FetchErrors` and other retryable
+  API responses that previously would have been thrown as
+  `IntegrationProviderAPIError`
+
 ## 6.1.1 - 2022-05-05
 
 ### Added
