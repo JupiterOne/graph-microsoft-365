@@ -1,4 +1,4 @@
-import { isRetryable } from './utils';
+import { isRetryable, retriesAvailable } from './utils';
 
 describe('#isRetryable', () => {
   test('will retry -1 Fetch Error', () => {
@@ -7,7 +7,7 @@ describe('#isRetryable', () => {
       statusCode: -1,
       statusText: 'FetchError',
     });
-    expect(isRetryable(err, 0)).toBe(true);
+    expect(isRetryable(err)).toBe(true);
   });
 
   test('will retry 400 Errors', () => {
@@ -16,7 +16,7 @@ describe('#isRetryable', () => {
     Object.assign(err, {
       statusCode: 400,
     });
-    expect(isRetryable(err, 0)).toBe(true);
+    expect(isRetryable(err)).toBe(true);
   });
 
   test('will retry 408 errors', () => {
@@ -25,7 +25,7 @@ describe('#isRetryable', () => {
     Object.assign(err, {
       statusCode: 408,
     });
-    expect(isRetryable(err, 0)).toBe(true);
+    expect(isRetryable(err)).toBe(true);
   });
 
   test('will retry 500 errors', () => {
@@ -34,7 +34,7 @@ describe('#isRetryable', () => {
     Object.assign(err, {
       statusCode: 500,
     });
-    expect(isRetryable(err, 0)).toBe(true);
+    expect(isRetryable(err)).toBe(true);
   });
 
   test('will retry 502 errors', () => {
@@ -44,7 +44,7 @@ describe('#isRetryable', () => {
       statusCode: 502,
     });
 
-    expect(isRetryable(err, 0)).toBe(true);
+    expect(isRetryable(err)).toBe(true);
   });
 
   test('will retry 503 errors', () => {
@@ -52,7 +52,7 @@ describe('#isRetryable', () => {
     Object.assign(err, {
       statusCode: 503,
     });
-    expect(isRetryable(err, 0)).toBe(true);
+    expect(isRetryable(err)).toBe(true);
   });
 
   test('will retry 504 erorrs', () => {
@@ -60,7 +60,7 @@ describe('#isRetryable', () => {
     Object.assign(err, {
       statusCode: 504,
     });
-    expect(isRetryable(err, 0)).toBe(true);
+    expect(isRetryable(err)).toBe(true);
   });
 
   test('will retry compact token error', () => {
@@ -68,17 +68,10 @@ describe('#isRetryable', () => {
       'CompactToken parsing failed with error code: 80049217',
     );
 
-    expect(isRetryable(err, 0)).toBe(true);
+    expect(isRetryable(err)).toBe(true);
   });
 
-  test('will ot retry if already retried 5 times', () => {
-    const err = new Error();
-    // we have a retryable status code
-    Object.assign(err, {
-      statusCode: 502,
-    });
-
-    // but we've already retried 5 times so we shouldn't retry
-    expect(isRetryable(err, 5)).toBe(false);
+  test('will not retry if already retried 5 times', () => {
+    expect(retriesAvailable(5)).toBe(false);
   });
 });

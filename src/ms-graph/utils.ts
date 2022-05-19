@@ -1,4 +1,4 @@
-export function isRetryable(err: any, retries: number): boolean {
+export function isRetryable(err: any): boolean {
   // -1 a `FetchError` (probably connection timeout)
   // 400 Bad Request
   // 408 Request Timeout
@@ -18,8 +18,11 @@ export function isRetryable(err: any, retries: number): boolean {
   };
 
   return (
-    retries < 5 &&
-    (isRetryableStatusCode(err.statusCode) ||
-      isRetryableErrorMessage(err.message))
+    isRetryableStatusCode(err.statusCode) ||
+    isRetryableErrorMessage(err.message)
   );
+}
+
+export function retriesAvailable(retries: number): boolean {
+  return retries < 5;
 }

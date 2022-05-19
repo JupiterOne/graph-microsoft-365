@@ -19,7 +19,7 @@ import 'isomorphic-unfetch';
 import { toArray } from '../utils/toArray';
 
 import { ClientConfig } from './types';
-import { isRetryable } from './utils';
+import { isRetryable, retriesAvailable } from './utils';
 
 export type QueryParams = string | { [key: string]: string | number };
 
@@ -168,19 +168,29 @@ export class GraphClient {
           query,
         });
       } catch (err) {
-        if (isRetryable(err, retries)) {
+        const errorLogInfo = {
+          endpoint: nextLink,
+          retries: retries,
+          statusCode: err.statusCode,
+          statusText: err.statusText,
+          errMessage: err.message,
+        };
+
+        if (retriesAvailable(retries) && isRetryable(err)) {
           this.logger.info(
-            {
-              retries: retries,
-              statusCode: err.statusCode,
-              statusText: err.statusText,
-              errMessage: err.message,
-            },
-            'Retryable error occurred during API call. Retrying...',
+            errorLogInfo,
+            'Retryable error occurred. Retrying...',
           );
+
           retries++;
           continue;
         } else {
+          if (!retriesAvailable(retries)) {
+            this.logger.error(errorLogInfo, 'Retry limit reached.');
+          } else {
+            this.logger.error(errorLogInfo, 'Non-retryable error occurred.');
+          }
+
           nextLink = undefined;
           this.handleApiError(err, resourceUrl);
         }
