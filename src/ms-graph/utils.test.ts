@@ -10,6 +10,15 @@ describe('#isRetryable', () => {
     expect(isRetryable(err, 0)).toBe(true);
   });
 
+  test('will retry 400 Errors', () => {
+    const err = new Error();
+
+    Object.assign(err, {
+      statusCode: 400,
+    });
+    expect(isRetryable(err, 0)).toBe(true);
+  });
+
   test('will retry 408 errors', () => {
     const err = new Error();
 
@@ -35,6 +44,22 @@ describe('#isRetryable', () => {
       statusCode: 502,
     });
 
+    expect(isRetryable(err, 0)).toBe(true);
+  });
+
+  test('will retry 503 errors', () => {
+    const err = new Error();
+    Object.assign(err, {
+      statusCode: 503,
+    });
+    expect(isRetryable(err, 0)).toBe(true);
+  });
+
+  test('will retry 504 erorrs', () => {
+    const err = new Error();
+    Object.assign(err, {
+      statusCode: 504,
+    });
     expect(isRetryable(err, 0)).toBe(true);
   });
 

@@ -169,6 +169,15 @@ export class GraphClient {
         });
       } catch (err) {
         if (isRetryable(err, retries)) {
+          this.logger.info(
+            {
+              retries: retries,
+              statusCode: err.statusCode,
+              statusText: err.statusText,
+              errMessage: err.message,
+            },
+            'Retryable error occurred during API call. Retrying...',
+          );
           retries++;
           continue;
         } else {
