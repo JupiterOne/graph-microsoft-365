@@ -8,6 +8,12 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.1.3 - 2022-05-20
+
+### Changed
+
+- Updated error message logging for client
+
 ## 6.1.2 - 2022-05-19
 
 ### Changed
