@@ -168,12 +168,15 @@ export class GraphClient {
           query,
         });
       } catch (err) {
+        const errMessage =
+          typeof err.message === 'string' ? err.message : err.message?.Message;
+
         const errorLogInfo = {
           endpoint: nextLink,
           retries: retries,
           statusCode: err.statusCode,
           statusText: err.statusText,
-          errMessage: err.message,
+          errMessage: errMessage,
         };
 
         if (retriesAvailable(retries) && isRetryable(err)) {
