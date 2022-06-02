@@ -85,28 +85,28 @@ If you need help with this integration, please contact
 ## Permissions
 
 1. `DeviceManagementApps.Read.All`
-    1. Read Microsoft Intune apps
-    1. Needed for creating `Application` entities
+   1. Read Microsoft Intune apps
+   1. Needed for creating `Application` entities
 1. `DeviceManagementConfiguration.Read.All`
-    1. Read Microsoft Intune device configuration and policies
-    1. Needed for creating `Configuration` and `ControlPolicy` entities
+   1. Read Microsoft Intune device configuration and policies
+   1. Needed for creating `Configuration` and `ControlPolicy` entities
 1. `DeviceManagementManagedDevices.Read.All`
-    1. Read Microsoft Intune devices
-    1. Needed for creating `Device` and `HostAgent` entities
+   1. Read Microsoft Intune devices
+   1. Needed for creating `Device` and `HostAgent` entities
 1. `Organization.Read.All`
-    1. Read organization information
-    1. Needed for creating the `Account` entity
+   1. Read organization information
+   1. Needed for creating the `Account` entity
 1. `APIConnectors.Read.All`
-    1. Read API connectors for authentication flows
-    1. Needed for enriching the `Account` entity with Intune subscription
-       infomation
+   1. Read API connectors for authentication flows
+   1. Needed for enriching the `Account` entity with Intune subscription
+      infomation
 1. `DeviceManagementServiceConfig.Read.All`
-    1. Read Microsoft Intune configuration
-    1. Also needed for enriching the `Account` entity with Intune subscription
-       infomation
+   1. Read Microsoft Intune configuration
+   1. Also needed for enriching the `Account` entity with Intune subscription
+      infomation
 1. `Directory.Read.All`
-    1. Read directory data
-    1. Needed for creating `User`, `Group`, and `GroupUser` entities
+   1. Read directory data
+   1. Needed for creating `User`, `Group`, and `GroupUser` entities
 
 ## How to Uninstall
 
