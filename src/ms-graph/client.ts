@@ -19,12 +19,19 @@ import 'isomorphic-unfetch';
 import { toArray } from '../utils/toArray';
 
 import { ClientConfig } from './types';
+import { isRetryable, retriesAvailable } from './utils';
 
 export type QueryParams = string | { [key: string]: string | number };
 
 interface GraphClientResponse<T> {
   value: T[];
   '@odata.nextLink'?: string;
+}
+
+interface ExecuteIterationParams<T> {
+  resourceUrl: string;
+  query?: QueryParams;
+  callback: (each: T) => Promise<void> | void;
 }
 
 /**
@@ -138,22 +145,19 @@ export class GraphClient {
       this.handleApiError(error, url);
     }
   }
-
   // Not using PageIterator because it doesn't allow async callback
   /**
    * Iterate resources. 401 Unauthorized, 403 Forbidden, and 404 Not Found
    * responses are considered empty collections. Other API errors will be
    * thrown.
    */
-  protected async iterateResources<T>({
+  public async iterateResources<T>({
     resourceUrl,
     query,
     callback,
-  }: {
-    resourceUrl: string;
-    query?: QueryParams;
-    callback: (item: T) => void | Promise<void>;
-  }): Promise<void> {
+  }: ExecuteIterationParams<T>) {
+    // unless the caller passes an empty string
+    // nextLink should also be truthy the first run
     let nextLink: string | undefined = resourceUrl;
     let retries = 0;
     let response: GraphClientResponse<T> | undefined;
@@ -164,20 +168,37 @@ export class GraphClient {
           query,
         });
       } catch (err) {
-        if (
-          err.message ===
-            'CompactToken parsing failed with error code: 80049217' &&
-          nextLink &&
-          retries < 5
-        ) {
-          // Retry a few times to handle sporatic timing issue with this sdk - https://github.com/OneDrive/onedrive-api-docs/issues/785
+        const errMessage =
+          typeof err.message === 'string' ? err.message : err.message?.Message;
+
+        const errorLogInfo = {
+          endpoint: nextLink,
+          retries: retries,
+          statusCode: err.statusCode,
+          statusText: err.statusText,
+          errMessage: errMessage,
+        };
+
+        if (retriesAvailable(retries) && isRetryable(err)) {
+          this.logger.info(
+            errorLogInfo,
+            'Retryable error occurred. Retrying...',
+          );
+
           retries++;
           continue;
         } else {
+          if (!retriesAvailable(retries)) {
+            this.logger.error(errorLogInfo, 'Retry limit reached.');
+          } else {
+            this.logger.error(errorLogInfo, 'Non-retryable error occurred.');
+          }
+
           nextLink = undefined;
           this.handleApiError(err, resourceUrl);
         }
       }
+
       if (response) {
         for (const value of response.value) {
           await callback(value);
