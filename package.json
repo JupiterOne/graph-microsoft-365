@@ -26,6 +26,7 @@
     "prepush": "yarn format:check && yarn lint && yarn type-check && jest --changedSince main",
     "graph:spec": "j1-integration visualize-types --project-path docs/spec --output-file ./.j1-integration/types-graph/index.spec.html",
     "graph:types": "j1-integration visualize-types",
+    "graph:dependencies": "j1-integration visualize-dependencies",
     "validate:questions": "j1-integration validate-question-file -a $MANAGED_QUESTIONS_JUPITERONE_ACCOUNT_ID -k $MANAGED_QUESTIONS_JUPITERONE_API_KEY",
     "validate:questions:dry": "j1-integration validate-question-file --dry-run"
   },
@@ -40,9 +41,9 @@
   },
   "devDependencies": {
     "@jupiterone/integration-sdk-cli": "^8.10.1",
-    "@jupiterone/integration-sdk-core": "^8.10.1",
-    "@jupiterone/integration-sdk-dev-tools": "^8.10.1",
-    "@jupiterone/integration-sdk-testing": "^8.10.1",
+    "@jupiterone/integration-sdk-core": "^8.14.0",
+    "@jupiterone/integration-sdk-dev-tools": "^8.14.0",
+    "@jupiterone/integration-sdk-testing": "^8.14.0",
     "@microsoft/microsoft-graph-types": "^1.28.0",
     "@microsoft/microsoft-graph-types-beta": "microsoftgraph/msgraph-typescript-typings#beta",
     "@types/node": "^14"
