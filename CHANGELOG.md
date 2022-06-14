@@ -8,6 +8,13 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.1.4 - 2022-06-14
+
+## Changed
+
+- Updated SDK Dependency to `8.14.0`
+- Added `graph:dependencies` command
+
 ## 6.1.3 - 2022-05-20
 
 ### Changed
