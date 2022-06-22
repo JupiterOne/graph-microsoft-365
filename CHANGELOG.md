@@ -8,9 +8,16 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.2.0 - 2022-06-22
+
+### Added
+
+- `macAddress`, `ipAddress`, `hostname`, and `ethernetMacAddress` properties
+  added to managed device entities ("Host", "Device").
+
 ## 6.1.4 - 2022-06-14
 
-## Changed
+### Changed
 
 - Updated SDK Dependency to `8.14.0`
 - Added `graph:dependencies` command
