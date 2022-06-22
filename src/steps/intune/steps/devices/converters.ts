@@ -24,6 +24,13 @@ export function createManagedDeviceEntity(
   if (isPhysicalDevice) {
     _class.push('Device');
   }
+  const macAddress: string[] = [];
+  if (managedDevice.wiFiMacAddress) {
+    macAddress.push(managedDevice.wiFiMacAddress);
+  }
+  if (managedDevice.ethernetMacAddress) {
+    macAddress.push(managedDevice.ethernetMacAddress);
+  }
   return createIntegrationEntity({
     entityData: {
       source: {}, // removed due to size
@@ -55,11 +62,15 @@ export function createManagedDeviceEntity(
           managedDevice.serialNumber,
         hardwareVersion:
           managedDevice.hardwareInformation?.model ?? managedDevice.model,
+        hostname: managedDevice.deviceName,
         meid: managedDevice.meid, // A mobile equipment identifier (MEID) is a globally unique number identifying a physical piece of CDMA2000 mobile station equipment
         imei: managedDevice.imei, // The International Mobile Equipment Identity (IMEI) is a number, usually unique, to identify 3GPP and iDEN mobile phones, as well as some satellite phones.
         iccid: managedDevice.iccid, // Every SIM card has a ICCID number, which stands for Integrated Circuit Card Identifier
         udid: managedDevice.udid, // UDID is an acronym for Unique Device Identifier.
         wifiMacAddress: managedDevice.wiFiMacAddress, // To communicate with a Wi-Fi network, a device must identify itself to the network using a unique network address called a Media Access Control (MAC) address
+        ethernetMacAddress: managedDevice.ethernetMacAddress,
+        macAddress,
+        ipAddress: managedDevice.hardwareInformation?.ipAddressV4 ?? undefined,
         easDeviceId: managedDevice.easActivated && managedDevice.easDeviceId, // Microsoft Exchange ActiveSync device identifier
         assetTag:
           managedDevice.azureActiveDirectoryDeviceId ??
