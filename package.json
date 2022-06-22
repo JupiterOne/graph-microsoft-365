@@ -37,12 +37,12 @@
     "lodash": "^4.17.20"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.14.0"
+    "@jupiterone/integration-sdk-core": "^8.15.0"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.14.0",
-    "@jupiterone/integration-sdk-dev-tools": "^8.14.0",
-    "@jupiterone/integration-sdk-testing": "^8.14.0",
+    "@jupiterone/integration-sdk-core": "^8.15.0",
+    "@jupiterone/integration-sdk-dev-tools": "^8.15.0",
+    "@jupiterone/integration-sdk-testing": "^8.15.0",
     "@microsoft/microsoft-graph-types": "^1.28.0",
     "@microsoft/microsoft-graph-types-beta": "microsoftgraph/msgraph-typescript-typings#beta",
     "@types/node": "^14"

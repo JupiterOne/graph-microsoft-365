@@ -70,7 +70,7 @@ export function createManagedDeviceEntity(
         wifiMacAddress: managedDevice.wiFiMacAddress, // To communicate with a Wi-Fi network, a device must identify itself to the network using a unique network address called a Media Access Control (MAC) address
         ethernetMacAddress: managedDevice.ethernetMacAddress,
         macAddress,
-        ipAddress: managedDevice.hardwareInformation?.ipAddressV4,
+        ipAddress: managedDevice.hardwareInformation?.ipAddressV4 ?? undefined,
         easDeviceId: managedDevice.easActivated && managedDevice.easDeviceId, // Microsoft Exchange ActiveSync device identifier
         assetTag:
           managedDevice.azureActiveDirectoryDeviceId ??
