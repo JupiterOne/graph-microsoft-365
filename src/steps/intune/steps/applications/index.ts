@@ -4,7 +4,6 @@ import {
   createDirectRelationship,
   JobState,
   Entity,
-  IntegrationLogger,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../../../types';
 import {
