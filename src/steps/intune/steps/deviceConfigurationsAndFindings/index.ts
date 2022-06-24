@@ -69,7 +69,7 @@ export async function fetchDeviceConfigurationsAndFindings(
               '|' +
               deviceConfigurationEntity._key;
 
-            if (await jobState.hasKey(hostAssignedDeviceKey)) {
+            if (jobState.hasKey(hostAssignedDeviceKey)) {
               logger.warn(
                 {
                   deviceStatusId: deviceStatus.id,
@@ -103,7 +103,7 @@ export async function fetchDeviceConfigurationsAndFindings(
             // Only create findings if they are open
             if (findingIsOpen(deviceStatus.status, logger) !== false) {
               const noncomplianceFindingKey = deviceStatus.id;
-              if (await jobState.hasKey(noncomplianceFindingKey!)) {
+              if (jobState.hasKey(noncomplianceFindingKey!)) {
                 logger.warn(
                   {
                     deviceStatusId: deviceStatus.id,

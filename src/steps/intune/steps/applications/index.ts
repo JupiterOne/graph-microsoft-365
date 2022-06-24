@@ -23,16 +23,23 @@ import {
 import { DeviceManagementIntuneClient } from '../../clients/deviceManagementIntuneClient';
 import { DetectedApp } from '@microsoft/microsoft-graph-types-beta';
 
-export async function fetchManagedApplications(
-  executionContext: IntegrationStepContext,
-): Promise<void> {
-  const { logger, instance, jobState } = executionContext;
+export async function fetchManagedApplications({
+  logger,
+  instance,
+  jobState,
+}: IntegrationStepContext): Promise<void> {
   const intuneClient = new DeviceManagementIntuneClient(
     logger,
     instance.config,
   );
+
+  let duplicateKeysCount = 0;
+
   await intuneClient.iterateManagedApps(async (managedApp) => {
     // Ingest all assigned or line of business apps reguardless if a device has installed it or not yet
+    // TODO: This should probably be broken into two steps. One to iterate
+    // the managedApps and one to iterate the managedappdevicestatuses and build
+    // relationships. The overhead for reading local data is very low
     const managedAppEntity = createManagedApplicationEntity(managedApp);
     await jobState.addEntity(managedAppEntity);
 
@@ -56,16 +63,9 @@ export async function fetchManagedApplications(
           deviceEntity._key +
           '|' +
           managedAppEntity._key;
-        if (await jobState.hasKey(deviceAssignedAppKey)) {
-          logger.warn(
-            {
-              deviceStatusId: deviceStatus.id,
-              deviceId: deviceStatus.deviceId,
-              managedAppId: managedApp.id,
-              deviceAssignedAppKey,
-            },
-            'Possible duplicate deviceAssignedAppKey',
-          );
+
+        if (jobState.hasKey(deviceAssignedAppKey)) {
+          duplicateKeysCount++;
         } else {
           await jobState.addRelationship(
             createDirectRelationship({
@@ -88,6 +88,12 @@ export async function fetchManagedApplications(
       },
     );
   });
+  if (duplicateKeysCount) {
+    logger.warn(
+      { duplicateKeysCount },
+      'Duplicate keys encountered in managed-applications step.',
+    );
+  }
 }
 
 type DebugParams = {
@@ -117,23 +123,9 @@ export async function fetchDetectedApplications(
     instance.config,
   );
 
-  const deviceEntityIdSet = new Set<string>();
-
   for (const type of managedDeviceTypes) {
     await jobState.iterateEntities({ _type: type }, async (deviceEntity) => {
       const deviceEntityId = deviceEntity.id as string;
-
-      if (deviceEntityIdSet.has(deviceEntityId)) {
-        debug({
-          logger,
-          args: {
-            deviceEntityId,
-          },
-          msg: 'Found duplicate device entity ID',
-        });
-      } else {
-        deviceEntityIdSet.add(deviceEntityId);
-      }
 
       await intuneClient.iterateDetectedApps(
         deviceEntityId,
@@ -153,7 +145,7 @@ export async function fetchDetectedApplications(
                 detectedApp,
               });
 
-            if (await jobState.hasKey(deviceInstalledRelationship._key)) {
+            if (jobState.hasKey(deviceInstalledRelationship._key)) {
               logger.warn(
                 {
                   relationshipKey: deviceInstalledRelationship._key,
