@@ -96,18 +96,6 @@ export async function fetchManagedApplications({
   }
 }
 
-type DebugParams = {
-  logger: IntegrationLogger;
-  args: Record<string, any>;
-  msg: string;
-};
-
-function debug({ logger, args, msg }: DebugParams) {
-  if (process.env.DEBUG_APPLICATIONS) {
-    logger.info(args, msg);
-  }
-}
-
 /**
  * Creates a single `Application { _type: 'intune_detected_application' }` entity generated
  * for each `Application.displayName`. All `Device` entities which have an app installed with
@@ -123,6 +111,7 @@ export async function fetchDetectedApplications(
     instance.config,
   );
 
+  let duplicateKeysCount = 0;
   for (const type of managedDeviceTypes) {
     await jobState.iterateEntities({ _type: type }, async (deviceEntity) => {
       const deviceEntityId = deviceEntity.id as string;
@@ -146,55 +135,20 @@ export async function fetchDetectedApplications(
               });
 
             if (jobState.hasKey(deviceInstalledRelationship._key)) {
-              logger.warn(
-                {
-                  relationshipKey: deviceInstalledRelationship._key,
-                  deviceKey: deviceEntity._key,
-                  detectedAppEntityKey: detectedAppEntity._key,
-                  detectedAppId: detectedApp.id,
-                  relationshipClass:
-                    relationships.MULTI_DEVICE_INSTALLED_DETECTED_APPLICATION[0]
-                      ._class,
-                },
-                'Possible duplicate deviceInstalledDetectedApp Key',
-              );
+              duplicateKeysCount++;
             } else {
               await jobState.addRelationship(deviceInstalledRelationship);
             }
-            // TODO create managed -> detected relationships
-            // // If there is a managed application related to this, create a MANAGES relationship
-            // let managedAppEntity;
-            // if (detectedApp.displayName?.toLowerCase) {
-            //   managedAppEntity = await jobState.findEntity(
-            //     MANAGED_APP_KEY_PREFIX + detectedApp.displayName?.toLowerCase(),
-            //   );
-            // }
-            // if (managedAppEntity) {
-            //   const managedAppManagesDetectedAppKey = generateRelationshipKey(
-            //     RelationshipClass.MANAGES,
-            //     managedAppEntity,
-            //     detectedAppEntity,
-            //   );
-            //   if (!(await jobState.hasKey(managedAppManagesDetectedAppKey))) {
-            //     await jobState.addRelationship(
-            //       createDirectRelationship({
-            //         _class:
-            //           relationships
-            //             .MANAGED_APPLICATION_MANAGES_DETECTED_APPLICATION
-            //             ._class,
-            //         from: managedAppEntity,
-            //         to: detectedAppEntity,
-            //         properties: {
-            //           _key: managedAppManagesDetectedAppKey,
-            //         },
-            //       }),
-            //     );
-            //   }
-            // }
           }
         },
       );
     });
+  }
+  if (duplicateKeysCount) {
+    logger.warn(
+      { duplicateKeysCount },
+      'Duplicate keys encountered in managed-applications step.',
+    );
   }
 }
 
@@ -232,9 +186,8 @@ export const applicationSteps: Step<
     entities: [entities.DETECTED_APPLICATION],
     relationships: [
       ...relationships.MULTI_DEVICE_INSTALLED_DETECTED_APPLICATION,
-      // relationships.MANAGED_APPLICATION_MANAGES_DETECTED_APPLICATION,
     ],
-    dependsOn: [steps.FETCH_DEVICES, steps.FETCH_MANAGED_APPLICATIONS],
+    dependsOn: [steps.FETCH_DEVICES],
     executionHandler: fetchDetectedApplications,
   },
 ];
