@@ -15,6 +15,29 @@ import { entities as activeDirectoryEntities } from '../../../active-directory';
 import { entities, INTUNE_HOST_AGENT_KEY_PREFIX } from '../../constants';
 import { ManagedDeviceType, relationships } from '../../constants';
 
+export function normalizeMacAddress(macAddress: string): string {
+  // A macAddress that is length 12 should be normalized and lowercased
+  // A macAddress not of length 12 should just be lowercased
+  // (e.g. 11AA22BB33CC can be normalized, but 11:AA)
+  if (macAddress.length !== 12) {
+    return macAddress.toLowerCase();
+  }
+
+  let normalizedMacAddress =
+    macAddress.slice(0, 2) +
+    ':' +
+    macAddress.slice(2, 4) +
+    ':' +
+    macAddress.slice(4, 6) +
+    ':' +
+    macAddress.slice(6, 8) +
+    ':' +
+    macAddress.slice(8, 10) +
+    ':' +
+    macAddress.slice(10, 12);
+  return normalizedMacAddress.toLowerCase();
+}
+
 // https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-manageddevice?view=graph-rest-1.0&viewFallbackFrom=graph-rest-beta
 export function createManagedDeviceEntity(
   managedDevice: ManagedDevice,
