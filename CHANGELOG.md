@@ -8,6 +8,14 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.2.1 - 2022-06-25
+
+### Changed
+
+- Add default timeout to MS365 requests
+- Remove unnecessary step dependency
+- Remove use of async `jobState.hasKey`
+
 ## 6.2.0 - 2022-06-22
 
 ### Added
