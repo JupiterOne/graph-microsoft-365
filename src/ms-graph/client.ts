@@ -48,6 +48,9 @@ export class GraphClient {
   ) {
     this.client = Client.initWithMiddleware({
       authProvider: new GraphAuthenticationProvider(config),
+      fetchOptions: {
+        timeout: 10000,
+      },
     });
   }
 
@@ -169,6 +172,7 @@ export class GraphClient {
         });
       } catch (err) {
         const errorLogInfo = {
+          err,
           endpoint: nextLink,
           retries: retries,
           statusCode: err.statusCode,

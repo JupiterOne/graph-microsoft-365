@@ -68,7 +68,7 @@ export async function fetchCompliancePolicyAndFindings(
             compliancePolicyEntity,
           );
 
-          if (await jobState.hasKey(hostAgentAssignedCompliancePolicyKey)) {
+          if (jobState.hasKey(hostAgentAssignedCompliancePolicyKey)) {
             logger.warn(
               {
                 deviceStatusId: deviceStatus.id,
@@ -102,7 +102,7 @@ export async function fetchCompliancePolicyAndFindings(
           // Only create findings if they are open
           if (findingIsOpen(deviceStatus.status, logger) !== false) {
             const noncomplianceFindingKey = deviceStatus.id;
-            if (await jobState.hasKey(noncomplianceFindingKey!)) {
+            if (jobState.hasKey(noncomplianceFindingKey!)) {
               logger.warn(
                 {
                   deviceStatusId: deviceStatus.id,

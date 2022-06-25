@@ -4,7 +4,6 @@ import {
   createDirectRelationship,
   JobState,
   Entity,
-  IntegrationLogger,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig, IntegrationStepContext } from '../../../../types';
 import {
@@ -23,16 +22,24 @@ import {
 import { DeviceManagementIntuneClient } from '../../clients/deviceManagementIntuneClient';
 import { DetectedApp } from '@microsoft/microsoft-graph-types-beta';
 
-export async function fetchManagedApplications(
-  executionContext: IntegrationStepContext,
-): Promise<void> {
-  const { logger, instance, jobState } = executionContext;
+export async function fetchManagedApplications({
+  logger,
+  instance,
+  jobState,
+}: IntegrationStepContext): Promise<void> {
   const intuneClient = new DeviceManagementIntuneClient(
     logger,
     instance.config,
   );
+
+  let duplicateKeysCount = 0;
+  logger.info('Starting to fetch managed applications...');
+
   await intuneClient.iterateManagedApps(async (managedApp) => {
     // Ingest all assigned or line of business apps reguardless if a device has installed it or not yet
+    // TODO: This should probably be broken into two steps. One to iterate
+    // the managedApps and one to iterate the managedappdevicestatuses and build
+    // relationships. The overhead for reading local data is very low
     const managedAppEntity = createManagedApplicationEntity(managedApp);
     await jobState.addEntity(managedAppEntity);
 
@@ -56,16 +63,9 @@ export async function fetchManagedApplications(
           deviceEntity._key +
           '|' +
           managedAppEntity._key;
-        if (await jobState.hasKey(deviceAssignedAppKey)) {
-          logger.warn(
-            {
-              deviceStatusId: deviceStatus.id,
-              deviceId: deviceStatus.deviceId,
-              managedAppId: managedApp.id,
-              deviceAssignedAppKey,
-            },
-            'Possible duplicate deviceAssignedAppKey',
-          );
+
+        if (jobState.hasKey(deviceAssignedAppKey)) {
+          duplicateKeysCount++;
         } else {
           await jobState.addRelationship(
             createDirectRelationship({
@@ -88,18 +88,15 @@ export async function fetchManagedApplications(
       },
     );
   });
-}
 
-type DebugParams = {
-  logger: IntegrationLogger;
-  args: Record<string, any>;
-  msg: string;
-};
-
-function debug({ logger, args, msg }: DebugParams) {
-  if (process.env.DEBUG_APPLICATIONS) {
-    logger.info(args, msg);
+  if (duplicateKeysCount) {
+    logger.warn(
+      { duplicateKeysCount },
+      'Duplicate keys encountered in managed-applications step.',
+    );
   }
+
+  logger.info('Completed fetching managed applications');
 }
 
 /**
@@ -117,23 +114,10 @@ export async function fetchDetectedApplications(
     instance.config,
   );
 
-  const deviceEntityIdSet = new Set<string>();
-
+  let duplicateKeysCount = 0;
   for (const type of managedDeviceTypes) {
     await jobState.iterateEntities({ _type: type }, async (deviceEntity) => {
       const deviceEntityId = deviceEntity.id as string;
-
-      if (deviceEntityIdSet.has(deviceEntityId)) {
-        debug({
-          logger,
-          args: {
-            deviceEntityId,
-          },
-          msg: 'Found duplicate device entity ID',
-        });
-      } else {
-        deviceEntityIdSet.add(deviceEntityId);
-      }
 
       await intuneClient.iterateDetectedApps(
         deviceEntityId,
@@ -153,56 +137,21 @@ export async function fetchDetectedApplications(
                 detectedApp,
               });
 
-            if (await jobState.hasKey(deviceInstalledRelationship._key)) {
-              logger.warn(
-                {
-                  relationshipKey: deviceInstalledRelationship._key,
-                  deviceKey: deviceEntity._key,
-                  detectedAppEntityKey: detectedAppEntity._key,
-                  detectedAppId: detectedApp.id,
-                  relationshipClass:
-                    relationships.MULTI_DEVICE_INSTALLED_DETECTED_APPLICATION[0]
-                      ._class,
-                },
-                'Possible duplicate deviceInstalledDetectedApp Key',
-              );
+            if (jobState.hasKey(deviceInstalledRelationship._key)) {
+              duplicateKeysCount++;
             } else {
               await jobState.addRelationship(deviceInstalledRelationship);
             }
-            // TODO create managed -> detected relationships
-            // // If there is a managed application related to this, create a MANAGES relationship
-            // let managedAppEntity;
-            // if (detectedApp.displayName?.toLowerCase) {
-            //   managedAppEntity = await jobState.findEntity(
-            //     MANAGED_APP_KEY_PREFIX + detectedApp.displayName?.toLowerCase(),
-            //   );
-            // }
-            // if (managedAppEntity) {
-            //   const managedAppManagesDetectedAppKey = generateRelationshipKey(
-            //     RelationshipClass.MANAGES,
-            //     managedAppEntity,
-            //     detectedAppEntity,
-            //   );
-            //   if (!(await jobState.hasKey(managedAppManagesDetectedAppKey))) {
-            //     await jobState.addRelationship(
-            //       createDirectRelationship({
-            //         _class:
-            //           relationships
-            //             .MANAGED_APPLICATION_MANAGES_DETECTED_APPLICATION
-            //             ._class,
-            //         from: managedAppEntity,
-            //         to: detectedAppEntity,
-            //         properties: {
-            //           _key: managedAppManagesDetectedAppKey,
-            //         },
-            //       }),
-            //     );
-            //   }
-            // }
           }
         },
       );
     });
+  }
+  if (duplicateKeysCount) {
+    logger.warn(
+      { duplicateKeysCount },
+      'Duplicate keys encountered in managed-applications step.',
+    );
   }
 }
 
@@ -240,9 +189,8 @@ export const applicationSteps: Step<
     entities: [entities.DETECTED_APPLICATION],
     relationships: [
       ...relationships.MULTI_DEVICE_INSTALLED_DETECTED_APPLICATION,
-      // relationships.MANAGED_APPLICATION_MANAGES_DETECTED_APPLICATION,
     ],
-    dependsOn: [steps.FETCH_DEVICES, steps.FETCH_MANAGED_APPLICATIONS],
+    dependsOn: [steps.FETCH_DEVICES],
     executionHandler: fetchDetectedApplications,
   },
 ];
