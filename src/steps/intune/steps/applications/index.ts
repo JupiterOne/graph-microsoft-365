@@ -33,6 +33,7 @@ export async function fetchManagedApplications({
   );
 
   let duplicateKeysCount = 0;
+  logger.info('Starting to fetch managed applications...');
 
   await intuneClient.iterateManagedApps(async (managedApp) => {
     // Ingest all assigned or line of business apps reguardless if a device has installed it or not yet
@@ -87,12 +88,15 @@ export async function fetchManagedApplications({
       },
     );
   });
+
   if (duplicateKeysCount) {
     logger.warn(
       { duplicateKeysCount },
       'Duplicate keys encountered in managed-applications step.',
     );
   }
+
+  logger.info('Completed fetching managed applications');
 }
 
 /**
