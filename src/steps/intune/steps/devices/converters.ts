@@ -23,7 +23,7 @@ export function normalizeMacAddress(macAddress: string): string {
     return macAddress.toLowerCase();
   }
 
-  let normalizedMacAddress =
+  const normalizedMacAddress =
     macAddress.slice(0, 2) +
     ':' +
     macAddress.slice(2, 4) +
@@ -49,10 +49,16 @@ export function createManagedDeviceEntity(
   }
   const macAddress: string[] = [];
   if (managedDevice.wiFiMacAddress) {
-    macAddress.push(managedDevice.wiFiMacAddress);
+    const normalizedMacAddress = normalizeMacAddress(
+      managedDevice.wiFiMacAddress,
+    );
+    macAddress.push(normalizedMacAddress);
   }
   if (managedDevice.ethernetMacAddress) {
-    macAddress.push(managedDevice.ethernetMacAddress);
+    const normalizedMacAddress = normalizeMacAddress(
+      managedDevice.ethernetMacAddress,
+    );
+    macAddress.push(normalizedMacAddress);
   }
   return createIntegrationEntity({
     entityData: {
