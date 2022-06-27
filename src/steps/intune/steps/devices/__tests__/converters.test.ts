@@ -1,5 +1,5 @@
 import { DeviceType } from '@microsoft/microsoft-graph-types-beta';
-import { selectDeviceType } from '../converters';
+import { normalizeMacAddress, selectDeviceType } from '../converters';
 
 describe('selectDeviceType', () => {
   test('if a device is not physical, it should be typed as a server', () => {
@@ -18,5 +18,18 @@ describe('selectDeviceType', () => {
 
   test('windowsRT device type should be a user_endpoint', () => {
     expect(selectDeviceType('windowsRT', true)).toBe('user_endpoint');
+  });
+});
+
+describe('#normalizeMacAddress', () => {
+  test('macAddress is normalized', () => {
+    const macAddress = '001122AABBCC';
+    const expected = '00:11:22:aa:bb:cc';
+    expect(normalizeMacAddress(macAddress)).toBe(expected);
+  });
+  test('lowercases macAddress that are not length 12', () => {
+    const macAddress = '00:11:22:AA:BB:CC';
+    const expected = '00:11:22:aa:bb:cc';
+    expect(normalizeMacAddress(macAddress)).toBe(expected);
   });
 });

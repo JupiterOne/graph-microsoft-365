@@ -107,7 +107,7 @@ Array [
     "ipAddress": undefined,
     "jailBroken": false,
     "macAddress": Array [
-      "[REDACTED]",
+      "[redacted]",
     ],
     "make": "Apple",
     "managed": true,
@@ -164,7 +164,7 @@ Array [
     "ipAddress": undefined,
     "jailBroken": true,
     "macAddress": Array [
-      "[REDACTED]",
+      "[redacted]",
     ],
     "make": "Apple",
     "managed": true,
@@ -319,7 +319,7 @@ Array [
     "ipAddress": undefined,
     "jailBroken": false,
     "macAddress": Array [
-      "[REDACTED]",
+      "[redacted]",
     ],
     "make": "Apple",
     "managed": true,
@@ -376,7 +376,7 @@ Array [
     "ipAddress": undefined,
     "jailBroken": true,
     "macAddress": Array [
-      "[REDACTED]",
+      "[redacted]",
     ],
     "make": "Apple",
     "managed": true,
