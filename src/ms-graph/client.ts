@@ -49,7 +49,7 @@ export class GraphClient {
     this.client = Client.initWithMiddleware({
       authProvider: new GraphAuthenticationProvider(config),
       fetchOptions: {
-        timeout: 10000,
+        timeout: 30000,
       },
     });
   }
