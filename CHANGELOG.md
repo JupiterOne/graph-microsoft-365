@@ -8,6 +8,13 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.3.0 - 2022-06-27
+
+### Changed
+
+- `macAddress` properties on managed devices are now normalized to a
+  `aa:bb:cc:11:22:33` format
+
 ## 6.2.1 - 2022-06-25
 
 ### Changed
