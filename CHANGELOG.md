@@ -8,6 +8,12 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.3.1 - 2022-06-28
+
+### Changed
+
+- Increased client timeout to 30s
+
 ## 6.3.0 - 2022-06-27
 
 ### Changed
