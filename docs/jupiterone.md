@@ -1,4 +1,4 @@
-# Microsoft 365 Integration with JupiterOne
+# Microsoft 365
 
 JupiterOne provides a managed integration for Microsoft 365. The integration
 connects directly to Microsoft Graph APIs to obtain metadata about the target
