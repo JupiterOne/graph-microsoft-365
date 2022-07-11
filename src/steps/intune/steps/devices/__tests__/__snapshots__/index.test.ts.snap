@@ -162,7 +162,7 @@ Array [
     "id": "1f75329e-51fc-451c-bd40-c457337641a4",
     "imei": "",
     "ipAddress": undefined,
-    "jailBroken": true,
+    "jailBroken": undefined,
     "macAddress": Array [
       "[redacted]",
     ],
@@ -374,7 +374,7 @@ Array [
     "id": "1f75329e-51fc-451c-bd40-c457337641a4",
     "imei": "",
     "ipAddress": undefined,
-    "jailBroken": true,
+    "jailBroken": undefined,
     "macAddress": Array [
       "[redacted]",
     ],
