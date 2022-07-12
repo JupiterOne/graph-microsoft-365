@@ -120,7 +120,10 @@ export function createManagedDeviceEntity(
           managedDevice.managementState &&
           managedDevice.managementState !== 'discovered',
         supervised: managedDevice.isSupervised,
-        jailBroken: managedDevice.jailBroken !== 'False',
+        jailBroken:
+          managedDevice.jailBroken === 'Unknown'
+            ? undefined
+            : managedDevice.jailBroken !== 'False',
         username: managedDevice.userPrincipalName,
         physical: isPhysicalDevice,
         // Used to map HOSTAGENT to user_endpoint via user_endpoint's udid
