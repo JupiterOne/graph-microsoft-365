@@ -8,6 +8,13 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.3.2 - 2022-07-12
+
+### Fixed
+
+- Integraiton no longer sets `jailBroken` to `true` when response from API is
+  `"jailBroken": "Unknown"`. It is now set to undefined.
+
 ## 6.3.1 - 2022-06-28
 
 ### Changed
