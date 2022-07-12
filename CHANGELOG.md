@@ -12,7 +12,7 @@ and this project adheres to
 
 ### Fixed
 
-- Integraiton no longer sets `jailBroken` to `true` when response from API is
+- Integration no longer sets `jailBroken` to `true` when response from API is
   `"jailBroken": "Unknown"`. It is now set to undefined.
 
 ## 6.3.1 - 2022-06-28
