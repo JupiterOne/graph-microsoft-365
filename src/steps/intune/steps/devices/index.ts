@@ -3,7 +3,7 @@ import {
   IntegrationStepExecutionContext,
   Step,
 } from '@jupiterone/integration-sdk-core';
-import { IntegrationConfig, IntegrationStepContext } from '../../../../types';
+import { IntegrationConfig } from '../../../../types';
 import { steps as activeDirectorySteps } from '../../../active-directory';
 import { DeviceManagementIntuneClient } from '../../clients/deviceManagementIntuneClient';
 import { relationships, entities, steps } from '../../constants';
@@ -19,17 +19,18 @@ import {
  * need to be modeled as seperate entities as devices may be shared between multiple integrations
  * where the Intune host agent is unique to this integration.
  */
-export async function fetchDevices(
-  executionContext: IntegrationStepContext,
-): Promise<void> {
-  const { logger, instance, jobState } = executionContext;
+export async function fetchDevices({
+  logger,
+  instance,
+  jobState,
+}: IntegrationStepExecutionContext<IntegrationConfig>): Promise<void> {
   const intuneClient = new DeviceManagementIntuneClient(
     logger,
     instance.config,
   );
 
   await intuneClient.iterateManagedDevices(async (device) => {
-    const deviceEntity = createManagedDeviceEntity(device);
+    const deviceEntity = createManagedDeviceEntity(device, instance.config);
     await jobState.addEntity(deviceEntity);
     const userEntity = await jobState.findEntity(device.userId as string);
     const userDeviceRelationship = userEntity
