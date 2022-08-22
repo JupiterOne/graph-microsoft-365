@@ -8,6 +8,12 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.3.3 - 2022-08-22
+
+### Added
+
+- added option to enable raw data for managed devices
+
 ## 6.3.2 - 2022-07-12
 
 ### Fixed
