@@ -11,6 +11,7 @@ import {
   DeviceType,
   ManagedDevice,
 } from '@microsoft/microsoft-graph-types-beta';
+import { IntegrationConfig } from '../../../../types';
 import { entities as activeDirectoryEntities } from '../../../active-directory';
 import { entities, INTUNE_HOST_AGENT_KEY_PREFIX } from '../../constants';
 import { ManagedDeviceType, relationships } from '../../constants';
@@ -41,6 +42,7 @@ export function normalizeMacAddress(macAddress: string): string {
 // https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-manageddevice?view=graph-rest-1.0&viewFallbackFrom=graph-rest-beta
 export function createManagedDeviceEntity(
   managedDevice: ManagedDevice,
+  config: IntegrationConfig,
 ): Entity {
   const isPhysicalDevice = isPhysical(managedDevice);
   const _class = ['Host'];
@@ -60,9 +62,10 @@ export function createManagedDeviceEntity(
     );
     macAddress.push(normalizedMacAddress);
   }
+
   return createIntegrationEntity({
     entityData: {
-      source: {}, // removed due to size
+      source: config.enableRawData ? managedDevice : {},
       assign: {
         _class,
         _type: selectDeviceType(managedDevice.deviceType, isPhysicalDevice),
