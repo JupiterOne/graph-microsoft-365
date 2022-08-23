@@ -37,13 +37,15 @@ export async function fetchDevices({
       // user who is logged on to the device
       const userEntity = userId ? await jobState.findEntity(userId) : undefined;
       if (userEntity) {
-        await jobState.addRelationship(
-          createDirectRelationship({
-            from: userEntity,
-            to: deviceEntity,
-            _class: RelationshipClass.USES,
-          }),
-        );
+        const userUsesRelationship = createDirectRelationship({
+          from: userEntity,
+          to: deviceEntity,
+          _class: RelationshipClass.USES,
+        });
+
+        if (!jobState.hasKey(userUsesRelationship._key)) {
+          await jobState.addRelationship(userUsesRelationship);
+        }
       }
     }
 
