@@ -8,6 +8,12 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.4.1 - 2022-08-23
+
+### Fixed
+
+- Check for duplicate `user_uses_{device}` relationships before adding them.
+
 ## 6.4.0 - 2022-08-23
 
 ### Added
