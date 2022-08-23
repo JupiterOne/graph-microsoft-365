@@ -8,6 +8,12 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.4.0 - 2022-08-23
+
+### Added
+
+- Added `azure_user_uses_{device_type}` relationship
+
 ## 6.3.3 - 2022-08-22
 
 ### Added
