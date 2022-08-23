@@ -1,6 +1,7 @@
 import {
   createDirectRelationship,
   IntegrationStepExecutionContext,
+  RelationshipClass,
   Step,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig } from '../../../../types';
@@ -32,6 +33,21 @@ export async function fetchDevices({
   await intuneClient.iterateManagedDevices(async (device) => {
     const deviceEntity = createManagedDeviceEntity(device, instance.config);
     await jobState.addEntity(deviceEntity);
+    for (const { userId } of device.usersLoggedOn ?? []) {
+      // user who is logged on to the device
+      const userEntity = userId ? await jobState.findEntity(userId) : undefined;
+      if (userEntity) {
+        await jobState.addRelationship(
+          createDirectRelationship({
+            from: userEntity,
+            to: deviceEntity,
+            _class: RelationshipClass.USES,
+          }),
+        );
+      }
+    }
+
+    // User who enrolled/registered device
     const userEntity = await jobState.findEntity(device.userId as string);
     const userDeviceRelationship = userEntity
       ? createDirectRelationship({
@@ -70,6 +86,7 @@ export const deviceSteps: Step<
     relationships: [
       ...relationships.MULTI_USER_HAS_DEVICE,
       ...relationships.MULTI_HOST_AGENT_MANAGES_DEVICE,
+      ...relationships.MULTI_USER_USES_DEVICE,
     ],
     dependsOn: [activeDirectorySteps.FETCH_USERS],
     executionHandler: fetchDevices,

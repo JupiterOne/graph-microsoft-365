@@ -106,6 +106,10 @@ export const relationships = {
     sourceType: activeDirectoryEntities.USER._type,
     _class: RelationshipClass.HAS,
   }),
+  MULTI_USER_USES_DEVICE: createRelationshipForAllDeviceTypes({
+    sourceType: activeDirectoryEntities.USER._type,
+    _class: RelationshipClass.USES,
+  }),
   MULTI_HOST_AGENT_MANAGES_DEVICE: createRelationshipForAllDeviceTypes({
     sourceType: entities.HOST_AGENT._type,
     _class: RelationshipClass.MANAGES,
