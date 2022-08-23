@@ -38,8 +38,8 @@ describe('fetchDevices', () => {
       context.jobState.collectedRelationships.filter((r) =>
         managedDeviceTypes.some((type) => r._type.includes(type)),
       );
-    const userRelationships = managedDeviceRelationships.filter((r) =>
-      r._type.includes(activeDirectoryEntities.USER._type),
+    const userHasRelationships = managedDeviceRelationships.filter((r) =>
+      r._type.includes(activeDirectoryEntities.USER._type + '_has'),
     );
     const nonUserRelationships = managedDeviceRelationships.filter(
       (r) => !r._type.includes(activeDirectoryEntities.USER._type),
@@ -63,8 +63,8 @@ describe('fetchDevices', () => {
     expect(hostAgents).toMatchSnapshot('hostAgents'); // intentionally the same snapshot as in the 'With Active Directory' test below
 
     // Check that user relationships are mapped
-    expect(userRelationships.length).toBeGreaterThan(0);
-    userRelationships.forEach((r) =>
+    expect(userHasRelationships.length).toBeGreaterThan(0);
+    userHasRelationships.forEach((r) =>
       expect(r).toMatchObject({
         _mapping: expect.any(Object),
       }),
@@ -106,8 +106,12 @@ describe('fetchDevices', () => {
       context.jobState.collectedRelationships.filter((r) =>
         managedDeviceTypes.some((type) => r._type.includes(type)),
       );
-    const userRelationships = managedDeviceRelationships.filter((r) =>
-      r._type.includes(activeDirectoryEntities.USER._type),
+    const userHasRelationships = managedDeviceRelationships.filter((r) =>
+      r._type.includes(activeDirectoryEntities.USER._type + '_has'),
+    );
+
+    const userUsesRelationships = managedDeviceRelationships.filter((r) =>
+      r._type.includes(activeDirectoryEntities.USER._type + '_uses'),
     );
     const nonUserRelationships = managedDeviceRelationships.filter(
       (r) => !r._type.includes(activeDirectoryEntities.USER._type),
@@ -131,8 +135,12 @@ describe('fetchDevices', () => {
     expect(hostAgents).toMatchSnapshot('hostAgents'); // intentionally the same snapshot as in the 'Without Active Directory' test above
 
     // Check that user relationships are direct
-    expect(userRelationships.length).toBeGreaterThan(0);
-    expect(userRelationships).toMatchDirectRelationshipSchema({});
+    expect(userHasRelationships.length).toBeGreaterThan(0);
+    expect(userHasRelationships).toMatchDirectRelationshipSchema({});
+
+    // User uses relationships are present
+    expect(userUsesRelationships.length).toBeGreaterThan(0);
+
     // Check that the remaining relationships are with host agents
     expect(nonUserRelationships.length).toBeGreaterThan(0);
     nonUserRelationships.forEach((r) =>

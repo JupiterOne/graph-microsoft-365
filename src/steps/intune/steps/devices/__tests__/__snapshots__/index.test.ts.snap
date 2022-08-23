@@ -48,6 +48,14 @@ Array [
 exports[`fetchDevices With Active Directory: managedDeviceRelationshipsWithAD 1`] = `
 Array [
   Object {
+    "_class": "USES",
+    "_fromEntityKey": "001d35fc-dd2b-4d17-9ffc-3bafa265e7d9",
+    "_key": "001d35fc-dd2b-4d17-9ffc-3bafa265e7d9|uses|683dbff1-c8ff-4996-91ae-85484de46cfc",
+    "_toEntityKey": "683dbff1-c8ff-4996-91ae-85484de46cfc",
+    "_type": "azure_user_uses_smartphone",
+    "displayName": "USES",
+  },
+  Object {
     "_class": "HAS",
     "_fromEntityKey": "001d35fc-dd2b-4d17-9ffc-3bafa265e7d9",
     "_key": "001d35fc-dd2b-4d17-9ffc-3bafa265e7d9|has|683dbff1-c8ff-4996-91ae-85484de46cfc",

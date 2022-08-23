@@ -180,6 +180,13 @@ The following relationships are created:
 | `azure_user`                  | **HAS**               | `smartphone`                   |
 | `azure_user`                  | **HAS**               | `user_endpoint`                |
 | `azure_user`                  | **HAS**               | `workstation`                  |
+| `azure_user`                  | **USES**              | `computer`                     |
+| `azure_user`                  | **USES**              | `desktop`                      |
+| `azure_user`                  | **USES**              | `laptop`                       |
+| `azure_user`                  | **USES**              | `server`                       |
+| `azure_user`                  | **USES**              | `smartphone`                   |
+| `azure_user`                  | **USES**              | `user_endpoint`                |
+| `azure_user`                  | **USES**              | `workstation`                  |
 | `computer`                    | **ASSIGNED**          | `intune_managed_application`   |
 | `computer`                    | **HAS**               | `intune_noncompliance_finding` |
 | `computer`                    | **INSTALLED**         | `intune_detected_application`  |
