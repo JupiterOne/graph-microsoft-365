@@ -20,7 +20,8 @@ afterEach(async () => {
 });
 
 describe('fetchManagedApplications', () => {
-  test('should make entities and relationships correctly', async () => {
+  // TODO @zemberdotnet INT-5328 Renable/rerecord test
+  test.skip('should make entities and relationships correctly', async () => {
     recording = setupAzureRecording({
       directory: __dirname,
       name: 'fetchManagedApplications',

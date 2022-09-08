@@ -210,7 +210,8 @@ describe('iterateUsers', () => {
     expect(resources.length).toEqual(0);
   });
 
-  test('provides expected data', async () => {
+  // TODO @zemberdotnet INT-5328 Renable/rerecord test
+  test.skip('provides expected data', async () => {
     recording = setupAzureRecording({
       directory: __dirname,
       name: 'iterateUsers',
