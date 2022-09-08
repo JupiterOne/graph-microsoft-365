@@ -8,6 +8,10 @@ and this project adheres to
 
 ## Unreleased
 
+### Changed
+
+- Set page size to `999` for managed apps and users.
+
 ## 6.4.1 - 2022-08-23
 
 ### Fixed
