@@ -78,6 +78,10 @@ export class DirectoryGraphClient extends GraphClient {
   public async iterateUsers(
     callback: (user: User) => void | Promise<void>,
   ): Promise<void> {
-    return this.iterateResources({ resourceUrl: '/users', callback });
+    return this.iterateResources({
+      resourceUrl: '/users',
+      query: { $top: '999' },
+      callback,
+    });
   }
 }

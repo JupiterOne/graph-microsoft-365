@@ -49,7 +49,7 @@ export class GraphClient {
     this.client = Client.initWithMiddleware({
       authProvider: new GraphAuthenticationProvider(config),
       fetchOptions: {
-        timeout: 30000,
+        timeout: 45000,
       },
     });
   }
@@ -200,6 +200,13 @@ export class GraphClient {
       }
 
       if (response) {
+        this.logger.info(
+          {
+            resourceUrl,
+            responseObjectsCount: response.value.length,
+          },
+          'response received from api',
+        );
         for (const value of response.value) {
           await callback(value);
         }

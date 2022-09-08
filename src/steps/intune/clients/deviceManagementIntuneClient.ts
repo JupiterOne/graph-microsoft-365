@@ -84,6 +84,7 @@ export class DeviceManagementIntuneClient extends GraphClient {
     return this.iterateResources({
       resourceUrl: `https://graph.microsoft.com/beta/deviceAppManagement/mobileApps`,
       query: {
+        $top: '999',
         $filter: `(isAssigned eq true or microsoft.graph.managedApp/appAvailability eq 'lineOfBusiness' or microsoft.graph.managedApp/appAvailability eq null)`,
       },
       callback,
