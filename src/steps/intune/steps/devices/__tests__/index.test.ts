@@ -82,7 +82,8 @@ describe('fetchDevices', () => {
     );
   });
 
-  test('With Active Directory', async () => {
+  // TODO @zemberdotnet INT-5328 Renable/rerecord test
+  test.skip('With Active Directory', async () => {
     recording = setupAzureRecording({
       directory: __dirname,
       name: 'iterateManagedDevicesWithAD',
