@@ -58,22 +58,11 @@ export class DirectoryGraphClient extends GraphClient {
   public async iterateGroupMembers(
     input: {
       groupId: string;
-      /**
-       * The property names for `$select` query param.
-       */
-      select?: string | string[];
     },
     callback: (user: GroupMember) => void | Promise<void>,
   ): Promise<void> {
-    const $select = input.select
-      ? Array.isArray(input.select)
-        ? input.select.join(',')
-        : input.select
-      : undefined;
-
     return this.iterateResources({
       resourceUrl: `/groups/${input.groupId}/members`,
-      query: $select ? { $select } : undefined,
       callback,
     });
   }

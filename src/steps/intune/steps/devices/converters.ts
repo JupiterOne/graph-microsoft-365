@@ -12,7 +12,7 @@ import {
   ManagedDevice,
 } from '@microsoft/microsoft-graph-types-beta';
 import { IntegrationConfig } from '../../../../types';
-import { entities as activeDirectoryEntities } from '../../../active-directory';
+import { Entities as ActiveDirectoryEntities } from '../../../active-directory';
 import { entities, INTUNE_HOST_AGENT_KEY_PREFIX } from '../../constants';
 import { ManagedDeviceType, relationships } from '../../constants';
 
@@ -261,8 +261,8 @@ export function createUserDeviceMappedRelationship(
             ['_class', 'email'],
           ],
           targetEntity: {
-            _class: activeDirectoryEntities.USER._class,
-            _type: activeDirectoryEntities.USER._type,
+            _class: ActiveDirectoryEntities.USER._class,
+            _type: ActiveDirectoryEntities.USER._type,
             _key: userId,
             id: userId,
             email: email,
