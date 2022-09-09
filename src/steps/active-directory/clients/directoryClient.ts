@@ -47,7 +47,11 @@ export class DirectoryGraphClient extends GraphClient {
   public async iterateGroups(
     callback: (user: Group) => void | Promise<void>,
   ): Promise<void> {
-    return this.iterateResources({ resourceUrl: '/groups', callback });
+    return this.iterateResources({
+      resourceUrl: '/groups',
+      query: { $top: '999' },
+      callback,
+    });
   }
 
   // https://docs.microsoft.com/en-us/graph/api/group-list-members?view=graph-rest-1.0&tabs=http
