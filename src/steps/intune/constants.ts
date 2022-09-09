@@ -3,7 +3,7 @@ import {
   IntegrationError,
   RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
-import { entities as activeDirectoryEntities } from '../active-directory';
+import { Entities as ActiveDirectoryEntities } from '../active-directory';
 
 export const steps = {
   FETCH_DEVICES: 'managed-devices',
@@ -103,11 +103,11 @@ function createRelationshipForAllDeviceTypes(relationshipMetadata: {
 
 export const relationships = {
   MULTI_USER_HAS_DEVICE: createRelationshipForAllDeviceTypes({
-    sourceType: activeDirectoryEntities.USER._type,
+    sourceType: ActiveDirectoryEntities.USER._type,
     _class: RelationshipClass.HAS,
   }),
   MULTI_USER_USES_DEVICE: createRelationshipForAllDeviceTypes({
-    sourceType: activeDirectoryEntities.USER._type,
+    sourceType: ActiveDirectoryEntities.USER._type,
     _class: RelationshipClass.USES,
   }),
   MULTI_HOST_AGENT_MANAGES_DEVICE: createRelationshipForAllDeviceTypes({

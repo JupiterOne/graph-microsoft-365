@@ -16,7 +16,7 @@ export interface IntegrationConfig extends IntegrationInstanceConfig {
   clientId: string;
 
   /**
-   * The Azuser application client secret used to authenticate requests.
+   * The Azure application client secret used to authenticate requests.
    */
   clientSecret: string;
 

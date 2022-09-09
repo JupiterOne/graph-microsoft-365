@@ -397,7 +397,7 @@ and this project adheres to
 
 ### Fixed
 
-- Sporatic authentication bug with Microsoft Graph sdk.
+- Sporadic authentication bug with Microsoft Graph sdk.
 
 ## 1.0.1 - 2020-02-10
 

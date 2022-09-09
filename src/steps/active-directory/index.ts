@@ -8,8 +8,8 @@ import { IntegrationConfig, IntegrationStepContext } from '../../types';
 import { DirectoryGraphClient } from './clients/directoryClient';
 import {
   DATA_ACCOUNT_ENTITY,
-  entities,
-  relationships,
+  Entities,
+  Relationships,
   steps,
 } from './constants';
 import {
@@ -96,7 +96,7 @@ export async function fetchGroupMembers(
   const graphClient = new DirectoryGraphClient(logger, instance.config);
 
   await jobState.iterateEntities(
-    { _type: entities.GROUP._type },
+    { _type: Entities.GROUP._type },
     async (groupEntity) => {
       await graphClient.iterateGroupMembers(
         { groupId: groupEntity.id as string },
@@ -116,34 +116,34 @@ export const activeDirectorySteps: Step<
   {
     id: steps.FETCH_ACCOUNT,
     name: 'Active Directory Info',
-    entities: [entities.ACCOUNT],
+    entities: [Entities.ACCOUNT],
     relationships: [],
     executionHandler: fetchAccount,
   },
   {
     id: steps.FETCH_USERS,
     name: 'Active Directory Users',
-    entities: [entities.USER],
-    relationships: [relationships.ACCOUNT_HAS_USER],
+    entities: [Entities.USER],
+    relationships: [Relationships.ACCOUNT_HAS_USER],
     dependsOn: [steps.FETCH_ACCOUNT],
     executionHandler: fetchUsers,
   },
   {
     id: steps.FETCH_GROUPS,
     name: 'Active Directory Groups',
-    entities: [entities.GROUP],
-    relationships: [relationships.ACCOUNT_HAS_GROUP],
+    entities: [Entities.GROUP],
+    relationships: [Relationships.ACCOUNT_HAS_GROUP],
     dependsOn: [steps.FETCH_ACCOUNT],
     executionHandler: fetchGroups,
   },
   {
     id: steps.FETCH_GROUP_MEMBERS,
     name: 'Active Directory Group Members',
-    entities: [entities.GROUP_MEMEBER],
+    entities: [Entities.GROUP_MEMBER],
     relationships: [
-      relationships.GROUP_HAS_USER,
-      relationships.GROUP_HAS_GROUP,
-      relationships.GROUP_HAS_MEMBER,
+      Relationships.GROUP_HAS_USER,
+      Relationships.GROUP_HAS_GROUP,
+      Relationships.GROUP_HAS_MEMBER,
     ],
     dependsOn: [steps.FETCH_GROUPS],
     executionHandler: fetchGroupMembers,

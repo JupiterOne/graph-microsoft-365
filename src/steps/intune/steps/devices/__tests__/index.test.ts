@@ -7,7 +7,7 @@ import { config } from '../../../../../../test/config';
 import { fetchDevices } from '..';
 import { entities, managedDeviceTypes } from '../../../constants';
 import { DATA_ACCOUNT_ENTITY, fetchUsers } from '../../../../active-directory';
-import { entities as activeDirectoryEntities } from '../../../../active-directory';
+import { Entities as ActiveDirectoryEntities } from '../../../../active-directory';
 import { createAccountEntity } from '../../../../active-directory/converters';
 
 let recording: Recording;
@@ -39,10 +39,10 @@ describe('fetchDevices', () => {
         managedDeviceTypes.some((type) => r._type.includes(type)),
       );
     const userHasRelationships = managedDeviceRelationships.filter((r) =>
-      r._type.includes(activeDirectoryEntities.USER._type + '_has'),
+      r._type.includes(ActiveDirectoryEntities.USER._type + '_has'),
     );
     const nonUserRelationships = managedDeviceRelationships.filter(
-      (r) => !r._type.includes(activeDirectoryEntities.USER._type),
+      (r) => !r._type.includes(ActiveDirectoryEntities.USER._type),
     );
 
     // Check that we have devices
@@ -108,14 +108,14 @@ describe('fetchDevices', () => {
         managedDeviceTypes.some((type) => r._type.includes(type)),
       );
     const userHasRelationships = managedDeviceRelationships.filter((r) =>
-      r._type.includes(activeDirectoryEntities.USER._type + '_has'),
+      r._type.includes(ActiveDirectoryEntities.USER._type + '_has'),
     );
 
     const userUsesRelationships = managedDeviceRelationships.filter((r) =>
-      r._type.includes(activeDirectoryEntities.USER._type + '_uses'),
+      r._type.includes(ActiveDirectoryEntities.USER._type + '_uses'),
     );
     const nonUserRelationships = managedDeviceRelationships.filter(
-      (r) => !r._type.includes(activeDirectoryEntities.USER._type),
+      (r) => !r._type.includes(ActiveDirectoryEntities.USER._type),
     );
 
     // Check that we have devices

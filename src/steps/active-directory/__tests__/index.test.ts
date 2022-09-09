@@ -2,7 +2,7 @@ import {
   createMockStepExecutionContext,
   Recording,
 } from '@jupiterone/integration-sdk-testing';
-import { entities, fetchAccount } from '..';
+import { Entities, fetchAccount } from '..';
 import {
   config,
   insufficientPermissionsDirectoryConfig,
@@ -31,7 +31,7 @@ describe('fetchAccount', () => {
 
     expect(accountEntities.length).toBe(1);
     expect(accountEntities).toMatchGraphObjectSchema({
-      _class: entities.ACCOUNT._class,
+      _class: Entities.ACCOUNT._class,
     });
     expect(accountEntities).toMatchSnapshot('accountEntitiesSuccessful');
   });
@@ -70,7 +70,7 @@ describe('fetchAccount', () => {
 
     expect(accountEntities.length).toBe(1);
     expect(accountEntities).toMatchGraphObjectSchema({
-      _class: entities.ACCOUNT._class,
+      _class: Entities.ACCOUNT._class,
     });
     expect(accountEntities).toMatchSnapshot('accountEntitiesNoMdm');
   });

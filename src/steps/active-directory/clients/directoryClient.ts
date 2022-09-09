@@ -47,29 +47,22 @@ export class DirectoryGraphClient extends GraphClient {
   public async iterateGroups(
     callback: (user: Group) => void | Promise<void>,
   ): Promise<void> {
-    return this.iterateResources({ resourceUrl: '/groups', callback });
+    return this.iterateResources({
+      resourceUrl: '/groups',
+      query: { $top: '999' },
+      callback,
+    });
   }
 
   // https://docs.microsoft.com/en-us/graph/api/group-list-members?view=graph-rest-1.0&tabs=http
   public async iterateGroupMembers(
     input: {
       groupId: string;
-      /**
-       * The property names for `$select` query param.
-       */
-      select?: string | string[];
     },
     callback: (user: GroupMember) => void | Promise<void>,
   ): Promise<void> {
-    const $select = input.select
-      ? Array.isArray(input.select)
-        ? input.select.join(',')
-        : input.select
-      : undefined;
-
     return this.iterateResources({
       resourceUrl: `/groups/${input.groupId}/members`,
-      query: $select ? { $select } : undefined,
       callback,
     });
   }

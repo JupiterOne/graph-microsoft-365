@@ -2,26 +2,26 @@ import {
   createIntegrationEntity,
   createDirectRelationship,
   Entity,
-  getTime,
   IntegrationInstance,
   Relationship,
   RelationshipDirection,
   RelationshipClass,
   createMappedRelationship,
+  parseTimePropertyValue,
 } from '@jupiterone/integration-sdk-core';
 import { Group, Organization, User } from '@microsoft/microsoft-graph-types';
 
 import { GroupMember, MemberType } from './clients/directoryClient';
-import { entities, relationships } from './constants';
+import { Entities, Relationships } from './constants';
 
 export function createAccountEntity(instance: IntegrationInstance): Entity {
   return createIntegrationEntity({
     entityData: {
       source: {},
       assign: {
-        _class: entities.ACCOUNT._class,
-        _key: `${entities.ACCOUNT._type}-${instance.id}`,
-        _type: entities.ACCOUNT._type,
+        _class: Entities.ACCOUNT._class,
+        _key: `${Entities.ACCOUNT._type}-${instance.id}`,
+        _type: Entities.ACCOUNT._type,
         name: instance.name,
         displayName: instance.name,
       },
@@ -53,9 +53,9 @@ export function createAccountEntityWithOrganization(
         intuneConfig,
       },
       assign: {
-        _class: entities.ACCOUNT._class,
-        _key: `${entities.ACCOUNT._type}-${instance.id}`,
-        _type: entities.ACCOUNT._type,
+        _class: Entities.ACCOUNT._class,
+        _key: `${Entities.ACCOUNT._type}-${instance.id}`,
+        _type: Entities.ACCOUNT._type,
         id: organization.id,
         name: organization.displayName,
         displayName: instance.name,
@@ -76,21 +76,21 @@ export function createGroupEntity(data: Group): Entity {
     entityData: {
       source: {}, // removed due to size
       assign: {
-        _class: entities.GROUP._class,
-        _type: entities.GROUP._type,
+        _class: Entities.GROUP._class,
+        _type: Entities.GROUP._type,
         _key: data.id!,
         name: data.displayName,
         displayName: data.displayName as string | undefined,
         id: data.id,
-        deletedOn: getTime(data.deletedDateTime),
+        deletedOn: parseTimePropertyValue(data.deletedDateTime),
         classification: data.classification,
-        createdOn: getTime(data.createdDateTime),
+        createdOn: parseTimePropertyValue(data.createdDateTime),
         description: data.description,
         email: data.mailEnabled ? data.mail : undefined,
         mail: data.mailEnabled ? data.mail : undefined,
         mailEnabled: data.mailEnabled,
         mailNickname: data.mailNickname,
-        renewedOn: getTime(data.renewedDateTime),
+        renewedOn: parseTimePropertyValue(data.renewedDateTime),
         securityEnabled: data.securityEnabled,
       },
     },
@@ -107,8 +107,8 @@ export function createUserEntity(data: User): Entity {
       source: {}, // removed due to size
       assign: {
         _key: generateUserKey(data),
-        _class: entities.USER._class,
-        _type: entities.USER._type,
+        _class: Entities.USER._class,
+        _type: Entities.USER._type,
         name: data.displayName,
         username: data.userPrincipalName,
         displayName: data.displayName as string | undefined,
@@ -135,8 +135,8 @@ export function createOrganizationEntity(data: Organization): Entity {
       source: data,
       assign: {
         _key: data.id!,
-        _class: entities.ORGANIZATION._class,
-        _type: entities.ORGANIZATION._type,
+        _class: Entities.ORGANIZATION._class,
+        _type: Entities.ORGANIZATION._type,
         website: data.verifiedDomains?.map((domain) => domain.name).join(', '),
         emailDomain: data.verifiedDomains
           ?.filter((domain) => domain.capabilities?.includes('Email'))
@@ -155,11 +155,11 @@ export function createAccountGroupRelationship(
   return createDirectRelationship({
     _class: RelationshipClass.HAS,
     fromKey: account._key,
-    fromType: entities.ACCOUNT._type,
+    fromType: Entities.ACCOUNT._type,
     toKey: group.id as string,
-    toType: entities.GROUP._type,
+    toType: Entities.GROUP._type,
     properties: {
-      _type: relationships.ACCOUNT_HAS_GROUP._type,
+      _type: Relationships.ACCOUNT_HAS_GROUP._type,
     },
   });
 }
@@ -184,7 +184,7 @@ export function createGroupMemberRelationship(
 
   return createMappedRelationship({
     _class: RelationshipClass.HAS,
-    _type: relationships.GROUP_HAS_MEMBER._type,
+    _type: Relationships.GROUP_HAS_MEMBER._type,
     _mapping: {
       relationshipDirection: RelationshipDirection.FORWARD,
       sourceEntityKey: group._key,
@@ -209,21 +209,21 @@ export function createGroupMemberRelationship(
 function getGroupMemberEntityType(member: GroupMember): string {
   switch (member['@odata.type']) {
     case MemberType.USER:
-      return entities.USER._type;
+      return Entities.USER._type;
     case MemberType.GROUP:
-      return entities.GROUP._type;
+      return Entities.GROUP._type;
     default:
-      return entities.GROUP_MEMEBER._type;
+      return Entities.GROUP_MEMBER._type;
   }
 }
 
 function getGroupMemberEntityClass(member: GroupMember): string | string[] {
   switch (member['@odata.type']) {
     case MemberType.USER:
-      return entities.USER._class;
+      return Entities.USER._class;
     case MemberType.GROUP:
-      return entities.GROUP._class;
+      return Entities.GROUP._class;
     default:
-      return entities.GROUP_MEMEBER._class;
+      return Entities.GROUP_MEMBER._class;
   }
 }

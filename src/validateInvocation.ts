@@ -6,12 +6,13 @@ import {
 import { GraphClient } from './ms-graph/client';
 import { IntegrationConfig } from './types';
 
-export function validateExecutionConfig(
-  executionContext: IntegrationExecutionContext<IntegrationConfig>,
-): void {
-  const { clientId, clientSecret, tenant } = executionContext.instance.config;
+export function validateExecutionConfig({
+  instance,
+  logger,
+}: IntegrationExecutionContext<IntegrationConfig>): void {
+  const { clientId, clientSecret, tenant } = instance.config;
 
-  executionContext.logger.info(
+  logger.info(
     {
       clientId,
       tenantId: tenant,
