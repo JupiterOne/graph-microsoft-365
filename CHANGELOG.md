@@ -10,7 +10,8 @@ and this project adheres to
 
 ### Changed
 
-- Set page size to `999` for managed apps and users.
+- refactored existing `activeDirectory` steps
+- Set page size to `999` for managed apps, users, groups, and group members.
 
 ## 6.4.1 - 2022-08-23
 
