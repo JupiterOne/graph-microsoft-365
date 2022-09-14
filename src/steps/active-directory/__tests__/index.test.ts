@@ -2,13 +2,14 @@ import {
   createMockStepExecutionContext,
   Recording,
 } from '@jupiterone/integration-sdk-testing';
-import { Entities, fetchAccount } from '..';
+import { Entities } from '..';
 import {
   config,
   insufficientPermissionsDirectoryConfig,
   noMdmConfig,
 } from '../../../../test/config';
 import { setupAzureRecording } from '../../../../test/recording';
+import { fetchAccount } from '../account';
 
 afterEach(async () => {
   if (recording) {

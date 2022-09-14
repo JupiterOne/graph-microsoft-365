@@ -546,9 +546,9 @@
     "@babel/helper-plugin-utils" "^7.16.7"
 
 "@babel/runtime@^7.4.4":
-  version "7.15.4"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.15.4.tgz#fd17d16bfdf878e6dd02d19753a39fa8a8d9c84a"
-  integrity sha512-99catp6bHCaxr4sJ/DbTGgHS4+Rs2RVd2g7iOap6SLGPDknRK9ztKNsE/Fg6QhSeh1FGE5f6gHGQmvvn3I3xhw==
+  version "7.19.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.19.0.tgz#22b11c037b094d27a8a2504ea4dcff00f50e2259"
+  integrity sha512-eR8Lo9hnDS7tqkO7NsV+mKvCmv5boaXFSZ70DnfhcgiEne8hv9oCEd36Klw74EtizEqLsy4YnW8UWwpBVolHZA==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -861,20 +861,20 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@jupiterone/data-model@^0.50.0":
-  version "0.50.0"
-  resolved "https://registry.yarnpkg.com/@jupiterone/data-model/-/data-model-0.50.0.tgz#a3fb8e84867fc74dc1c656d38c4a6bcd6255ef5e"
-  integrity sha512-G/6+m93PUbZe9hV8Vf6cIyw/m9de4u2rCeQrlReI71STuYkHh8uNmz4R8NDFcGFQOCOewQXW79f7MlCpwQaNJQ==
+"@jupiterone/data-model@^0.51.0":
+  version "0.51.0"
+  resolved "https://registry.yarnpkg.com/@jupiterone/data-model/-/data-model-0.51.0.tgz#6defff71e6be3a08012733ed487f6232561a7750"
+  integrity sha512-NtV6pzYis0WPxLt793GPeNqLKUwBshx1LANUISd+n5q9V3EooVafThgy/0GoJ233R9GQVHQpIWRkJZuiLJUuhg==
   dependencies:
     ajv "^8.0.0"
     ajv-formats "^2.0.0"
 
-"@jupiterone/integration-sdk-cli@^8.15.0":
-  version "8.15.0"
-  resolved "https://registry.yarnpkg.com/@jupiterone/integration-sdk-cli/-/integration-sdk-cli-8.15.0.tgz#fc9ade7cf849d5eb1f5a58ecad49ffbb3d812b9d"
-  integrity sha512-yB18HFcg8AgudwdRVPDZJyom2ZciTKrLTM/iH8uYOY+hbFm5/QpDDA6uhEiCE0PCyvWh7P6gkWfdqxv/1RqrYw==
+"@jupiterone/integration-sdk-cli@^8.23.1":
+  version "8.23.1"
+  resolved "https://registry.yarnpkg.com/@jupiterone/integration-sdk-cli/-/integration-sdk-cli-8.23.1.tgz#b37845fefa480566510f42e1dee1b1cb7571e954"
+  integrity sha512-Idab1gz9eGfXu8Ya2H+mGwdtFh07agiYRO8uVaLGH3HEjoKat+U68K79xLBz9Sz7asiTP2Bnx90JrVlB6mcOPQ==
   dependencies:
-    "@jupiterone/integration-sdk-runtime" "^8.15.0"
+    "@jupiterone/integration-sdk-runtime" "^8.23.1"
     chalk "^4"
     commander "^5.0.0"
     fs-extra "^10.1.0"
@@ -888,22 +888,22 @@
     upath "^1.2.0"
     vis "^4.21.0-EOL"
 
-"@jupiterone/integration-sdk-core@^8.15.0":
-  version "8.15.0"
-  resolved "https://registry.yarnpkg.com/@jupiterone/integration-sdk-core/-/integration-sdk-core-8.15.0.tgz#b47fb2d48914edd441c7f6106a68d0162c3be895"
-  integrity sha512-h0ryflTai32nh7Q8dWik2UunjoAQtT37NGB+JMtOkmryYA9uI/sbuwcU867SzYo2xLgSqYKq33oAlarwX9oyPA==
+"@jupiterone/integration-sdk-core@^8.23.0", "@jupiterone/integration-sdk-core@^8.23.1":
+  version "8.23.1"
+  resolved "https://registry.yarnpkg.com/@jupiterone/integration-sdk-core/-/integration-sdk-core-8.23.1.tgz#a61a3be64f90e2d2ce0f282a20505eddf8e70444"
+  integrity sha512-xq8kf5zFI0N7g3a0vSl+5P9b4TMWYDMOcL4lDZ+Ks+b7SaQ6Of8Qdb1coAdSAxt5KuqM1JDzCbiLQv0MN/5cbg==
   dependencies:
-    "@jupiterone/data-model" "^0.50.0"
+    "@jupiterone/data-model" "^0.51.0"
     lodash "^4.17.21"
     uuid "^8.3.2"
 
-"@jupiterone/integration-sdk-dev-tools@^8.15.0":
-  version "8.15.0"
-  resolved "https://registry.yarnpkg.com/@jupiterone/integration-sdk-dev-tools/-/integration-sdk-dev-tools-8.15.0.tgz#029aaa45466700696aeba17f9386d651b8c50293"
-  integrity sha512-smgma6tU4K6yKxKACMNSs0UOYTkNxKTNFMQIUtGtWvNUyZYY+aYt9NqTWvZB+SQf0i913TVDfXX83zn8XfD9Ew==
+"@jupiterone/integration-sdk-dev-tools@^8.23.0":
+  version "8.23.1"
+  resolved "https://registry.yarnpkg.com/@jupiterone/integration-sdk-dev-tools/-/integration-sdk-dev-tools-8.23.1.tgz#81faeb705a3f5fadfefd55a6010310193c00aeb9"
+  integrity sha512-UzT3ry9VpwEGaGGo7kpzu4HcXqA0RsFHf9YQl6jTEDbYsOMeXZ6rgl21klttYBQcCEIl4MJ09X0dNL+Dta2Jzg==
   dependencies:
-    "@jupiterone/integration-sdk-cli" "^8.15.0"
-    "@jupiterone/integration-sdk-testing" "^8.15.0"
+    "@jupiterone/integration-sdk-cli" "^8.23.1"
+    "@jupiterone/integration-sdk-testing" "^8.23.1"
     "@types/jest" "^27.1.0"
     "@types/node" "^14.0.5"
     "@typescript-eslint/eslint-plugin" "^4.22.0"
@@ -919,12 +919,12 @@
     ts-node "^9.1.1"
     typescript "^4.2.4"
 
-"@jupiterone/integration-sdk-runtime@^8.15.0":
-  version "8.15.0"
-  resolved "https://registry.yarnpkg.com/@jupiterone/integration-sdk-runtime/-/integration-sdk-runtime-8.15.0.tgz#c57322b3c9dc91553addf14c0901846e99584f5f"
-  integrity sha512-MllCaWOpLwMRZQ6yfNC5b03idh1uMXWLbFfjhP6GQEilMXVPUiie7jVIbH7hBk8OVsCfMjlfgleEUCX3XXQAmQ==
+"@jupiterone/integration-sdk-runtime@^8.23.1":
+  version "8.23.1"
+  resolved "https://registry.yarnpkg.com/@jupiterone/integration-sdk-runtime/-/integration-sdk-runtime-8.23.1.tgz#856494cb7df4b3c4389a01d5a059261a654df9a4"
+  integrity sha512-lH0gEQJdlycm44ZSb/mr9yt3gfZ4LCHdgb5d7wq//SOnGjl3uU8lNhn3+9p/gzV819D6/wSPRqXRyB5O1CbdwQ==
   dependencies:
-    "@jupiterone/integration-sdk-core" "^8.15.0"
+    "@jupiterone/integration-sdk-core" "^8.23.1"
     "@lifeomic/alpha" "^1.4.0"
     "@lifeomic/attempt" "^3.0.3"
     async-sema "^3.1.0"
@@ -942,13 +942,13 @@
     rimraf "^3.0.2"
     uuid "^7.0.3"
 
-"@jupiterone/integration-sdk-testing@^8.15.0":
-  version "8.15.0"
-  resolved "https://registry.yarnpkg.com/@jupiterone/integration-sdk-testing/-/integration-sdk-testing-8.15.0.tgz#853b90e333316a7d34d3802f1be838194e67fcb5"
-  integrity sha512-Ryrc9m7RBeYal4tg2B3NqH0iqDAqnGyfrnQdqPuTI/CqNKTAloYvoGMqHW3OSZuGqmjzECZlYD5B+RULmUU+3w==
+"@jupiterone/integration-sdk-testing@^8.23.0", "@jupiterone/integration-sdk-testing@^8.23.1":
+  version "8.23.1"
+  resolved "https://registry.yarnpkg.com/@jupiterone/integration-sdk-testing/-/integration-sdk-testing-8.23.1.tgz#63a884ed09036f0267684d17948b042376406211"
+  integrity sha512-ZGOkbhTTQluuR5NONlL7Oxi/bdBIZRt9RqPxPSUmiKwMNsWRwlLFu29gZi8M1wk8XGakvT+OuXB+yS3Husru7Q==
   dependencies:
-    "@jupiterone/integration-sdk-core" "^8.15.0"
-    "@jupiterone/integration-sdk-runtime" "^8.15.0"
+    "@jupiterone/integration-sdk-core" "^8.23.1"
+    "@jupiterone/integration-sdk-runtime" "^8.23.1"
     "@pollyjs/adapter-node-http" "^6.0.5"
     "@pollyjs/core" "^6.0.5"
     "@pollyjs/persister-fs" "^6.0.5"
@@ -982,14 +982,15 @@
     msal "^1.4.4"
     tslib "^1.9.3"
 
-"@microsoft/microsoft-graph-types-beta@microsoftgraph/msgraph-typescript-typings#beta":
-  version "1.4.0"
-  resolved "https://codeload.github.com/microsoftgraph/msgraph-typescript-typings/tar.gz/bec77afd605f438c71b299ac8435f95d76c6cba9"
+"@microsoft/microsoft-graph-types-beta@^0.29.0-preview":
+  version "0.29.0-preview"
+  resolved "https://registry.yarnpkg.com/@microsoft/microsoft-graph-types-beta/-/microsoft-graph-types-beta-0.29.0-preview.tgz#0f571e2bb09ad37de24bbe6ba34703fefe314294"
+  integrity sha512-83PCHDH7GxW8KM1J+MM6FPbaahIuj7VIgnY4UbMGQkkq2fBaHeKOmgjVbohvLVeIOOCTLmorPh6JtXH0VtFurA==
 
-"@microsoft/microsoft-graph-types@^1.28.0":
-  version "1.41.0"
-  resolved "https://registry.yarnpkg.com/@microsoft/microsoft-graph-types/-/microsoft-graph-types-1.41.0.tgz#669113391f4efb02e888a8a3349e4e3d6d25ba35"
-  integrity sha512-GNGqnN3k4wo6zlxszBUdrzEXMQMeTRXRO2OP3h63LNbqRrRHUe6WY2EbGwL7gUhap7pOoyziZ+eG5YUvUNdBSA==
+"@microsoft/microsoft-graph-types@^2.24.0":
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/@microsoft/microsoft-graph-types/-/microsoft-graph-types-2.24.0.tgz#a3485645df12fad721008c9d5b423b30fa60068c"
+  integrity sha512-wbzU11JFt9s+tVqmECKaP0BgoQhfkXDykDSffdp5WPrr2lxWyqbKrXjmbiFxD6MgSENRFsdUeCXSULCM7Pcjzw==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -1199,12 +1200,25 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
   integrity sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==
 
+"@types/node-fetch@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.6.2.tgz#d1a9c5fd049d9415dce61571557104dec3ec81da"
+  integrity sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==
+  dependencies:
+    "@types/node" "*"
+    form-data "^3.0.0"
+
 "@types/node@*":
   version "16.11.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.6.tgz#6bef7a2a0ad684cf6e90fcfe31cecabd9ce0a3ae"
   integrity sha512-ua7PgUoeQFjmWPcoo9khiPum3Pd60k4/2ZGXt18sm2Slk0W0xZTqt5Y0Ny1NyBiN1EVQ/+FaF9NcY4Qe6rwk5w==
 
-"@types/node@^14", "@types/node@^14.0.5":
+"@types/node@^14":
+  version "14.18.28"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.28.tgz#ddb82da2fff476a8e827e8773c84c19d9c235278"
+  integrity sha512-CK2fnrQlIgKlCV3N2kM+Gznb5USlwA1KFX3rJVHmgVk6NJxFPuQ86pAcvKnu37IA4BGlSRz7sEE1lHL1aLZ/eQ==
+
+"@types/node@^14.0.5":
   version "14.17.32"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.32.tgz#2ca61c9ef8c77f6fa1733be9e623ceb0d372ad96"
   integrity sha512-JcII3D5/OapPGx+eJ+Ik1SQGyt6WvuqdRfh9jUwL6/iHGjmyOriBDciBUu7lEIBTL2ijxwrR70WUnw5AEDmFvQ==
@@ -4172,10 +4186,17 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-msal@^1.0.2, msal@^1.4.4:
+msal@^1.0.2:
   version "1.4.14"
   resolved "https://registry.yarnpkg.com/msal/-/msal-1.4.14.tgz#159d69b6b7f130563e20466158e87fd86d00ec28"
   integrity sha512-k8M5+/jbfSQoCf7CyQzBP5HE5mY8TkBujykLGTEp2x0MvOK/FQsfUTNis28zlvvPVzhgrhb5GQiGM8rRpXyHdA==
+  dependencies:
+    tslib "^1.9.3"
+
+msal@^1.4.4:
+  version "1.4.17"
+  resolved "https://registry.yarnpkg.com/msal/-/msal-1.4.17.tgz#b78171c0471ede506eeaabc86343f8f4e2d01634"
+  integrity sha512-RjHwP2cCIWQ9iUIk1SziUMb9+jj5mC4OqG2w16E5yig8jySi/TwiFvKlwcjNrPsndph0HtgCtbENnk5julf3yQ==
   dependencies:
     tslib "^1.9.3"
 

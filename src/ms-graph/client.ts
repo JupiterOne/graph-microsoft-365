@@ -67,10 +67,6 @@ export class GraphClient {
     }
   }
 
-  public async fetchMetadata(): Promise<object> {
-    return this.client.api('/').get();
-  }
-
   /**
    * Fetch organization details. Throws an error when this cannot be
    * accomplished.
@@ -282,7 +278,7 @@ class GraphAuthenticationProvider implements AuthenticationProvider {
     }
     if (!this.accessToken) {
       throw new Error(
-        'Authentication cannot be peformed at this time, no reason provided by Microsoft identity platform.',
+        'Authentication cannot be performed at this time, no reason provided by Microsoft identity platform.',
       );
     } else {
       return this.accessToken.token;

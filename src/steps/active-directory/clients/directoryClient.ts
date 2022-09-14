@@ -63,6 +63,7 @@ export class DirectoryGraphClient extends GraphClient {
   ): Promise<void> {
     return this.iterateResources({
       resourceUrl: `/groups/${input.groupId}/members`,
+      query: { $top: '999' },
       callback,
     });
   }

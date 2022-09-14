@@ -62,20 +62,6 @@ describe('verifyAuthentication', () => {
   });
 });
 
-test('fetchMetadata', async () => {
-  recording = setupAzureRecording({
-    directory: __dirname,
-    name: 'fetchMetadata',
-  });
-
-  const client = new GraphClient(logger, config);
-
-  const metadata = await client.fetchMetadata();
-  expect(metadata).toMatchObject({
-    '@odata.context': 'https://graph.microsoft.com/v1.0/$metadata',
-  });
-});
-
 describe('fetchOrganization', () => {
   test('accessible', async () => {
     recording = setupAzureRecording({
