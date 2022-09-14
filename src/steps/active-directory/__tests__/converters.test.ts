@@ -1,14 +1,15 @@
 import { RelationshipDirection } from '@jupiterone/integration-sdk-core';
+import { createAccountEntityWithOrganization } from '../account/converters';
 import { Entities } from '../constants';
+import { createGroupMemberRelationship } from '../group-members/converters';
 import {
-  createAccountEntityWithOrganization,
   createAccountGroupRelationship,
-  createAccountUserRelationship,
   createGroupEntity,
-  createGroupMemberRelationship,
-  createOrganizationEntity,
+} from '../group/converters';
+import {
+  createAccountUserRelationship,
   createUserEntity,
-} from '../converters';
+} from '../users/converters';
 import exampleAccountEntity from './fixtures/exampleAccountEntity';
 import exampleGroup from './fixtures/exampleGroup';
 import exampleGroupEntity from './fixtures/exampleGroupEntity';
@@ -94,26 +95,6 @@ describe('createUserEntity', () => {
         'admin_test.dualboot.com#EXT#@admintestdualboot.onmicrosoft.com',
       userPrincipalName:
         'admin_test.dualboot.com#EXT#@admintestdualboot.onmicrosoft.com',
-    });
-  });
-});
-
-describe('createOrganizationEntity', () => {
-  test('properties transferred', () => {
-    expect(createOrganizationEntity(exampleOrganization)).toEqual({
-      _class: ['Organization'],
-      _key: '1111111-1111-1111-1111-111111111111',
-      _rawData: [
-        {
-          name: 'default',
-          rawData: exampleOrganization,
-        },
-      ],
-      _type: 'azure_organization',
-      id: '1111111-1111-1111-1111-111111111111',
-      displayName: 'Default Directory',
-      website: 'verifiedDomain.onmicrosoft.com',
-      emailDomain: 'verifiedDomain.onmicrosoft.com',
     });
   });
 });

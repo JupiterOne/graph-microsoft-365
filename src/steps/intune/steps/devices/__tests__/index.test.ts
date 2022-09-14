@@ -6,9 +6,10 @@ import { setupAzureRecording } from '../../../../../../test/recording';
 import { config } from '../../../../../../test/config';
 import { fetchDevices } from '..';
 import { entities, managedDeviceTypes } from '../../../constants';
-import { DATA_ACCOUNT_ENTITY, fetchUsers } from '../../../../active-directory';
+import { DATA_ACCOUNT_ENTITY } from '../../../../active-directory';
 import { Entities as ActiveDirectoryEntities } from '../../../../active-directory';
-import { createAccountEntity } from '../../../../active-directory/converters';
+import { createAccountEntity } from '../../../../active-directory/account/converters';
+import { fetchUsers } from '../../../../active-directory/users';
 
 let recording: Recording;
 
