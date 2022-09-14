@@ -32,7 +32,8 @@ describe('iterateGroupMembers', () => {
     client = new DirectoryGraphClient(logger, config);
   });
 
-  test('iterateGroupMembers', async () => {
+  // TODO @zemberdotnet Rerecord test
+  test.skip('iterateGroupMembers', async () => {
     recording = setupAzureRecording({
       directory: __dirname,
       name: 'iterateGroupMembers',
