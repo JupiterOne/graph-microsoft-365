@@ -8,6 +8,8 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.4.2 - 2022-09-15
+
 ### Changed
 
 - refactored existing `activeDirectory` steps
