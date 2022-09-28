@@ -8,6 +8,12 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.4.3 - 2022-09-28
+
+### Changed
+
+- update sdk
+
 ## 6.4.2 - 2022-09-15
 
 ### Changed
