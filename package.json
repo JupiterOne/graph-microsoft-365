@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/graph-microsoft-365",
-  "version": "6.4.2",
+  "version": "6.4.3",
   "description": "A JupiterOne Integration for Microsoft 365",
   "license": "MPL-2.0",
   "main": "src/index.js",
@@ -37,12 +37,12 @@
     "lodash": "^4.17.20"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.23.0"
+    "@jupiterone/integration-sdk-core": "^8.25.1"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^8.23.0",
-    "@jupiterone/integration-sdk-dev-tools": "^8.23.0",
-    "@jupiterone/integration-sdk-testing": "^8.23.0",
+    "@jupiterone/integration-sdk-core": "^8.25.1",
+    "@jupiterone/integration-sdk-dev-tools": "^8.25.1",
+    "@jupiterone/integration-sdk-testing": "^8.25.1",
     "@microsoft/microsoft-graph-types": "^2.24.0",
     "@microsoft/microsoft-graph-types-beta": "^0.29.0-preview",
     "@types/node": "^14",
