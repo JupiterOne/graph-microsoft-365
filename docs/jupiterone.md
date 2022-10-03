@@ -38,20 +38,22 @@ If you need help with this integration, please contact
 
 1. From the top navigation of the J1 Search homepage, select **Integrations**.
 
-   ![Landing Page](images/LandingPage.png)
-
+   
+![Landing Page](images/LandingPage.png)
    
    
 
 2. Select the **Microsoft-365** integration tile.
 
-   
+    
 
    ![Definitions Page](images/DefinitionsPage.png)
 
 3. Click **New Instance**.
 
    ![Instances Page](images/InstancesPage.png)
+
+   
 
    
 
@@ -65,7 +67,11 @@ If you need help with this integration, please contact
 6. Select a **Polling Interval** that you feel is sufficient for your monitoring
    needs. You can leave this as `DISABLED` and manually execute the integration.
 
-7. Click **Create Configuration** after you have provided all the values.
+   ![](images/CompleteConfiguration.png)
+   
+   
+   
+7. Click **Create** after you have provided all the values.
 
 8. When prompted, click **Begin Authorization**. 
 
@@ -83,13 +89,13 @@ If you need help with this integration, please contact
 
    Selecting a personal account produces the following error message: 
 
-   ![Account Error](images/PersonalAccountError.png) 
+   ![Account Error](images/PersonalAccountError.png)   
 
     
 
 10. Review requested permissions (which are described below) and grant consent.
 
-   ![pick an account](images/PickAnAccount.png) 
+   ![pick an account](images/PickAnAccount.png)   
 
 ## Permissions
 
