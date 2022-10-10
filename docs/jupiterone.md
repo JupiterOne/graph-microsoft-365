@@ -2,12 +2,12 @@
 
 JupiterOne provides a managed integration for Microsoft 365. The integration
 connects directly to Microsoft Graph APIs to obtain metadata about the target
-organization and analyze resource relationships. 
+organization and analyze resource relationships.
 
 ## Microsoft 365 + JupiterOne Integration Benefits
 
 - Visualize Microsoft 365 services, groups, and users in the JupiterOne graph.
-- Map Microsoft 365 users to employees in your JupiterOne account. 
+- Map Microsoft 365 users to employees in your JupiterOne account.
 - Monitor changes to Microsoft 365 users using JupiterOne alerts.
 
 ## How it Works
