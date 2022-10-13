@@ -35,6 +35,7 @@ export async function fetchDeviceConfigurationsAndFindings(
   );
   await intuneClient.iterateDeviceConfigurations(
     async (deviceConfiguration) => {
+      let deviceConfigurationCreatedOrFound = false;
       await intuneClient.iterateDeviceConfigurationDeviceStatuses(
         deviceConfiguration.id as string,
         async (deviceStatus) => {
@@ -61,6 +62,7 @@ export async function fetchDeviceConfigurationsAndFindings(
                 deviceConfiguration,
                 jobState,
               );
+            deviceConfigurationCreatedOrFound = true;
 
             const hostAssignedDeviceKey =
               deviceStatus.id! +
@@ -142,6 +144,12 @@ export async function fetchDeviceConfigurationsAndFindings(
           }
         },
       );
+      if (!deviceConfigurationCreatedOrFound) {
+        logger.warn(
+          { deviceConfigId: deviceConfiguration.id },
+          'Skipped creation of deviceConfiguration',
+        );
+      }
     },
   );
 }
