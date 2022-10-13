@@ -8,6 +8,12 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.4.4 - 2022-10-13
+
+### Changed
+
+- Added warn log in Device Configuration step
+
 ## 6.4.3 - 2022-09-28
 
 ### Changed
