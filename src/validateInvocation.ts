@@ -27,7 +27,7 @@ export function validateExecutionConfig({
     if (!tenant) missingFields.push('tenant');
 
     throw new IntegrationValidationError(
-      `Config requires: ${missingFields.join(',')}`,
+      `Config requires: ${missingFields.join(', ')}`,
     );
   }
 }
