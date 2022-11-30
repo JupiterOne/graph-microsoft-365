@@ -21,8 +21,13 @@ export function validateExecutionConfig({
   );
 
   if (!clientId || !clientSecret || !tenant) {
+    const missingFields: string[] = [];
+    if (!clientId) missingFields.push('clientId');
+    if (!clientSecret) missingFields.push('clientSecret');
+    if (!tenant) missingFields.push('tenant');
+
     throw new IntegrationValidationError(
-      'Config requires all of {clientId, clientSecret, tenant}',
+      `Config requires: ${missingFields.join(',')}`,
     );
   }
 }
