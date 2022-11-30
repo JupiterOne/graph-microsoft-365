@@ -8,6 +8,12 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.4.5 - 2022-11-30
+
+### Changed
+
+- Improved error messaging when `validateInvocation` fails
+
 ## 6.4.4 - 2022-10-13
 
 ### Changed
