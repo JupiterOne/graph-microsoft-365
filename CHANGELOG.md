@@ -8,6 +8,12 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.4.6 - 2023-01-18
+
+### Changed
+
+- Added active, accountEnabled, and userType to user entity.
+
 ## 6.4.5 - 2022-11-30
 
 ### Changed
