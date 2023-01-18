@@ -35,6 +35,9 @@ export function createUserEntity(data: User): Entity {
         lastName: data.surname,
         userPrincipalName: data.userPrincipalName,
         id: data.id,
+        userType: data.userType,
+        active: data.accountEnabled,
+        accountEnabled: data.accountEnabled,
       },
     },
   });
