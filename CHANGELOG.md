@@ -8,6 +8,12 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.4.7 - 2023-01-23
+
+### Changed
+
+- Added `deviceCategoryDisplayName` to managed device entities.
+
 ## 6.4.6 - 2023-01-18
 
 ### Changed
