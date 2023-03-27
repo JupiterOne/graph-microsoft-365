@@ -1,5 +1,6 @@
 export function isRetryable(err: any): boolean {
   // -1 a `FetchError` (probably connection timeout)
+  // 200 OK, on the logs sometimes we get 200 'FetchError' when request timesout.
   // 400 Bad Request
   // 408 Request Timeout
   // 500 InternalSeverError
@@ -8,7 +9,7 @@ export function isRetryable(err: any): boolean {
   // 504 GatewayTimeout
   // Others we could consider adding if necessary: 408, 503 and others
   const isRetryableStatusCode = (statusCode: number): boolean => {
-    return [-1, 400, 408, 500, 502, 503, 504].includes(statusCode);
+    return [-1, 200, 400, 408, 500, 502, 503, 504].includes(statusCode);
   };
 
   const isRetryableErrorMessage = (message: string): boolean => {
