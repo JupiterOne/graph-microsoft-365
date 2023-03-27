@@ -1,6 +1,6 @@
 export function isRetryable(err: any): boolean {
   // -1 a `FetchError` (probably connection timeout)
-  // 200 OK, on the logs sometimes we get 200 'FetchError' when request timesout.
+  // 200 OK, on the logs sometimes we get 200 'FetchError' when the response timesout.
   // 400 Bad Request
   // 408 Request Timeout
   // 500 InternalSeverError
