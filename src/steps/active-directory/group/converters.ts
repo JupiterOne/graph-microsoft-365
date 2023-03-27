@@ -23,7 +23,7 @@ export function createGroupEntity(data: Group): Entity {
         deletedOn: parseTimePropertyValue(data.deletedDateTime),
         classification: data.classification,
         createdOn: parseTimePropertyValue(data.createdDateTime),
-        description: data.description,
+        description: data.description ?? '',
         email: data.mailEnabled ? data.mail : undefined,
         mail: data.mailEnabled ? data.mail : undefined,
         mailEnabled: data.mailEnabled,

@@ -72,9 +72,24 @@ export class DirectoryGraphClient extends GraphClient {
   public async iterateUsers(
     callback: (user: User) => void | Promise<void>,
   ): Promise<void> {
+    const defaultSelect = [
+      'businessPhones',
+      'displayName',
+      'givenName',
+      'jobTitle',
+      'mail',
+      'mobilePhone',
+      'officeLocation',
+      'preferredLanguage',
+      'surname',
+      'userPrincipalName',
+      'id',
+      'userType',
+      'accountEnabled',
+    ];
     return this.iterateResources({
       resourceUrl: '/users',
-      query: { $top: '999' },
+      query: { $top: '999', $select: defaultSelect.toString() },
       callback,
     });
   }
