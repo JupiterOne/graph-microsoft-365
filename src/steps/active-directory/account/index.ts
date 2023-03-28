@@ -22,15 +22,22 @@ export async function fetchAccount({
   const graphClient = new DirectoryGraphClient(logger, instance.config);
 
   const organization = await graphClient.fetchOrganization();
-  const intuneAccountID = (await graphClient.getIntuneAccountId())
-    ?.intuneAccountId;
-  const subscriptionState = (await graphClient.getIntuneSubscriptionState())
-    ?.value;
-  const mobileDeviceManagementAuthority = (
-    await graphClient.getMobileDeviceManagementAuthority(
-      organization.id as string,
-    )
-  )?.mobileDeviceManagementAuthority;
+  let intuneAccountID: string | undefined;
+  let subscriptionState: string | undefined;
+  let mobileDeviceManagementAuthority: string | undefined;
+  try {
+    intuneAccountID = (await graphClient.getIntuneAccountId())?.intuneAccountId;
+    subscriptionState = (await graphClient.getIntuneSubscriptionState())?.value;
+    mobileDeviceManagementAuthority = (
+      await graphClient.getMobileDeviceManagementAuthority(
+        organization.id as string,
+      )
+    )?.mobileDeviceManagementAuthority;
+  } catch (error) {
+    intuneAccountID = undefined;
+    subscriptionState = undefined;
+    mobileDeviceManagementAuthority = undefined;
+  }
 
   const accountEntity = createAccountEntityWithOrganization(
     instance,
