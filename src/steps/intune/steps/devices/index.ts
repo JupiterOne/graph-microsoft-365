@@ -31,7 +31,11 @@ export async function fetchDevices({
   );
 
   await intuneClient.iterateManagedDevices(async (device) => {
+    if (jobState.hasKey(device.id!)) {
+      return;
+    }
     const deviceEntity = createManagedDeviceEntity(device, instance.config);
+
     await jobState.addEntity(deviceEntity);
     for (const { userId } of device.usersLoggedOn ?? []) {
       // user who is logged on to the device
