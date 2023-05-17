@@ -3,6 +3,7 @@ import {
   createMappedRelationship,
   Entity,
   IntegrationError,
+  parseTimePropertyValue,
   Relationship,
   RelationshipDirection,
 } from '@jupiterone/integration-sdk-core';
@@ -133,6 +134,7 @@ export function createManagedDeviceEntity(
         deviceId: null,
         // POTENTIAL: managedDevice.usersLoggedOn - link out to other users perhaps?
         deviceCategoryDisplayName: managedDevice.deviceCategoryDisplayName,
+        lastSeenOn: parseTimePropertyValue(managedDevice.lastSyncDateTime),
       },
     },
   });

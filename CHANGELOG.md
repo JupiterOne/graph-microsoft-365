@@ -8,6 +8,16 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.5.0 - 2023-05-17
+
+### Added
+
+- Device entities now have the following new properties:
+
+  | Property     | Type     |
+  | ------------ | -------- |
+  | `lastSeenOn` | `number` |
+
 ## 6.4.7 - 2023-01-23
 
 ### Changed

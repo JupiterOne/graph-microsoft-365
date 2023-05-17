@@ -117,7 +117,7 @@ To exercise the grant flow:
    `https://localhost/microsoft-365/oauth-microsoft-365/v1/authorize?admin_consent=True&tenant=tenant-id&state=12345`,
    capture the `tenant` query param.
    1. You may need to check your network history for this query param as you
-      will likelybe redirected back to your instance configuration page faster
+      will likely be redirected back to your instance configuration page faster
       than you can pull the the tenant param.
    1. This will be the same tenant id that you are logged into when you granted
       concent.
