@@ -116,6 +116,7 @@ Array [
     "displayName": "[REDACTED]",
     "easDeviceId": false,
     "encrypted": true,
+    "enrolledDateTime": 1613579085000,
     "ethernetMacAddress": null,
     "hardwareManufacturer": "Apple",
     "hardwareModel": "iPhone 11 Pro",
@@ -129,6 +130,8 @@ Array [
     "ipAddress": undefined,
     "jailBroken": false,
     "lastSeenOn": 1615335855000,
+    "lastSyncDateTime": 1615335855000,
+    "lastUpdateDateTime": undefined,
     "macAddress": Array [
       "[redacted]",
     ],
@@ -175,6 +178,7 @@ Array [
     "displayName": "[REDACTED]",
     "easDeviceId": false,
     "encrypted": true,
+    "enrolledDateTime": 1613579883000,
     "ethernetMacAddress": null,
     "hardwareManufacturer": "Apple",
     "hardwareModel": "MacBook Pro",
@@ -188,6 +192,8 @@ Array [
     "ipAddress": undefined,
     "jailBroken": undefined,
     "lastSeenOn": 1613665618000,
+    "lastSyncDateTime": 1613665618000,
+    "lastUpdateDateTime": undefined,
     "macAddress": Array [
       "[redacted]",
     ],
