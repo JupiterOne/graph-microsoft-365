@@ -77,6 +77,15 @@ export function createManagedDeviceEntity(
         deviceName: managedDevice.deviceName,
         displayName: managedDevice.deviceName as string,
         deviceType: managedDevice.deviceType,
+        enrolledDateTime: parseTimePropertyValue(
+          managedDevice.enrolledDateTime,
+        ),
+        lastSyncDateTime: parseTimePropertyValue(
+          managedDevice.lastSyncDateTime,
+        ),
+        lastUpdateDateTime: parseTimePropertyValue(
+          managedDevice.deviceHealthAttestationState?.lastUpdateDateTime,
+        ),
         model: managedDevice.model,
         make: managedDevice.manufacturer,
         version: managedDevice.model,
