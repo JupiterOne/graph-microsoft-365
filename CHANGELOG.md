@@ -8,6 +8,18 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.6.0 - 2023-06-06
+
+### Added
+
+- Device entities now have the following new properties:
+
+  | Property             | Type   |
+  | -------------------- | ------ |
+  | `enrolledDateTime`   | `date` |
+  | `lastSyncDateTime`   | `date` |
+  | `lastUpdateDateTime` | `date` |
+
 ## 6.5.0 - 2023-05-17
 
 ### Added
