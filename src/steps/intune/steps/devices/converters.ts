@@ -167,6 +167,7 @@ export function createIntuneHostAgentEntity(
         registrationState: managedDevice.deviceRegistrationState,
         complianceState: managedDevice.complianceState,
         compliant: isCompliant(managedDevice.complianceState),
+        lastSeenOn: parseTimePropertyValue(managedDevice.lastSyncDateTime),
       },
     },
   });
