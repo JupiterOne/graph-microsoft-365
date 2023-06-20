@@ -8,6 +8,12 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.6.1 - 2023-06-16
+
+### Added
+
+- `lastSeenOn` to Device entities.
+
 ## 6.6.0 - 2023-06-06
 
 ### Added
