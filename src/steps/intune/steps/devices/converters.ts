@@ -75,7 +75,13 @@ export function createManagedDeviceEntity(
         id: managedDevice.id,
         name: managedDevice.deviceName,
         deviceName: managedDevice.deviceName,
-        displayName: managedDevice.deviceName as string,
+        displayName:
+          managedDevice.deviceName ||
+          `${
+            managedDevice.userDisplayName ||
+            managedDevice.emailAddress ||
+            'Unknown User'
+          }'s ${managedDevice.model || 'Device'}`,
         deviceType: managedDevice.deviceType,
         enrolledDateTime: parseTimePropertyValue(
           managedDevice.enrolledDateTime,
