@@ -8,6 +8,13 @@ and this project adheres to
 
 ## Unreleased
 
+## 6.6.2 - 2023-07-23
+
+### Changed
+
+- `name` on Device entities to default to a generated name if a `deviceName` is
+  not provided.
+
 ## 6.6.1 - 2023-06-16
 
 ### Added
