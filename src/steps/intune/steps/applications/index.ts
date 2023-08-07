@@ -46,7 +46,7 @@ export async function fetchManagedApplications({
     await intuneClient.iterateManagedAppDeviceStatuses(
       managedApp.id as string,
       async (deviceStatus) => {
-        const deviceId = deviceStatus.deviceId;
+        const deviceId = deviceStatus.DeviceId;
         const deviceEntity = await jobState.findEntity(deviceId as string);
 
         if (!deviceEntity) {
@@ -58,11 +58,7 @@ export async function fetchManagedApplications({
         }
 
         const deviceAssignedAppKey =
-          deviceStatus.id! +
-          '|' +
-          deviceEntity._key +
-          '|' +
-          managedAppEntity._key;
+          deviceEntity._key + '|' + managedAppEntity._key;
 
         if (jobState.hasKey(deviceAssignedAppKey)) {
           duplicateKeysCount++;
@@ -76,9 +72,9 @@ export async function fetchManagedApplications({
               to: managedAppEntity,
               properties: {
                 _key: deviceAssignedAppKey,
-                installState: deviceStatus.installState, // Possible values are: installed, failed, notInstalled, uninstallFailed, pendingInstall, & unknown
-                installStateDetail: deviceStatus.installStateDetail, // extra details on the install state. Ex: iosAppStoreUpdateFailedToInstall
-                errorCode: deviceStatus.errorCode,
+                installState: deviceStatus.InstallState, // Possible values are: installed, failed, notInstalled, uninstallFailed, pendingInstall, & unknown
+                installStateDetail: deviceStatus.InstallStateDetail, // extra details on the install state. Ex: iosAppStoreUpdateFailedToInstall
+                errorCode: deviceStatus.ErrorCode,
                 installedVersion:
                   managedApp.version ?? findNewestVersion(managedApp),
               },
