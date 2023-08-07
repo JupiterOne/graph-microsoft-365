@@ -46,6 +46,23 @@
     "@microsoft/microsoft-graph-types": "^2.24.0",
     "@microsoft/microsoft-graph-types-beta": "^0.29.0-preview",
     "@types/node": "^14",
-    "@types/node-fetch": "^2.6.2"
+    "@types/node-fetch": "^2.6.2",
+    "auto": "10.46.0"
+  },
+  "auto": {
+    "plugins": [
+      [
+        "npm",
+        {
+          "setRcToken": false,
+          "publishFolder": "./dist"
+        }
+      ],
+      "released"
+    ],
+    "onlyPublishWithReleaseLabel": true,
+    "shipit": {
+      "prerelease": false
+    }
   }
 }

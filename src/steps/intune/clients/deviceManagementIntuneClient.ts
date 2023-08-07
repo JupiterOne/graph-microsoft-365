@@ -1,3 +1,4 @@
+import { PassThrough } from 'stream';
 import { GraphClient } from '../../../ms-graph/client';
 import {
   DeviceComplianceDeviceStatus,
@@ -6,8 +7,8 @@ import {
   DeviceConfigurationDeviceStatus,
   ManagedApp,
   ManagedDevice,
-  MobileAppInstallStatus,
 } from '@microsoft/microsoft-graph-types-beta';
+import { MobileAppInstallStatus } from '../types';
 
 export class DeviceManagementIntuneClient extends GraphClient {
   //********** MANAGED DEVICES **********/
@@ -92,18 +93,29 @@ export class DeviceManagementIntuneClient extends GraphClient {
   }
 
   // NOTE: This becomes a relationship from mobileapp to device
-  // https://docs.microsoft.com/en-us/graph/api/intune-apps-mobileappinstallstatus-list?view=graph-rest-beta
+  // There is not current documentation for this endpoint
+  // Beta api changed, info:
+  // https://techcommunity.microsoft.com/t5/intune-customer-success/support-tip-retrieving-intune-apps-reporting-data-from-microsoft/ba-p/3851578
+  // https://github.com/microsoftgraph/msgraph-sdk-powershell/issues/2088
+  // https://github.com/microsoftgraph/msgraph-sdk-powershell/issues/2074
   public async iterateManagedAppDeviceStatuses(
     mobileAppId: string,
     callback: (deviceStatus: MobileAppInstallStatus) => void | Promise<void>,
   ): Promise<void> {
-    return this.iterateResources({
-      resourceUrl: `https://graph.microsoft.com/beta/deviceAppManagement/mobileApps/${mobileAppId}/deviceStatuses`,
-      query: {
-        $filter: `(mobileAppInstallStatusValue ne 'notApplicable')`, // We shouldn't be making relationships on applications that are not applicable to a device
-      },
-      callback,
+    const api = this.client.api(
+      'https://graph.microsoft.com/beta/deviceManagement/reports/getDeviceInstallStatusReport',
+    );
+    const res: PassThrough = await api.post({
+      filter: `(ApplicationId eq '${mobileAppId}')`,
     });
+    const response = JSON.parse(Buffer.from(res.read()).toString());
+    for (const responseValue of response.Values) {
+      const mobileAppInstallStatus = {};
+      response.Schema.forEach((column, index) => {
+        mobileAppInstallStatus[column.column] = responseValue[index];
+      });
+      await callback(mobileAppInstallStatus as MobileAppInstallStatus);
+    }
   }
 
   //********** DEVICE COMPLIANCE POLICIES **********/
