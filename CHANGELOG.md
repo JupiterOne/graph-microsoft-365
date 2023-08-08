@@ -1,3 +1,15 @@
+# v6.7.1 (Tue Aug 08 2023)
+
+#### 🐛 Bug Fix
+
+- Int 9015 step correction [#143](https://github.com/JupiterOne/graph-microsoft-365/pull/143) (gonzaloavalosribas@Gonzalos-MacBook-Pro.local)
+
+#### Authors: 1
+
+- Gonzalo Avalos Ribas ([@Gonzalo-Avalos-Ribas](https://github.com/Gonzalo-Avalos-Ribas))
+
+---
+
 # v6.7.0 (Tue Aug 08 2023)
 
 #### 🚀 Enhancement
