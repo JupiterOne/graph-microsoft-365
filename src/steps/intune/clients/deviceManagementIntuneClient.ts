@@ -108,11 +108,12 @@ export class DeviceManagementIntuneClient extends GraphClient {
     const res: PassThrough = await api.post({
       filter: `(ApplicationId eq '${mobileAppId}')`,
     });
+
     const response = JSON.parse(Buffer.from(res.read()).toString());
     for (const responseValue of response.Values) {
       const mobileAppInstallStatus = {};
       response.Schema.forEach((column, index) => {
-        mobileAppInstallStatus[column.column] = responseValue[index];
+        mobileAppInstallStatus[column.Column] = responseValue[index];
       });
       await callback(mobileAppInstallStatus as MobileAppInstallStatus);
     }
