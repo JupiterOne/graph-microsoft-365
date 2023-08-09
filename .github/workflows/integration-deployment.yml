@@ -1,4 +1,4 @@
-ame: J1 Integration deployment
+name: J1 Integration deployment
 
 on:
   release:
