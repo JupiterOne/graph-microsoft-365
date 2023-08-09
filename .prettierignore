@@ -4,3 +4,4 @@ coverage/
 .gitleaks.toml
 .j1-integration-cache
 .gitleaks.yml
+CHANGELOG.md
