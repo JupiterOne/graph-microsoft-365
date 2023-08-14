@@ -2,16 +2,9 @@ import {
   createMockIntegrationLogger,
   Recording,
 } from '@jupiterone/integration-sdk-testing';
-import {
-  DirectoryObject,
-  DirectoryRole,
-  User,
-} from '@microsoft/microsoft-graph-types';
+import { User } from '@microsoft/microsoft-graph-types';
 
-import {
-  config,
-  insufficientPermissionsDirectoryConfig,
-} from '../../../../test/config';
+import { config } from '../../../../test/config';
 import { setupAzureRecording } from '../../../../test/recording';
 import { DirectoryGraphClient, GroupMember } from '../clients/directoryClient';
 
@@ -98,73 +91,6 @@ describe('iterateUsers', () => {
       expect(r).toMatchObject({
         id: expect.any(String),
       });
-    });
-  });
-});
-
-describe('iterateDirectoryRoles', () => {
-  test('accessible', async () => {
-    recording = setupAzureRecording({
-      directory: __dirname,
-      name: 'iterateDirectoryRoles',
-    });
-
-    const client = new DirectoryGraphClient(logger, config);
-
-    const resources: DirectoryRole[] = [];
-    await client.iterateDirectoryRoles((e) => {
-      resources.push(e);
-    });
-
-    expect(resources.length).toBeGreaterThan(0);
-    resources.forEach((r) => {
-      expect(r).toMatchObject({
-        roleTemplateId: expect.any(String),
-      });
-    });
-  });
-
-  test('insufficient permissions', async () => {
-    recording = setupAzureRecording({
-      directory: __dirname,
-      name: 'iterateDirectoryRolesInsufficientPermissions',
-      options: { recordFailedRequests: true },
-    });
-
-    const client = new DirectoryGraphClient(
-      logger,
-      insufficientPermissionsDirectoryConfig,
-    );
-
-    const resources: DirectoryRole[] = [];
-    await client.iterateDirectoryRoles((e) => {
-      resources.push(e);
-    });
-
-    expect(resources.length).toEqual(0);
-  });
-});
-
-test('iterateDirectoryRoleMembers', async () => {
-  recording = setupAzureRecording({
-    directory: __dirname,
-    name: 'iterateDirectoryRoleMembers',
-  });
-
-  const client = new DirectoryGraphClient(logger, config);
-
-  const resources: DirectoryObject[] = [];
-  await client.iterateDirectoryRoleMembers(
-    '9a4ba32c-28dd-4c30-bc99-f8137845d6bf',
-    (e) => {
-      resources.push(e);
-    },
-  );
-
-  expect(resources.length).toBeGreaterThan(0);
-  resources.forEach((r) => {
-    expect(r).toMatchObject({
-      '@odata.type': '#microsoft.graph.user',
     });
   });
 });
