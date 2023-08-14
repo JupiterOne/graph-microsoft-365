@@ -6,7 +6,7 @@ const config: IntegrationConfig = {
   tenant: 'a76fc728-0cba-45f0-a9eb-d45207e14513',
 };
 
-if (process.env.LOAD_CONFIG) {
+if (process.env.LOAD_ENV) {
   config.clientId = process.env.CLIENT_ID || config.clientId;
   config.clientSecret = process.env.CLIENT_SECRET || config.clientSecret;
   config.tenant = process.env.TENANT || config.tenant;
