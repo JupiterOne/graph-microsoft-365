@@ -24,6 +24,7 @@ import {
   UNRELATED_DEVICE_STATUSES,
 } from '../../utils';
 import { DeviceConfiguration } from '@microsoft/microsoft-graph-types-beta';
+import { IngestionSources } from '../../../constants';
 
 export async function fetchDeviceConfigurationsAndFindings(
   executionContext: IntegrationStepContext,
@@ -175,6 +176,7 @@ export const deviceConfigurationAndFindingsSteps: Step<
 >[] = [
   {
     id: steps.FETCH_DEVICE_CONFIGURATIONS_AND_FINDINGS,
+    ingestionSourceId: IngestionSources.DEVICE_CONFIGURATIONS,
     name: 'Device Configurations and Related Findings',
     entities: [entities.DEVICE_CONFIGURATION, entities.NONCOMPLIANCE_FINDING],
     relationships: [
