@@ -38,8 +38,8 @@
   "dependencies": {
     "@azure/identity": "^1.2.2",
     "@microsoft/microsoft-graph-client": "^2.2.1",
-    "isomorphic-unfetch": "^3.1.0",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "node-fetch": "2"
   },
   "peerDependencies": {
     "@jupiterone/integration-sdk-core": "^9.0.0"
@@ -50,6 +50,8 @@
     "@jupiterone/integration-sdk-testing": "^9.0.0",
     "@microsoft/microsoft-graph-types": "^2.24.0",
     "@microsoft/microsoft-graph-types-beta": "^0.29.0-preview",
+    "@pollyjs/adapter-fetch": "^6.0.6",
+    "@pollyjs/core": "^6.0.6",
     "@types/node": "^14",
     "@types/node-fetch": "^2.6.2",
     "auto": "^10.36.5"
