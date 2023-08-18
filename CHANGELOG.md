@@ -1,3 +1,20 @@
+# v7.0.0 (Fri Aug 18 2023)
+
+#### 💥 Breaking Change
+
+- INT-8955 - upgrade sdk packages and node 18 [#146](https://github.com/JupiterOne/graph-microsoft-365/pull/146) (ronald.arias@contractor.jupiterone.com)
+
+#### 🐛 Bug Fix
+
+- Int 9015 correction of yml [#144](https://github.com/JupiterOne/graph-microsoft-365/pull/144) (gonzaloavalosribas@Gonzalos-MacBook-Pro.local)
+
+#### Authors: 2
+
+- Gonzalo Avalos Ribas ([@Gonzalo-Avalos-Ribas](https://github.com/Gonzalo-Avalos-Ribas))
+- Ronald Arias ([@RonaldEAM](https://github.com/RonaldEAM))
+
+---
+
 # v6.7.1 (Tue Aug 08 2023)
 
 #### 🐛 Bug Fix
