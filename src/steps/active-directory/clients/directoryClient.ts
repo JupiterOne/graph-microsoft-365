@@ -1,9 +1,4 @@
-import {
-  DirectoryObject,
-  DirectoryRole,
-  Group,
-  User,
-} from '@microsoft/microsoft-graph-types';
+import { DirectoryObject, Group, User } from '@microsoft/microsoft-graph-types';
 
 import { GraphClient } from '../../../ms-graph/client';
 
@@ -25,24 +20,6 @@ export interface GroupMember extends DirectoryObject {
 }
 
 export class DirectoryGraphClient extends GraphClient {
-  // https://docs.microsoft.com/en-us/graph/api/directoryrole-list?view=graph-rest-1.0&tabs=http
-  public async iterateDirectoryRoles(
-    callback: (role: DirectoryRole) => void | Promise<void>,
-  ): Promise<void> {
-    return this.iterateResources({ resourceUrl: '/directoryRoles', callback });
-  }
-
-  // https://docs.microsoft.com/en-us/graph/api/directoryrole-list-members?view=graph-rest-1.0&tabs=http
-  public async iterateDirectoryRoleMembers(
-    roleId: string,
-    callback: (member: DirectoryObject) => void | Promise<void>,
-  ): Promise<void> {
-    return this.iterateResources({
-      resourceUrl: `/directoryRoles/${roleId}/members`,
-      callback,
-    });
-  }
-
   // https://docs.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http
   public async iterateGroups(
     callback: (user: Group) => void | Promise<void>,

@@ -1,4 +1,3 @@
-import { PassThrough } from 'stream';
 import { GraphClient } from '../../../ms-graph/client';
 import {
   DeviceComplianceDeviceStatus,
@@ -105,11 +104,16 @@ export class DeviceManagementIntuneClient extends GraphClient {
     const api = this.client.api(
       'https://graph.microsoft.com/beta/deviceManagement/reports/getDeviceInstallStatusReport',
     );
-    const res: PassThrough = await api.post({
+    const res: NodeJS.ReadableStream = await api.post({
       filter: `(ApplicationId eq '${mobileAppId}')`,
     });
 
-    const response = JSON.parse(Buffer.from(res.read()).toString());
+    let responseStr = '';
+    for await (const chunk of res) {
+      responseStr += Buffer.from(chunk).toString();
+    }
+
+    const response = JSON.parse(responseStr);
     for (const responseValue of response.Values) {
       const mobileAppInstallStatus = {};
       response.Schema.forEach((column, index) => {

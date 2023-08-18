@@ -25,6 +25,7 @@ import {
   findingIsOpen,
   UNRELATED_DEVICE_STATUSES,
 } from '../../utils';
+import { IngestionSources } from '../../../constants';
 
 export async function fetchCompliancePolicyAndFindings(
   executionContext: IntegrationStepContext,
@@ -163,6 +164,7 @@ export const compliancePolicyAndFindingsSteps: Step<
 >[] = [
   {
     id: steps.FETCH_COMPLIANCE_POLICIES_AND_FINDINGS,
+    ingestionSourceId: IngestionSources.COMPLIANCE_POLICIES,
     name: 'Compliance Policies and Related Findings',
     entities: [entities.COMPLIANCE_POLICY, entities.NONCOMPLIANCE_FINDING],
     relationships: [

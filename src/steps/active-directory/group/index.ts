@@ -11,10 +11,12 @@ import {
   createAccountGroupRelationship,
   createGroupEntity,
 } from './converters';
+import { IngestionSources } from '../../constants';
 
 export const groupSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: steps.FETCH_GROUPS,
+    ingestionSourceId: IngestionSources.GROUPS,
     name: 'Active Directory Groups',
     entities: [Entities.GROUP],
     relationships: [Relationships.ACCOUNT_HAS_GROUP],

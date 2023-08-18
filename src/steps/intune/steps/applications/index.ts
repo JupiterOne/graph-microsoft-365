@@ -21,6 +21,7 @@ import {
 } from './converters';
 import { DeviceManagementIntuneClient } from '../../clients/deviceManagementIntuneClient';
 import { DetectedApp } from '@microsoft/microsoft-graph-types-beta';
+import { IngestionSources } from '../../../constants';
 
 export async function fetchManagedApplications({
   logger,
@@ -173,6 +174,7 @@ export const applicationSteps: Step<
 >[] = [
   {
     id: steps.FETCH_MANAGED_APPLICATIONS,
+    ingestionSourceId: IngestionSources.APPLICATIONS,
     name: 'Managed Applications',
     entities: [entities.MANAGED_APPLICATION],
     relationships: [...relationships.MULTI_DEVICE_ASSIGNED_MANAGED_APPLICATION],
@@ -181,6 +183,7 @@ export const applicationSteps: Step<
   },
   {
     id: steps.FETCH_DETECTED_APPLICATIONS,
+    ingestionSourceId: IngestionSources.APPLICATIONS,
     name: 'Detected Applications',
     entities: [entities.DETECTED_APPLICATION],
     relationships: [

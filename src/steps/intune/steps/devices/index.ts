@@ -13,6 +13,7 @@ import {
   createIntuneHostAgentEntity,
   createUserDeviceMappedRelationship,
 } from './converters';
+import { IngestionSources } from '../../../constants';
 
 /**
  * Intune ManagedDevices are componsed of a physical or virtual device plus the Intune host agent.
@@ -87,6 +88,7 @@ export const deviceSteps: Step<
 >[] = [
   {
     id: steps.FETCH_DEVICES,
+    ingestionSourceId: IngestionSources.DEVICES,
     name: 'Managed Devices',
     entities: [...entities.MULTI_DEVICE, entities.HOST_AGENT],
     relationships: [

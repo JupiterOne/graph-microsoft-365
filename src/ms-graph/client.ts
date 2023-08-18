@@ -6,16 +6,22 @@ import {
   IntegrationProviderAuthorizationError,
 } from '@jupiterone/integration-sdk-core';
 import {
+  AuthenticationHandler,
   AuthenticationProvider,
   AuthenticationProviderOptions,
   Client,
+  RedirectHandler,
+  RedirectHandlerOptions,
+  RetryHandler,
+  RetryHandlerOptions,
+  TelemetryHandler,
 } from '@microsoft/microsoft-graph-client';
+import { HTTPMessageHandler } from './middlewares/HTTPMessageHandler';
 import {
   DeviceManagement,
   Organization,
 } from '@microsoft/microsoft-graph-types';
 import { DeviceManagementSubscriptionState } from '@microsoft/microsoft-graph-types-beta';
-import 'isomorphic-unfetch';
 import { toArray } from '../utils/toArray';
 
 import { ClientConfig } from './types';
@@ -47,7 +53,7 @@ export class GraphClient {
     readonly config: ClientConfig,
   ) {
     this.client = Client.initWithMiddleware({
-      authProvider: new GraphAuthenticationProvider(config),
+      middleware: this.buildMiddleware(new GraphAuthenticationProvider(config)),
       fetchOptions: {
         timeout: 30000,
       },
@@ -65,6 +71,22 @@ export class GraphClient {
         statusText: err.code,
       });
     }
+  }
+
+  private buildMiddleware(
+    authProvider: AuthenticationProvider,
+  ): AuthenticationHandler {
+    const authenticationHandler = new AuthenticationHandler(authProvider);
+    const retryHandler = new RetryHandler(new RetryHandlerOptions());
+    const telemetryHandler = new TelemetryHandler();
+    const httpMessageHandler = new HTTPMessageHandler();
+
+    authenticationHandler.setNext(retryHandler);
+    const redirectHandler = new RedirectHandler(new RedirectHandlerOptions());
+    retryHandler.setNext(redirectHandler);
+    redirectHandler.setNext(telemetryHandler);
+    telemetryHandler.setNext(httpMessageHandler);
+    return authenticationHandler;
   }
 
   /**
@@ -99,7 +121,11 @@ export class GraphClient {
   > {
     const url = '/deviceManagement';
     try {
-      return await this.client.api(url).select('intuneAccountId').get();
+      const response = await this.client
+        .api(url)
+        .select('intuneAccountId')
+        .get();
+      return response;
     } catch (error) {
       this.handleApiError(error, url);
     }

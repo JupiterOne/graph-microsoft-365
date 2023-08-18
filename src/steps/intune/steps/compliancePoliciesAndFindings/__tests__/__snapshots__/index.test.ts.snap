@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`fetchCompliancePolicyAndFindings should make entities and relationships correctly: compliancePolicyEntities 1`] = `
-Array [
-  Object {
-    "_class": Array [
+[
+  {
+    "_class": [
       "Configuration",
       "ControlPolicy",
     ],
     "_key": "1aa3f0f3-d780-4349-885b-c86d273aa14e",
-    "_rawData": Array [],
+    "_rawData": [],
     "_type": "intune_compliance_policy",
     "category": "compliance",
     "createdOn": 1613586600379,
@@ -24,8 +24,8 @@ Array [
 `;
 
 exports[`fetchCompliancePolicyAndFindings should make entities and relationships correctly: deviceCompliancePolicyRelationships 1`] = `
-Array [
-  Object {
+[
+  {
     "_class": "ASSIGNED",
     "_fromEntityKey": "intune-host-agent:683dbff1-c8ff-4996-91ae-85484de46cfc",
     "_key": "intune-host-agent:683dbff1-c8ff-4996-91ae-85484de46cfc|assigned|1aa3f0f3-d780-4349-885b-c86d273aa14e",
@@ -39,8 +39,8 @@ Array [
 `;
 
 exports[`fetchCompliancePolicyAndFindings should make entities and relationships correctly: deviceDeviceConfigurationRelationships 1`] = `
-Array [
-  Object {
+[
+  {
     "_class": "HAS",
     "_fromEntityKey": "683dbff1-c8ff-4996-91ae-85484de46cfc",
     "_key": "683dbff1-c8ff-4996-91ae-85484de46cfc|has|7b521133-f056-40a9-b639-b76afd67e4bb_1aa3f0f3-d780-4349-885b-c86d273aa14e_683dbff1-c8ff-4996-91ae-85484de46cfc",
@@ -52,8 +52,8 @@ Array [
 `;
 
 exports[`fetchCompliancePolicyAndFindings should make entities and relationships correctly: noncomplianceFindingDeviceConfigurationRelationships 1`] = `
-Array [
-  Object {
+[
+  {
     "_class": "IDENTIFIED",
     "_fromEntityKey": "1aa3f0f3-d780-4349-885b-c86d273aa14e",
     "_key": "1aa3f0f3-d780-4349-885b-c86d273aa14e|identified|7b521133-f056-40a9-b639-b76afd67e4bb_1aa3f0f3-d780-4349-885b-c86d273aa14e_683dbff1-c8ff-4996-91ae-85484de46cfc",
@@ -65,16 +65,16 @@ Array [
 `;
 
 exports[`fetchCompliancePolicyAndFindings should make entities and relationships correctly: noncomplianceFindingEntities 1`] = `
-Array [
-  Object {
-    "_class": Array [
+[
+  {
+    "_class": [
       "Finding",
     ],
     "_key": "7b521133-f056-40a9-b639-b76afd67e4bb_1aa3f0f3-d780-4349-885b-c86d273aa14e_683dbff1-c8ff-4996-91ae-85484de46cfc",
-    "_rawData": Array [
-      Object {
+    "_rawData": [
+      {
         "name": "default",
-        "rawData": Object {
+        "rawData": {
           "complianceGracePeriodExpirationDateTime": "2021-02-17T19:13:41.8113Z",
           "deviceDisplayName": "[REDACTED]",
           "deviceModel": null,

@@ -3,10 +3,12 @@ import { IntegrationConfig, IntegrationStepContext } from '../../../types';
 import { DirectoryGraphClient } from '../clients/directoryClient';
 import { Entities, Relationships, steps } from '../constants';
 import { createGroupMemberRelationship } from './converters';
+import { IngestionSources } from '../../constants';
 
 export const groupMembersSteps: IntegrationStep<IntegrationConfig>[] = [
   {
     id: steps.FETCH_GROUP_MEMBERS,
+    ingestionSourceId: IngestionSources.GROUPS,
     name: 'Active Directory Group Members',
     entities: [Entities.GROUP_MEMBER],
     relationships: [

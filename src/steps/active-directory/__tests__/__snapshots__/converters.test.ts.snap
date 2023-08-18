@@ -1,36 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`createAccountEntityWithOrganization properties transferred: createAccountEntityWithOrganization 1`] = `
-Object {
-  "_class": Array [
+{
+  "_class": [
     "Account",
   ],
   "_key": "microsoft_365_account-the-instance-id",
-  "_rawData": Array [
-    Object {
+  "_rawData": [
+    {
       "name": "default",
-      "rawData": Object {
-        "intuneConfig": Object {
+      "rawData": {
+        "intuneConfig": {
           "intuneAccountID": "intuneAccountID",
           "mobileDeviceManagementAuthority": "mobileDeviceManagementAuthority",
           "subscriptionState": "subscriptionState",
         },
-        "organization": Object {
-          "assignedPlans": Array [
-            Object {
+        "organization": {
+          "assignedPlans": [
+            {
               "assignedDateTime": "2021-01-13T21:06:18Z",
               "capabilityStatus": "Deleted",
               "service": "SCO",
               "servicePlanId": "1111111-1111-1111-1111-111111111111",
             },
-            Object {
+            {
               "assignedDateTime": "2021-01-13T21:06:12Z",
               "capabilityStatus": "Enabled",
               "service": "MicrosoftKaizala",
               "servicePlanId": "1111111-1111-1111-1111-111111111111",
             },
           ],
-          "businessPhones": Array [],
+          "businessPhones": [],
           "city": undefined,
           "country": undefined,
           "countryLetterCode": "US",
@@ -38,33 +38,33 @@ Object {
           "deletedDateTime": undefined,
           "displayName": "Default Directory",
           "id": "1111111-1111-1111-1111-111111111111",
-          "marketingNotificationEmails": Array [],
+          "marketingNotificationEmails": [],
           "onPremisesLastSyncDateTime": undefined,
           "onPremisesSyncEnabled": undefined,
           "postalCode": undefined,
           "preferredLanguage": "en",
           "privacyProfile": undefined,
-          "provisionedPlans": Array [
-            Object {
+          "provisionedPlans": [
+            {
               "capabilityStatus": "Enabled",
               "provisioningStatus": "Success",
               "service": "MicrosoftCommunicationsOnline",
             },
-            Object {
+            {
               "capabilityStatus": "Enabled",
               "provisioningStatus": "Success",
               "service": "SharePoint",
             },
           ],
-          "securityComplianceNotificationMails": Array [],
-          "securityComplianceNotificationPhones": Array [],
+          "securityComplianceNotificationMails": [],
+          "securityComplianceNotificationPhones": [],
           "state": undefined,
           "street": undefined,
-          "technicalNotificationMails": Array [
+          "technicalNotificationMails": [
             "technicalNotificationMail.jupiterone@hotmail.com",
           ],
-          "verifiedDomains": Array [
-            Object {
+          "verifiedDomains": [
+            {
               "capabilities": "Email, OfficeCommunicationsOnline",
               "isDefault": true,
               "isInitial": true,
@@ -86,7 +86,7 @@ Object {
   "mobileDeviceManagementAuthority": "mobileDeviceManagementAuthority",
   "name": "Default Directory",
   "organizationName": "Default Directory",
-  "verifiedDomains": Array [
+  "verifiedDomains": [
     "verifiedDomain.onmicrosoft.com",
   ],
 }

@@ -1,17 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`fetchDeviceConfigurationsAndFindings should make entities and relationships correctly: deviceConfigurationEntities 1`] = `
-Array [
-  Object {
-    "_class": Array [
+[
+  {
+    "_class": [
       "Configuration",
       "ControlPolicy",
     ],
     "_key": "6aa605f0-744e-4ae1-8031-c6564624c89b",
-    "_rawData": Array [
-      Object {
+    "_rawData": [
+      {
         "name": "default",
-        "rawData": Object {
+        "rawData": {
           "@odata.type": "#microsoft.graph.iosCustomConfiguration",
           "createdDateTime": "2021-02-17T18:31:21.3225031Z",
           "description": null,
@@ -40,8 +40,8 @@ Array [
 `;
 
 exports[`fetchDeviceConfigurationsAndFindings should make entities and relationships correctly: deviceDeviceConfigurationRelationships 1`] = `
-Array [
-  Object {
+[
+  {
     "_class": "HAS",
     "_fromEntityKey": "683dbff1-c8ff-4996-91ae-85484de46cfc",
     "_key": "683dbff1-c8ff-4996-91ae-85484de46cfc|has|7b521133-f056-40a9-b639-b76afd67e4bb_6aa605f0-744e-4ae1-8031-c6564624c89b_683dbff1-c8ff-4996-91ae-85484de46cfc",
@@ -53,8 +53,8 @@ Array [
 `;
 
 exports[`fetchDeviceConfigurationsAndFindings should make entities and relationships correctly: noncomplianceFindingDeviceConfigurationRelationships 1`] = `
-Array [
-  Object {
+[
+  {
     "_class": "IDENTIFIED",
     "_fromEntityKey": "6aa605f0-744e-4ae1-8031-c6564624c89b",
     "_key": "6aa605f0-744e-4ae1-8031-c6564624c89b|identified|7b521133-f056-40a9-b639-b76afd67e4bb_6aa605f0-744e-4ae1-8031-c6564624c89b_683dbff1-c8ff-4996-91ae-85484de46cfc",
@@ -66,8 +66,8 @@ Array [
 `;
 
 exports[`fetchDeviceConfigurationsAndFindings should make entities and relationships correctly: noncomplianceFindingDeviceRelationships 1`] = `
-Array [
-  Object {
+[
+  {
     "_class": "ASSIGNED",
     "_fromEntityKey": "intune-host-agent:683dbff1-c8ff-4996-91ae-85484de46cfc",
     "_key": "7b521133-f056-40a9-b639-b76afd67e4bb_6aa605f0-744e-4ae1-8031-c6564624c89b_683dbff1-c8ff-4996-91ae-85484de46cfc|intune-host-agent:683dbff1-c8ff-4996-91ae-85484de46cfc|6aa605f0-744e-4ae1-8031-c6564624c89b",
@@ -81,16 +81,16 @@ Array [
 `;
 
 exports[`fetchDeviceConfigurationsAndFindings should make entities and relationships correctly: noncomplianceFindingEntities 1`] = `
-Array [
-  Object {
-    "_class": Array [
+[
+  {
+    "_class": [
       "Finding",
     ],
     "_key": "7b521133-f056-40a9-b639-b76afd67e4bb_6aa605f0-744e-4ae1-8031-c6564624c89b_683dbff1-c8ff-4996-91ae-85484de46cfc",
-    "_rawData": Array [
-      Object {
+    "_rawData": [
+      {
         "name": "default",
-        "rawData": Object {
+        "rawData": {
           "complianceGracePeriodExpirationDateTime": "2021-02-17T19:13:41.8113Z",
           "deviceDisplayName": "[REDACTED]",
           "deviceModel": null,
