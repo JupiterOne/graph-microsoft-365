@@ -1,3 +1,15 @@
+# v7.0.1 (Fri Aug 18 2023)
+
+#### 🐛 Bug Fix
+
+- fix: export ingestionConfig [#147](https://github.com/JupiterOne/graph-microsoft-365/pull/147) (ronald.arias@contractor.jupiterone.com)
+
+#### Authors: 1
+
+- Ronald Arias ([@RonaldEAM](https://github.com/RonaldEAM))
+
+---
+
 # v7.0.0 (Fri Aug 18 2023)
 
 #### 💥 Breaking Change
