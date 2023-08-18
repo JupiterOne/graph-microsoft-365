@@ -6,6 +6,7 @@ import { intuneSteps } from './steps/intune';
 import { IntegrationConfig } from './types';
 import { getStepStartStates } from './utils/getStepStartStates';
 import { validateInvocation } from './validateInvocation';
+import { ingestionConfig } from './ingestionConfig';
 
 export const integrationSteps = [...activeDirectorySteps, ...intuneSteps];
 
@@ -15,4 +16,5 @@ export const invocationConfig: IntegrationInvocationConfig<IntegrationConfig> =
     validateInvocation,
     getStepStartStates,
     integrationSteps,
+    ingestionConfig,
   };
