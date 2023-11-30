@@ -1,3 +1,20 @@
+# v7.0.2 (Thu Nov 30 2023)
+
+#### 🐛 Bug Fix
+
+- IINT-10049: disable Managed Applications step temporarily [#149](https://github.com/JupiterOne/graph-microsoft-365/pull/149) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### ⚠️ Pushed to `main`
+
+- Populate CODEOWENRS, baseline package.json and baseline cortex.yaml ([@jablonnc](https://github.com/jablonnc))
+
+#### Authors: 2
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+- Noah Jablonski ([@jablonnc](https://github.com/jablonnc))
+
+---
+
 # v7.0.1 (Fri Aug 18 2023)
 
 #### 🐛 Bug Fix
