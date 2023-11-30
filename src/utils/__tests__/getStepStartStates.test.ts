@@ -8,6 +8,7 @@ import { setupAzureRecording } from '../../../test/recording';
 import { getStepStartStates } from '../getStepStartStates';
 import { set } from 'lodash';
 import { intuneSteps } from '../../steps/intune';
+import { steps } from '../../steps/intune/constants';
 
 let recording: Recording;
 
@@ -27,7 +28,10 @@ describe('getStepStartStates', () => {
     const context = createMockStepExecutionContext({ instanceConfig: config });
     expect(await getStepStartStates(context)).toEqual(
       integrationSteps.reduce(
-        (acc, step) => set(acc, `${step.id}.disabled`, false),
+        (acc, step) =>
+          step.id === steps.FETCH_MANAGED_APPLICATIONS
+            ? set(acc, `${step.id}.disabled`, true)
+            : set(acc, `${step.id}.disabled`, false),
         {},
       ),
     );
