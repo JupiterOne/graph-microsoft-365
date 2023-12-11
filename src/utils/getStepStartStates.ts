@@ -1,6 +1,5 @@
 import {
   IntegrationExecutionContext,
-  IntegrationWarnEventName,
   StepStartStates,
 } from '@jupiterone/integration-sdk-core';
 import { IntegrationConfig } from '../types';
@@ -10,7 +9,6 @@ import { set } from 'lodash';
 import { GraphClient } from '../ms-graph/client';
 import { logger } from '@azure/identity';
 import { validateExecutionConfig } from '../validateInvocation';
-import { steps } from '../steps/intune/constants';
 
 export async function getStepStartStates(
   executionContext: IntegrationExecutionContext<IntegrationConfig>,
@@ -22,18 +20,12 @@ export async function getStepStartStates(
     stepIdsToDisable.push(...intuneSteps.map((s) => s.id));
   }
 
-  executionContext.logger.publishWarnEvent({
-    name: 'step_skip' as IntegrationWarnEventName,
-    description: `Step ${steps.FETCH_MANAGED_APPLICATIONS} is temporarily disabled due to active issues with Microsoft.`,
-  });
-
   return integrationSteps.reduce(
     (startStates, step) =>
       set(
         startStates,
         `${step.id}.disabled`,
-        stepIdsToDisable.includes(step.id) ||
-          step.id === steps.FETCH_MANAGED_APPLICATIONS,
+        stepIdsToDisable.includes(step.id),
       ),
     {},
   );
