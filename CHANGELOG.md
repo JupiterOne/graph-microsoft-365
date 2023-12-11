@@ -1,3 +1,20 @@
+# v7.0.3 (Mon Dec 11 2023)
+
+#### 🐛 Bug Fix
+
+- INT-8991: re enable managed applications step [#150](https://github.com/JupiterOne/graph-microsoft-365/pull/150) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### ⚠️ Pushed to `main`
+
+- Fix x-cortex-service-groups where tier-4 was set incorrectly ([@jablonnc](https://github.com/jablonnc))
+
+#### Authors: 2
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+- Noah Jablonski ([@jablonnc](https://github.com/jablonnc))
+
+---
+
 # v7.0.2 (Thu Nov 30 2023)
 
 #### 🐛 Bug Fix
