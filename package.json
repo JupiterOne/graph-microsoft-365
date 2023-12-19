@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/graph-microsoft-365",
-  "version": "7.0.3",
+  "version": "7.0.4",
   "description": "A JupiterOne Integration for Microsoft 365",
   "repository": {
     "type": "git",
