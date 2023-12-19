@@ -1,3 +1,15 @@
+# v7.0.5 (Tue Dec 19 2023)
+
+#### 🐛 Bug Fix
+
+- INT-8991: add try catch in device installation fetch [#152](https://github.com/JupiterOne/graph-microsoft-365/pull/152) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### Authors: 1
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+
+---
+
 # v7.0.4 (Tue Dec 19 2023)
 
 #### 🐛 Bug Fix
