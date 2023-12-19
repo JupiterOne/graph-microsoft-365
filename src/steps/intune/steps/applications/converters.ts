@@ -38,7 +38,6 @@ export function createManagedApplicationEntity(
         id: managedApp.id,
         name: managedApp.displayName?.toLowerCase(),
         displayName: managedApp.displayName as string,
-        description: managedApp.description,
         notes: managedApp.notes ? [managedApp.notes] : [],
         COTS: !isLineOfBusiness(managedApp['@odata.type']),
         external: !isLineOfBusiness(managedApp['@odata.type']),
