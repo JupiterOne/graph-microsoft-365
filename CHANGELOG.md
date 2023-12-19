@@ -1,3 +1,15 @@
+# v7.0.4 (Tue Dec 19 2023)
+
+#### 🐛 Bug Fix
+
+- INT-8991: remove query parameter causing 500 errors [#151](https://github.com/JupiterOne/graph-microsoft-365/pull/151) ([@gastonyelmini](https://github.com/gastonyelmini))
+
+#### Authors: 1
+
+- Gaston Yelmini ([@gastonyelmini](https://github.com/gastonyelmini))
+
+---
+
 # v7.0.3 (Mon Dec 11 2023)
 
 #### 🐛 Bug Fix
