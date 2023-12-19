@@ -44,46 +44,50 @@ export async function fetchManagedApplications({
     const managedAppEntity = createManagedApplicationEntity(managedApp);
     await jobState.addEntity(managedAppEntity);
 
-    await intuneClient.iterateManagedAppDeviceStatuses(
-      managedApp.id as string,
-      async (deviceStatus) => {
-        const deviceId = deviceStatus.DeviceId;
-        const deviceEntity = await jobState.findEntity(deviceId as string);
+    try {
+      await intuneClient.iterateManagedAppDeviceStatuses(
+        managedApp.id as string,
+        async (deviceStatus) => {
+          const deviceId = deviceStatus.DeviceId;
+          const deviceEntity = await jobState.findEntity(deviceId as string);
 
-        if (!deviceEntity) {
-          logger.warn(
-            { deviceId, deviceStatus },
-            'Error creating Device -> DeviceConfiguration relationship: deviceEntity does not exist',
-          );
-          return;
-        }
+          if (!deviceEntity) {
+            logger.warn(
+              { deviceId, deviceStatus },
+              'Error creating Device -> DeviceConfiguration relationship: deviceEntity does not exist',
+            );
+            return;
+          }
 
-        const deviceAssignedAppKey =
-          deviceEntity._key + '|' + managedAppEntity._key;
+          const deviceAssignedAppKey =
+            deviceEntity._key + '|' + managedAppEntity._key;
 
-        if (jobState.hasKey(deviceAssignedAppKey)) {
-          duplicateKeysCount++;
-        } else {
-          await jobState.addRelationship(
-            createDirectRelationship({
-              _class:
-                relationships.MULTI_DEVICE_ASSIGNED_MANAGED_APPLICATION[0]
-                  ._class,
-              from: deviceEntity,
-              to: managedAppEntity,
-              properties: {
-                _key: deviceAssignedAppKey,
-                installState: deviceStatus.InstallState, // Possible values are: installed, failed, notInstalled, uninstallFailed, pendingInstall, & unknown
-                installStateDetail: deviceStatus.InstallStateDetail, // extra details on the install state. Ex: iosAppStoreUpdateFailedToInstall
-                errorCode: deviceStatus.ErrorCode,
-                installedVersion:
-                  managedApp.version ?? findNewestVersion(managedApp),
-              },
-            }),
-          );
-        }
-      },
-    );
+          if (jobState.hasKey(deviceAssignedAppKey)) {
+            duplicateKeysCount++;
+          } else {
+            await jobState.addRelationship(
+              createDirectRelationship({
+                _class:
+                  relationships.MULTI_DEVICE_ASSIGNED_MANAGED_APPLICATION[0]
+                    ._class,
+                from: deviceEntity,
+                to: managedAppEntity,
+                properties: {
+                  _key: deviceAssignedAppKey,
+                  installState: deviceStatus.InstallState, // Possible values are: installed, failed, notInstalled, uninstallFailed, pendingInstall, & unknown
+                  installStateDetail: deviceStatus.InstallStateDetail, // extra details on the install state. Ex: iosAppStoreUpdateFailedToInstall
+                  errorCode: deviceStatus.ErrorCode,
+                  installedVersion:
+                    managedApp.version ?? findNewestVersion(managedApp),
+                },
+              }),
+            );
+          }
+        },
+      );
+    } catch (err) {
+      logger.warn(err, 'Error when fetching device installation reports');
+    }
   });
 
   if (duplicateKeysCount) {
