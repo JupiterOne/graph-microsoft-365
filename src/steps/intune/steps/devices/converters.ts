@@ -146,7 +146,8 @@ export function createManagedDeviceEntity(
         username: managedDevice.userPrincipalName,
         physical: isPhysicalDevice,
         // Used to map HOSTAGENT to user_endpoint via user_endpoint's udid
-        deviceId:
+        deviceId: managedDevice.id,
+        aadDeviceId:
           managedDevice.azureActiveDirectoryDeviceId ??
           managedDevice.azureADDeviceId, // I believe these are legacy values now
         // POTENTIAL: managedDevice.usersLoggedOn - link out to other users perhaps?
