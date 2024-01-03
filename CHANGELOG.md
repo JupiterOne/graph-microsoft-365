@@ -1,3 +1,20 @@
+# v7.0.6 (Wed Jan 03 2024)
+
+#### 🐛 Bug Fix
+
+- add deviceId [#153](https://github.com/JupiterOne/graph-microsoft-365/pull/153) ([@mknoedel](https://github.com/mknoedel))
+
+#### ⚠️ Pushed to `main`
+
+- Apply remove-codeql with multi-gitter [ci skip] ([@electricgull](https://github.com/electricgull))
+
+#### Authors: 2
+
+- Cameron Griffin ([@electricgull](https://github.com/electricgull))
+- Michael Knoedel ([@mknoedel](https://github.com/mknoedel))
+
+---
+
 # v7.0.5 (Tue Dec 19 2023)
 
 #### 🐛 Bug Fix
