@@ -11,6 +11,11 @@ const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
   tenant: {
     type: 'string',
   },
+  vulnerabilitySeverities: {
+    type: 'string',
+    mask: false,
+    optional: true,
+  },
 };
 
 export default instanceConfigFields;

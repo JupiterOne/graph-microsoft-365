@@ -21,6 +21,7 @@ import {
 import { last } from 'lodash';
 import { DeviceCompliancePolicy } from '@microsoft/microsoft-graph-types-beta';
 import {
+  calculateSeverity,
   deviceIsRelatedToConfig,
   findingIsOpen,
   UNRELATED_DEVICE_STATUSES,
@@ -35,6 +36,7 @@ export async function fetchCompliancePolicyAndFindings(
     logger,
     instance.config,
   );
+  const severityFilter = instance.config.vulnerabilitySeverities?.split(',');
   await intuneClient.iterateCompliancePolicies(async (compliancePolicy) => {
     await intuneClient.iterateCompliancePolicyDeviceStatuses(
       compliancePolicy.id as string,
@@ -110,7 +112,12 @@ export async function fetchCompliancePolicyAndFindings(
                 },
                 'Possible duplicate compliancePolicyDeviceStatus',
               );
-            } else {
+            } else if (
+              !severityFilter ||
+              severityFilter.includes(
+                calculateSeverity(deviceStatus.status, logger),
+              )
+            ) {
               const noncomplianceFindingEntity =
                 createNoncomplianceFindingEntity(
                   deviceStatus,

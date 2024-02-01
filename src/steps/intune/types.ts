@@ -17,3 +17,12 @@ export type MobileAppInstallStatus = {
   AppInstallStateDetails: string;
   AppInstallStateDetails_loc: string;
 };
+
+export enum VulnerabilitySeverity {
+  INFORMATIONAL = 'informational',
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+  CRITICAL = 'critical',
+  UNKNOWN = 'unknown',
+}

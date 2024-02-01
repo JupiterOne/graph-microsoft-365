@@ -5,12 +5,28 @@ import {
 
 import { GraphClient } from './ms-graph/client';
 import { IntegrationConfig } from './types';
+import { VulnerabilitySeverity } from './steps/intune/types';
+
+const validateVulnerabilitySeverities = (vulnerabilitySeverities: string) => {
+  const vulnerabilitySeveritiesArray = vulnerabilitySeverities.split(',');
+  const validSeverities = Object.values(VulnerabilitySeverity);
+  for (const vulnerabilitySeverity of vulnerabilitySeveritiesArray) {
+    if (
+      !validSeverities.includes(vulnerabilitySeverity as VulnerabilitySeverity)
+    ) {
+      throw new IntegrationValidationError(
+        `Severity - ${vulnerabilitySeverity} - is not valid. Valid vulnerability severities include ${validSeverities}`,
+      );
+    }
+  }
+};
 
 export function validateExecutionConfig({
   instance,
   logger,
 }: IntegrationExecutionContext<IntegrationConfig>): void {
-  const { clientId, clientSecret, tenant } = instance.config;
+  const { clientId, clientSecret, tenant, vulnerabilitySeverities } =
+    instance.config;
 
   logger.info(
     {
@@ -29,6 +45,14 @@ export function validateExecutionConfig({
     throw new IntegrationValidationError(
       `Config requires: ${missingFields.join(', ')}`,
     );
+  }
+
+  if (vulnerabilitySeverities) {
+    instance.config.vulnerabilitySeverities = vulnerabilitySeverities.replace(
+      /\s+/g,
+      '',
+    );
+    validateVulnerabilitySeverities(instance.config.vulnerabilitySeverities);
   }
 }
 
