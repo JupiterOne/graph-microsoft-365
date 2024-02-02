@@ -19,6 +19,7 @@ import {
 } from './converters';
 import { last } from 'lodash';
 import {
+  calculateSeverity,
   deviceIsRelatedToConfig,
   findingIsOpen,
   UNRELATED_DEVICE_STATUSES,
@@ -34,6 +35,7 @@ export async function fetchDeviceConfigurationsAndFindings(
     logger,
     instance.config,
   );
+  const severityFilter = instance.config.vulnerabilitySeverities?.split(',');
   await intuneClient.iterateDeviceConfigurations(
     async (deviceConfiguration) => {
       let deviceConfigurationCreatedOrFound = false;
@@ -113,7 +115,12 @@ export async function fetchDeviceConfigurationsAndFindings(
                   },
                   'Possible duplicate deviceConfigurationDeviceStatus',
                 );
-              } else {
+              } else if (
+                !severityFilter ||
+                severityFilter.includes(
+                  calculateSeverity(deviceStatus.status, logger),
+                )
+              ) {
                 const noncomplianceFindingEntity =
                   createNoncomplianceFindingEntity(
                     deviceStatus,

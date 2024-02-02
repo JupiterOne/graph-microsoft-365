@@ -25,6 +25,11 @@ export interface IntegrationConfig extends IntegrationInstanceConfig {
    * flow.
    */
   tenant: string;
+
+  /**
+   * Comma separated vulnerability severity levels to filter by
+   */
+  vulnerabilitySeverities?: string;
 }
 
 /**

@@ -1,5 +1,6 @@
 import { IntegrationLogger } from '@jupiterone/integration-sdk-core';
 import { DeviceConfigurationDeviceStatus } from '@microsoft/microsoft-graph-types-beta';
+import { VulnerabilitySeverity } from './types';
 
 /**
  * Device statuses that indicate that a finding should not be open
@@ -74,19 +75,19 @@ export function calculateNumericSeverity(
 export function calculateSeverity(
   deviceStatus: DeviceConfigurationDeviceStatus['status'],
   logger: IntegrationLogger,
-) {
+): VulnerabilitySeverity {
   const numericSeverity = calculateNumericSeverity(deviceStatus, logger);
   if (numericSeverity === 0) {
-    return 'informational';
+    return VulnerabilitySeverity.INFORMATIONAL;
   } else if (numericSeverity < 4) {
-    return 'low';
+    return VulnerabilitySeverity.LOW;
   } else if (numericSeverity < 6) {
-    return 'medium';
+    return VulnerabilitySeverity.MEDIUM;
   } else if (numericSeverity < 8) {
-    return 'high';
+    return VulnerabilitySeverity.HIGH;
   } else if (numericSeverity <= 10) {
-    return 'critical';
+    return VulnerabilitySeverity.CRITICAL;
   } else {
-    return 'unknown';
+    return VulnerabilitySeverity.UNKNOWN;
   }
 }
