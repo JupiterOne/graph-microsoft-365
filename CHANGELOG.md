@@ -1,3 +1,15 @@
+# v7.1.0 (Fri Feb 02 2024)
+
+#### 🚀 Enhancement
+
+- Add vuln filters [#154](https://github.com/JupiterOne/graph-microsoft-365/pull/154) ([@jehisonprada](https://github.com/jehisonprada))
+
+#### Authors: 1
+
+- [@jehisonprada](https://github.com/jehisonprada)
+
+---
+
 # v7.0.6 (Wed Jan 03 2024)
 
 #### 🐛 Bug Fix
