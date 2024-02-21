@@ -1,3 +1,15 @@
+# v7.2.0 (Wed Feb 21 2024)
+
+#### 🚀 Enhancement
+
+- Added properties to user [#155](https://github.com/JupiterOne/graph-microsoft-365/pull/155) (gonzaloavalosribas@Gonzalos-MacBook-Pro.local)
+
+#### Authors: 1
+
+- Gonzalo Avalos Ribas ([@Gonzalo-Avalos-Ribas](https://github.com/Gonzalo-Avalos-Ribas))
+
+---
+
 # v7.1.0 (Fri Feb 02 2024)
 
 #### 🚀 Enhancement
