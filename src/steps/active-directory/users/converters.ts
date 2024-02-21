@@ -38,6 +38,8 @@ export function createUserEntity(data: User): Entity {
         userType: data.userType,
         active: data.accountEnabled,
         accountEnabled: data.accountEnabled,
+        usageLocation: data.usageLocation,
+        ...((data as any).signInActivity ?? {}),
       },
     },
   });

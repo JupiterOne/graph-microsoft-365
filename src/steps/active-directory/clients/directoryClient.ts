@@ -1,6 +1,7 @@
 import { DirectoryObject, Group, User } from '@microsoft/microsoft-graph-types';
 
 import { GraphClient } from '../../../ms-graph/client';
+import { IntegrationInfoEventName } from '@jupiterone/integration-sdk-core';
 
 export enum MemberType {
   USER = '#microsoft.graph.user',
@@ -63,7 +64,34 @@ export class DirectoryGraphClient extends GraphClient {
       'id',
       'userType',
       'accountEnabled',
+      'usageLocation',
+      'signInActivity',
     ];
+    // The ingestion of 'signInActivity' requires a special permission
+    // If the don't provide it, dont block the entire step.
+    // Just fetch without that property
+    try {
+      await this.callApi({
+        link: '/users',
+        query: { $top: '1', $select: defaultSelect.toString() },
+      });
+    } catch (error) {
+      if (
+        error.message ==
+          'Calling principal does not have required MSGraph permissions AuditLog.Read.All' ||
+        error.message ==
+          "Neither tenant is B2C or tenant doesn't have premium license"
+      ) {
+        this.logger.publishInfoEvent({
+          name: IntegrationInfoEventName.Stats,
+          description:
+            "Missing AuditLog.Read.All permission or Neither tenant is B2C or tenant doesn't have premium license. Won't ingest user sign in activity.",
+        });
+        defaultSelect.splice(defaultSelect.indexOf('signInActivity'), 1);
+      } else {
+        throw error;
+      }
+    }
     return this.iterateResources({
       resourceUrl: '/users',
       query: { $top: '999', $select: defaultSelect.toString() },
