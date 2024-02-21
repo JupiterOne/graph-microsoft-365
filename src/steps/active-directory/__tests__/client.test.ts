@@ -54,6 +54,9 @@ describe('iterateUsers', () => {
     recording = setupAzureRecording({
       directory: __dirname,
       name: 'iterateUsers404',
+      options: {
+        recordFailedRequests: true,
+      },
     });
 
     const client = new DirectoryGraphClient(logger, config);
