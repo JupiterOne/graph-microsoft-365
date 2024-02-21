@@ -65,11 +65,11 @@ describe('iterateUsers', () => {
       });
 
     const resources: User[] = [];
-    await client.iterateUsers((e) => {
-      resources.push(e);
-    });
-
-    expect(resources.length).toEqual(0);
+    await expect(async () => {
+      await client.iterateUsers((e) => {
+        resources.push(e);
+      });
+    }).rejects.toThrow();
   });
 
   // TODO @zemberdotnet INT-5328 Reenable/rerecord test
