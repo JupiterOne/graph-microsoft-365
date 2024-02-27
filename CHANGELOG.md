@@ -1,3 +1,15 @@
+# v7.2.1 (Tue Feb 27 2024)
+
+#### 🐛 Bug Fix
+
+- Remove confusing log [#156](https://github.com/JupiterOne/graph-microsoft-365/pull/156) (gonzaloavalosribas@Gonzalos-MacBook-Pro.local)
+
+#### Authors: 1
+
+- Gonzalo Avalos Ribas ([@Gonzalo-Avalos-Ribas](https://github.com/Gonzalo-Avalos-Ribas))
+
+---
+
 # v7.2.0 (Wed Feb 21 2024)
 
 #### 🚀 Enhancement
